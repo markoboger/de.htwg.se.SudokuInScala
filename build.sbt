@@ -1,4 +1,4 @@
-name          := "htwg-scala-seed"
+name          := "Sudoku in Scala"
 organization  := "de.htwg.se"
 version       := "0.0.1"
 scalaVersion  := "2.11.8"
