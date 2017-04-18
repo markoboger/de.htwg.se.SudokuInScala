@@ -47,33 +47,33 @@ class GridSpec extends WordSpec with Matchers {
         smallGrid.cell(1, 1) should be(Cell(4))
       }
       "have Houses with the right Cells" in {
-        tinyGrid.row(0).cell(0) should be(Cell(1))
-        tinyGrid.col(0).cell(0) should be(Cell(1))
-        tinyGrid.block(0).cell(0) should be(Cell(1))
+        tinyGrid.rows(0).cells(0) should be(Cell(1))
+        tinyGrid.cols(0).cells(0) should be(Cell(1))
+        tinyGrid.blocks(0).cells(0) should be(Cell(1))
 
-        smallGrid.row(0).cell(0) should be(Cell(1))
-        smallGrid.row(0).cell(1) should be(Cell(2))
-        smallGrid.row(1).cell(0) should be(Cell(3))
-        smallGrid.row(1).cell(1) should be(Cell(4))
-        smallGrid.col(0).cell(0) should be(Cell(1))
-        smallGrid.col(0).cell(1) should be(Cell(3))
-        smallGrid.col(1).cell(0) should be(Cell(2))
-        smallGrid.col(1).cell(1) should be(Cell(4))
+        smallGrid.rows(0).cells(0) should be(Cell(1))
+        smallGrid.rows(0).cells(1) should be(Cell(2))
+        smallGrid.rows(1).cells(0) should be(Cell(3))
+        smallGrid.rows(1).cells(1) should be(Cell(4))
+        smallGrid.cols(0).cells(0) should be(Cell(1))
+        smallGrid.cols(0).cells(1) should be(Cell(3))
+        smallGrid.cols(1).cells(0) should be(Cell(2))
+        smallGrid.cols(1).cells(1) should be(Cell(4))
       }
     }
     "prefilled with 1 to n on the diagonal" should {
       val normalGrid = new Grid(9)
       val diagonalGrid = normalGrid.set(0, 0, 1).set(1, 1, 2).set(2, 2, 3).set(3, 3, 4).set(4, 4, 5).set(5, 5, 6).set(6, 6, 7).set(7, 7, 8).set(8, 8, 9)
       "have blocks with the right cells" in {
-        diagonalGrid.block(0).cell(0) should be(Cell(1))
-        diagonalGrid.block(0).cell(4) should be(Cell(2))
-        diagonalGrid.block(0).cell(8) should be(Cell(3))
-        diagonalGrid.block(4).cell(0) should be(Cell(4))
-        diagonalGrid.block(4).cell(4) should be(Cell(5))
-        diagonalGrid.block(4).cell(8) should be(Cell(6))
-        diagonalGrid.block(8).cell(0) should be(Cell(7))
-        diagonalGrid.block(8).cell(4) should be(Cell(8))
-        diagonalGrid.block(8).cell(8) should be(Cell(9))
+        diagonalGrid.blocks(0).cells(0) should be(Cell(1))
+        diagonalGrid.blocks(0).cells(4) should be(Cell(2))
+        diagonalGrid.blocks(0).cells(8) should be(Cell(3))
+        diagonalGrid.blocks(4).cells(0) should be(Cell(4))
+        diagonalGrid.blocks(4).cells(4) should be(Cell(5))
+        diagonalGrid.blocks(4).cells(8) should be(Cell(6))
+        diagonalGrid.blocks(8).cells(0) should be(Cell(7))
+        diagonalGrid.blocks(8).cells(4) should be(Cell(8))
+        diagonalGrid.blocks(8).cells(8) should be(Cell(9))
       }
     }
   }
