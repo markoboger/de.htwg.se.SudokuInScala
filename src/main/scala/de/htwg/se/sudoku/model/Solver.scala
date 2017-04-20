@@ -10,8 +10,6 @@ class Solver(grid:Grid){
     col <- 0 until grid.size
   } yield grid.available(row, col)
 
-
-
   def unsolvable:Boolean = options.isEmpty
 
   def solve: Tuple2[Boolean, Grid] = solve(0)
