@@ -1,24 +1,30 @@
 package de.htwg.se.sudoku.aview
 
-import de.htwg.se.sudoku.model.{Grid,GridCreator,Solver}
+import de.htwg.se.sudoku.controller.Controller
+import de.htwg.se.sudoku.model.{Grid, GridCreator, Solver}
+import de.htwg.se.sudoku.util.Observer
 
-class Tui {
+class Tui(controller: Controller) extends Observer{
 
-  def processInputLine(input: String, grid:Grid):Grid = {
+  controller.add(this)
+  val size = 9
+  val randomCells:Int = size*size/4
+
+  def processInputLine(input: String):Unit = {
     input match {
-      case "q" => grid
-      case "n"=> new Grid(9)
-      case "r" => new GridCreator(9).createRandom(16)
+      case "q" =>
+      case "n"=> controller.createEmptyGrid(size)
+      case "r" => controller.createRandomGrid(size, randomCells)
       case "s" =>
-        val (success, solvedGrid) = new Solver(grid).solve;
+        val success= controller.solve
         if (success) println("Puzzle solved")else println("This puzzle could not be solved!")
-        solvedGrid
-      case _ => {
-        input.toList.filter(c => c != ' ').map(c => c.toString.toInt) match {
-          case row :: column :: value :: Nil => grid.set(row, column, value)
-          case _ => grid
+      case _ => input.toList.filter(c => c != ' ').map(c => c.toString.toInt) match {
+          case row :: column :: value :: Nil => controller.set(row, column, value)
+          case _ =>
         }
-      }
+
     }
   }
+
+  override def update: Unit =  println(controller.gridToString)
 }
