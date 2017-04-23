@@ -8,7 +8,7 @@ class Tui(controller: Controller) extends Observer{
 
   controller.add(this)
   val size = 9
-  val randomCells:Int = size*size/4
+  val randomCells:Int = size*size/8
 
   def processInputLine(input: String):Unit = {
     input match {
