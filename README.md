@@ -1,4 +1,4 @@
-https://travis-ci.org/markoboger/de.htwg.se.SudokuInScala.svg?branch=master
+[![Travis](https://travis-ci.org/markoboger/de.htwg.se.SudokuInScala.svg?branch=master)]()
 
 Sudoku in Scala
 =========================
