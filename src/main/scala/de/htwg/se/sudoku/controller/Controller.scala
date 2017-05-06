@@ -1,9 +1,12 @@
 package de.htwg.se.sudoku.controller
 
 import de.htwg.se.sudoku.model.{Grid, Solver, GridCreator}
-import de.htwg.se.sudoku.util.Observable
+import de.htwg.se.sudoku.util.{Observable, Command, UndoManager}
 
 class Controller(var grid:Grid) extends Observable{
+
+  private val undoManager = new UndoManager
+
   def createEmptyGrid(size: Int):Unit = {
     grid = new Grid(size)
     notifyObservers
@@ -17,7 +20,7 @@ class Controller(var grid:Grid) extends Observable{
   def gridToString: String = grid.toString
 
   def set(row: Int, col: Int, value: Int):Unit = {
-    grid = grid.set(row, col, value)
+    undoManager.doStep(new SetCommand(row, col, value))
     notifyObservers
   }
 
@@ -27,6 +30,24 @@ class Controller(var grid:Grid) extends Observable{
     grid = g
     notifyObservers
     success
+  }
+
+  def undo: Unit = {
+    undoManager.undoStep
+    notifyObservers
+  }
+
+  def redo: Unit = {
+    undoManager.redoStep
+    notifyObservers
+  }
+
+  class SetCommand(row:Int, col: Int, value:Int) extends Command {
+    override def doStep: Unit =   grid = grid.set(row, col, value)
+
+    override def undoStep: Unit = grid = grid.set(row, col, 0)
+
+    override def redoStep: Unit = grid = grid.set(row, col, value)
   }
 
 }

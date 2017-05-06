@@ -15,6 +15,8 @@ class Tui(controller: Controller) extends Observer{
       case "q" =>
       case "n"=> controller.createEmptyGrid(size)
       case "r" => controller.createRandomGrid(size, randomCells)
+      case "z" => controller.undo
+      case "y" => controller.redo
       case "s" =>
         val success= controller.solve
         if (success) println("Puzzle solved")else println("This puzzle could not be solved!")
