@@ -48,20 +48,4 @@ class CommandSpec extends WordSpec with Matchers {
   }
 }
 
-class UndoManagerSpec extends WordSpec with Matchers {
 
-  "An UndoManager" should {
-    val undoManager = new UndoManager
-    val command = new incrCommand
-    "have a push" in {
-
-      command.state should be(0)
-      undoManager.doStep(command)
-      command.state should be(1)
-      undoManager.undoStep
-      command.state should be(0)
-      undoManager.redoStep
-      command.state should be (1)
-    }
-  }
-}

@@ -1,7 +1,7 @@
 package de.htwg.se.sudoku.aview
 
-import de.htwg.se.sudoku.controller.Controller
-import de.htwg.se.sudoku.model.{Grid, GridCreator, Solver}
+import de.htwg.se.sudoku.controller.{Controller, GameStatus}
+import de.htwg.se.sudoku.controller.GameStatus._
 import de.htwg.se.sudoku.util.Observer
 
 class Tui(controller: Controller) extends Observer{
@@ -17,9 +17,7 @@ class Tui(controller: Controller) extends Observer{
       case "r" => controller.createRandomGrid(size, randomCells)
       case "z" => controller.undo
       case "y" => controller.redo
-      case "s" =>
-        val success= controller.solve
-        if (success) println("Puzzle solved")else println("This puzzle could not be solved!")
+      case "s" => controller.solve
       case _ => input.toList.filter(c => c != ' ').map(c => c.toString.toInt) match {
           case row :: column :: value :: Nil => controller.set(row, column, value)
           case _ =>
@@ -28,5 +26,9 @@ class Tui(controller: Controller) extends Observer{
     }
   }
 
-  override def update: Unit =  println(controller.gridToString)
+  override def update: Unit = {
+    println(controller.gridToString)
+    println(GameStatus.message(controller.gameStatus))
+    controller.gameStatus=IDLE
+  }
 }

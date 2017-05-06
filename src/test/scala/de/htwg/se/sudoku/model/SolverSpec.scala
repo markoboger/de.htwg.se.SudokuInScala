@@ -5,7 +5,7 @@ import org.scalatest.{Matchers, WordSpec}
 import org.scalatest.junit.JUnitRunner
 
 @RunWith(classOf[JUnitRunner])
-class GridSolverSpec extends WordSpec with Matchers {
+class SolverSpec extends WordSpec with Matchers {
 
   "A GridSolver" when {
     "Grid is empty" should {

@@ -1,35 +1,34 @@
 package de.htwg.se.sudoku.controller
 
-import de.htwg.se.sudoku.model.{Grid, Solver, GridCreator}
-import de.htwg.se.sudoku.util.{Observable, Command, UndoManager}
+import de.htwg.se.sudoku.controller.GameStatus._
+import de.htwg.se.sudoku.model.{Grid, GridCreator}
+import de.htwg.se.sudoku.util.{Observable, UndoManager}
 
-class Controller(var grid:Grid) extends Observable{
+class Controller(var grid: Grid) extends Observable {
 
+  var gameStatus: GameStatus = IDLE
   private val undoManager = new UndoManager
 
-  def createEmptyGrid(size: Int):Unit = {
+  def createEmptyGrid(size: Int): Unit = {
     grid = new Grid(size)
     notifyObservers
   }
 
-  def createRandomGrid(size: Int, randomCells:Int):Unit = {
+  def createRandomGrid(size: Int, randomCells: Int): Unit = {
     grid = new GridCreator(size).createRandom(randomCells)
     notifyObservers
   }
 
   def gridToString: String = grid.toString
 
-  def set(row: Int, col: Int, value: Int):Unit = {
-    undoManager.doStep(new SetCommand(row, col, value))
+  def set(row: Int, col: Int, value: Int): Unit = {
+    undoManager.doStep(new SetCommand(row, col, value, this))
     notifyObservers
   }
 
-  def solve: Boolean = {
-
-    val (success, g) = new Solver(grid).solve
-    grid = g
+  def solve: Unit = {
+    undoManager.doStep(new SolveCommand(this))
     notifyObservers
-    success
   }
 
   def undo: Unit = {
@@ -41,13 +40,4 @@ class Controller(var grid:Grid) extends Observable{
     undoManager.redoStep
     notifyObservers
   }
-
-  class SetCommand(row:Int, col: Int, value:Int) extends Command {
-    override def doStep: Unit =   grid = grid.set(row, col, value)
-
-    override def undoStep: Unit = grid = grid.set(row, col, 0)
-
-    override def redoStep: Unit = grid = grid.set(row, col, value)
-  }
-
 }
