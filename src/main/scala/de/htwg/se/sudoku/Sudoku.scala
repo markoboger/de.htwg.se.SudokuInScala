@@ -1,6 +1,6 @@
 package de.htwg.se.sudoku
 
-import de.htwg.se.sudoku.model.{Grid, GridCreator, Player, Solver}
+import de.htwg.se.sudoku.model.{Grid, GridCreateRandomStrategy, Player, Solver}
 import de.htwg.se.sudoku.controller.Controller
 import de.htwg.se.sudoku.aview.Tui
 

@@ -22,8 +22,8 @@ class HouseSpec extends WordSpec with Matchers {
     "be valid" in {
       house.valid should be(true)
     }
-    "produce an String ' '" in {
-      house.toString should be(" ")
+    "produce an String '  '" in {
+      house.toString should be("  ")
     }
   }
 
@@ -33,8 +33,8 @@ class HouseSpec extends WordSpec with Matchers {
     "be valid" in {
       house.valid should be(true)
     }
-    "produce an String 1" in {
-      house.toString should be("1")
+    "produce an String '1 '" in {
+      house.toString should be("1 ")
     }
     "return its cells by index" in {
       house.cells(0) should be(cell0)

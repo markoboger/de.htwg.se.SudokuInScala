@@ -1,7 +1,7 @@
 package de.htwg.se.sudoku.controller
 
 import de.htwg.se.sudoku.controller.GameStatus._
-import de.htwg.se.sudoku.model.{Grid, GridCreator}
+import de.htwg.se.sudoku.model.{Grid, GridCreateRandomStrategy}
 import de.htwg.se.sudoku.util.{Observable, UndoManager}
 
 class Controller(var grid: Grid) extends Observable {
@@ -15,7 +15,7 @@ class Controller(var grid: Grid) extends Observable {
   }
 
   def createRandomGrid(size: Int, randomCells: Int): Unit = {
-    grid = new GridCreator(size).createRandom(randomCells)
+    grid = (new GridCreateRandomStrategy).createNewGrid(size)
     notifyObservers
   }
 

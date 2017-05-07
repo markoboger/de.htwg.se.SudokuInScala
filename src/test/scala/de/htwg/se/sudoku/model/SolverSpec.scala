@@ -23,9 +23,9 @@ class SolverSpec extends WordSpec with Matchers {
       }
     }
     "Grid is not empty" should {
-      val randomTinyGrid = new GridCreator(1).createRandom(0)
-      val randomSmallGrid = new GridCreator(4).createRandom(4)
-      val randomNormalGrid = new GridCreator(9).createRandom(9)
+      val randomTinyGrid = (new GridCreateRandomStrategy).createNewGrid(1)
+      val randomSmallGrid = (new GridCreateRandomStrategy).createNewGrid(4)
+      val randomNormalGrid = (new GridCreateRandomStrategy).createNewGrid(9)
       val grids = List(randomTinyGrid,randomSmallGrid,randomNormalGrid)
       "solve a Grid without any problems" in {
         for (grid <- grids) {
@@ -33,20 +33,6 @@ class SolverSpec extends WordSpec with Matchers {
           val (solvable, solvedGrid) = new Solver(grid).solve
           solvable should be(true)
           solvedGrid.solved should be(true)
-        }
-
-      }
-    }
-    "Grid is almost full" should {
-      val randomSmallGrid = new GridCreator(4).createRandom(20)
-      val randomNormalGrid = new GridCreator(9).createRandom(100)
-      val grids = List(randomSmallGrid,randomNormalGrid)
-      "if the Grid is full with random numbers, it is likely not solvable, the Solver should then return false" in {
-        for (grid <- grids) {
-          grid.valid should be(true)
-          val (solvable, solvedGrid) = new Solver(grid).solve
-          solvable should be(false)
-          solvedGrid.solved should be(false)
         }
 
       }

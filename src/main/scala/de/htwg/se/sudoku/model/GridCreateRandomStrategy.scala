@@ -2,10 +2,11 @@ package de.htwg.se.sudoku.model
 
 import scala.util.Random
 
-class GridCreator(size:Int) {
+class GridCreateRandomStrategy extends GridCreateStrategyTemplate{
 
-  def createRandom(num: Int): Grid = {
-    var grid = new Grid(size)
+  def fill(_grid:Grid): Grid = {
+    val num = Math.sqrt(_grid.size).toInt
+    var grid = new Grid(_grid.size)
     for {index <- 1 to num} {
       grid = setRandomCell(grid)
     }

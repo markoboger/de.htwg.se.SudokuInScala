@@ -4,6 +4,7 @@ import scala.math.sqrt
 import scala.util.Random
 
 case class Grid(cells: Matrix[Cell]) {
+
   def this(size: Int) = this(new Matrix[Cell](size, Cell(0)))
 
   val size: Int = cells.size
@@ -12,6 +13,8 @@ case class Grid(cells: Matrix[Cell]) {
   def cell(row: Int, col: Int): Cell = cells.cell(row, col)
 
   def set(row: Int, col: Int, value: Int): Grid = copy(cells.replaceCell(row, col, Cell(value)))
+
+  def setGiven(row: Int, col: Int, value: Int): Grid = copy(cells.replaceCell(row, col, Cell(value, given=true)))
 
   def rows(row: Int): House = House(cells.rows(row))
 
@@ -49,6 +52,15 @@ case class Grid(cells: Matrix[Cell]) {
 
   def solved: Boolean = cells.rows.forall(coll => coll.forall(cell => cell.isSet))
 
+  def markFilledCellsAsGiven: Grid = {
+    var tempGrid = this
+    for {
+      row <- 0 until size
+      col <- 0 until size; if cell(row, col).isSet
+    } tempGrid = tempGrid.setGiven(row, col, cell(row, col).value)
+    tempGrid
+  }
+
   override def toString: String = {
     val lineseparator = ("+-" + ("--" * blocknum)) * blocknum + "+\n"
     val line = ("| " + ("x " * blocknum)) * blocknum + "|\n"
@@ -56,7 +68,7 @@ case class Grid(cells: Matrix[Cell]) {
     for {
       row <- 0 until size
       col <- 0 until size
-    } box = box.replaceFirst("x", cell(row, col).toString)
+    } box = box.replaceFirst("x ", cell(row, col).toString)
     box
   }
 }

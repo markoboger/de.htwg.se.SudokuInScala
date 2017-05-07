@@ -62,5 +62,4 @@ class ControllerSpec extends WordSpec with Matchers {
       controller.grid.solved should be(true)
     }
   }
-
 }
