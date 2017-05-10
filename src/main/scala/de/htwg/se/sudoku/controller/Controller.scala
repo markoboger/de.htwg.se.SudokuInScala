@@ -21,6 +21,8 @@ class Controller(var grid: Grid) extends Observable {
 
   def gridToString: String = grid.toString
 
+  def gridToHtml: String = grid.toHtml
+
   def set(row: Int, col: Int, value: Int): Unit = {
     undoManager.doStep(new SetCommand(row, col, value, this))
     notifyObservers

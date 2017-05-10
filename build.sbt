@@ -16,3 +16,6 @@ libraryDependencies ++= {
 }
 
 libraryDependencies += "junit" % "junit" % "4.8" % "test"
+
+libraryDependencies += "com.typesafe.akka" %% "akka-http" % "10.0.0"
+

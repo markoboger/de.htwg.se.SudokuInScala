@@ -71,6 +71,8 @@ case class Grid(cells: Matrix[Cell]) {
     } box = box.replaceFirst("x ", cell(row, col).toString)
     box
   }
+
+  def toHtml:String = "<p  style=\"font-family:'Lucida Console', monospace\"> " + toString.replace("\n","<br>").replace("  "," _") +"</p>"
 }
 
 
