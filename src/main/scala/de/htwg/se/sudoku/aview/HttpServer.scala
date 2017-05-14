@@ -1,16 +1,17 @@
 package de.htwg.se.sudoku.aview
 
 import akka.actor.ActorSystem
+import akka.http.javadsl.server.directives.RouteDirectives
 import akka.http.scaladsl.Http
 import akka.http.scaladsl.model.{ContentTypes, HttpEntity}
 import akka.http.scaladsl.server.Directives._
-import akka.http.scaladsl.server.Route
+import akka.http.scaladsl.server.{Route, StandardRoute}
 import akka.stream.ActorMaterializer
 import de.htwg.se.sudoku.controller.Controller
 
 class HttpServer(controller: Controller) {
   val size = 9
-  val randomCells:Int = size*size/8
+  val randomCells: Int = size * size / 8
 
   implicit val system = ActorSystem("my-system")
   implicit val materializer = ActorMaterializer()
@@ -22,13 +23,37 @@ class HttpServer(controller: Controller) {
       complete(HttpEntity(ContentTypes.`text/plain(UTF-8)`, "<h1>HTWG Sudoku</h1>"))
     }
     path("sudoku") {
-      complete(HttpEntity(ContentTypes.`text/html(UTF-8)`, "<h1>HTWG Sudoku</h1>" + controller.gridToHtml))
+      gridtoHtml
     } ~
-      path("sudoku" / Segment) { command =>{
+      path("sudoku" / "new") {
+        controller.createEmptyGrid(size)
+        gridtoHtml
+      } ~
+      path("sudoku" / "random") {
+        controller.createRandomGrid(size, randomCells)
+        gridtoHtml
+      } ~
+      path("sudoku" / "solve") {
+        controller.solve
+        gridtoHtml
+      } ~
+      path("sudoku" / "undo") {
+        controller.undo
+        gridtoHtml
+      } ~
+      path("sudoku" / "redo") {
+        controller.redo
+        gridtoHtml
+      } ~
+      path("sudoku" / Segment) { command => {
         processInputLine(command)
-        complete(HttpEntity(ContentTypes.`text/html(UTF-8)`, "<h1>HTWG Sudoku</h1>" + command + controller.gridToHtml)
-      )}
+        gridtoHtml
       }
+      }
+  }
+
+  def gridtoHtml: StandardRoute = {
+    complete(HttpEntity(ContentTypes.`text/html(UTF-8)`, "<h1>HTWG Sudoku</h1>" + controller.gridToHtml))
   }
 
   val bindingFuture = Http().bindAndHandle(route, "localhost", 8080)
@@ -39,19 +64,10 @@ class HttpServer(controller: Controller) {
       .onComplete(_ => system.terminate()) // and shutdown when done
   }
 
-  def processInputLine(input: String):Unit = {
-    input match {
-      case "q" =>
-      case "n"=> controller.createEmptyGrid(size)
-      case "r" => controller.createRandomGrid(size, randomCells)
-      case "z" => controller.undo
-      case "y" => controller.redo
-      case "s" => controller.solve
-      case _ => input.toList.filter(c => c != ' ').map(c => c.toString.toInt) match {
-        case row :: column :: value :: Nil => controller.set(row, column, value)
-        case _ =>
-      }
-
+  def processInputLine(input: String): Unit = {
+    input.toList.filter(c => c != ' ').map(c => c.toString.toInt) match {
+      case row :: column :: value :: Nil => controller.set(row, column, value)
+      case _ =>
     }
   }
 
