@@ -1,9 +1,9 @@
 package de.htwg.se.sudoku.model
 
 
-case class Cell(value: Int, given:Boolean = false) {
+case class Cell(value: Int, given:Boolean = false, isHighlighted:Boolean = false, showCandidates:Boolean = false) {
   def isSet: Boolean = value != 0
 
-  override def toString: String = value.toString.replace('0', ' ') + (if(given) "." else " ")
+  override def toString: String = value.toString.replace('0', ' ') + (if(given) "." else if(isHighlighted)"'" else " ")
 }
 

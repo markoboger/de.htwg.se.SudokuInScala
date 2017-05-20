@@ -16,6 +16,27 @@ case class Grid(cells: Matrix[Cell]) {
 
   def setGiven(row: Int, col: Int, value: Int): Grid = copy(cells.replaceCell(row, col, Cell(value, given=true)))
 
+  def highlight(index: Int):Grid = {
+    var grid = this
+    for {
+      row <- 0 until size
+      col <- 0 until size
+    } if (available(row, col).contains(index)) grid = grid.setHighlighted(row, col) else grid = grid.unsetHighlighted(row, col)
+    grid
+  }
+
+  def setHighlighted(row: Int, col: Int): Grid = copy(cells.replaceCell(row, col, cell(row, col).copy(isHighlighted=true)))
+
+  def unsetHighlighted(row: Int, col: Int): Grid = copy(cells.replaceCell(row, col, cell(row, col).copy( isHighlighted=false)))
+
+  def isHighlighted(row: Int, col: Int) = cell(row, col).isHighlighted
+
+  def setShowCandidates(row: Int, col: Int): Grid = copy(cells.replaceCell(row, col, cell(row, col).copy( showCandidates=true)))
+
+  def isShowCandidates(row:Int, col:Int) = cell(row, col).showCandidates
+
+  def unsetShowCandidates(row: Int, col: Int): Grid = copy(cells.replaceCell(row, col, cell(row, col).copy( showCandidates=false)))
+
   def rows(row: Int): House = House(cells.rows(row))
 
   def allrows: IndexedSeq[House] = (0 until size).map(i => rows(i))

@@ -12,54 +12,22 @@ import org.scalatest.junit.JUnitRunner
 class ControllerSpec extends WordSpec with Matchers {
 
   "A Controller" when {
-    "observed by an Observer" should {
+    "empty" should {
       val smallGrid = new Grid(4)
       val controller = new Controller(smallGrid)
-      val observer = new Observer {
-        var updated: Boolean = false
-
-        def isUpdated: Boolean = updated
-
-        override def update: Unit = updated = true
-      }
-      controller.add(observer)
-      "notify its Observer after creation" in {
-        controller.createEmptyGrid(4)
-        observer.updated should be(true)
-        controller.grid.size should be(4)
-      }
-      "notify its Observer after random creation" in {
-        controller.createRandomGrid(4, 1)
-        observer.updated should be(true)
-        controller.grid.valid should be(true)
-      }
-      "notify its Observer after setting a cell" in {
-        controller.set(1, 1, 4)
-        observer.updated should be(true)
-        controller.grid.cell(1, 1).value should be(4)
-      }
-      "notify its Observer after solving" in {
+      "handle undo/redo of solving a grid correctly" in {
+        controller.grid.cell(0, 0).isSet should be(false)
+        controller.grid.solved should be(false)
         controller.solve
-        observer.updated should be(true)
+        controller.grid.cell(0, 0).isSet should be(true)
+        controller.grid.solved should be(true)
+        controller.undo
+        controller.grid.cell(0, 0).isSet should be(false)
+        controller.grid.solved should be(false)
+        controller.redo
+        controller.grid.cell(0, 0).isSet should be(true)
         controller.grid.solved should be(true)
       }
-    }
-  }
-  "empty" should {
-    val smallGrid = new Grid(4)
-    val controller = new Controller(smallGrid)
-    "handle undo/redo of solving a grid correctly" in {
-      controller.grid.cell(0, 0).isSet should be(false)
-      controller.grid.solved should be(false)
-      controller.solve
-      controller.grid.cell(0, 0).isSet should be(true)
-      controller.grid.solved should be(true)
-      controller.undo
-      controller.grid.cell(0, 0).isSet should be(false)
-      controller.grid.solved should be(false)
-      controller.redo
-      controller.grid.cell(0, 0).isSet should be(true)
-      controller.grid.solved should be(true)
     }
   }
 }
