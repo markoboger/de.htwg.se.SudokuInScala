@@ -1,9 +1,10 @@
-package de.htwg.se.sudoku.model
+package de.htwg.se.sudoku.model.gridComponent.gridBaseImpl
+
+import de.htwg.se.sudoku.model.gridComponent.GridInterface
 
 import scala.math.sqrt
-import scala.util.Random
 
-case class Grid(cells: Matrix[Cell]) {
+case class Grid(cells: Matrix[Cell]) extends GridInterface{
 
   def this(size: Int) = this(new Matrix[Cell](size, Cell(0)))
 
@@ -92,6 +93,10 @@ case class Grid(cells: Matrix[Cell]) {
     } box = box.replaceFirst("x ", cell(row, col).toString)
     box
   }
+
+  override def createNewGrid(size: Int): GridInterface = (new GridCreateRandomStrategy).createNewGrid(size)
+
+  override def solve: (Boolean, GridInterface) = new Solver(this).solve
 }
 
 

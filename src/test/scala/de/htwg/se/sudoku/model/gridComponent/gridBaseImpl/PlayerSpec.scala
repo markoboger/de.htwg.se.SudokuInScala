@@ -1,7 +1,8 @@
-package de.htwg.se.sudoku.model
+package de.htwg.se.sudoku.model.gridComponent.gridBaseImpl
 
-import org.scalatest._
+import de.htwg.se.sudoku.model.Player
 import org.junit.runner.RunWith
+import org.scalatest._
 import org.scalatest.junit.JUnitRunner
 
 @RunWith(classOf[JUnitRunner])

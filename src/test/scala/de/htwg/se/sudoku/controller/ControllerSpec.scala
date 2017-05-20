@@ -1,6 +1,6 @@
 package de.htwg.se.sudoku.controller
 
-import de.htwg.se.sudoku.model.Grid
+import de.htwg.se.sudoku.model.gridComponent.gridBaseImpl.Grid
 import de.htwg.se.sudoku.util.Observer
 
 import scala.language.reflectiveCalls

@@ -1,15 +1,16 @@
 package de.htwg.se.sudoku.controller
 
 import de.htwg.se.sudoku.controller.GameStatus.{NOT_SOLVABLE, SOLVED}
-import de.htwg.se.sudoku.model.{Grid, Solver}
+import de.htwg.se.sudoku.model.gridComponent.gridBaseImpl.Solver
+import de.htwg.se.sudoku.model.gridComponent.GridInterface
 import de.htwg.se.sudoku.util.Command
 
 
 class SolveCommand(controller: Controller) extends Command {
-  var memento: Grid = controller.grid
+  var memento: GridInterface = controller.grid
   override def doStep: Unit = {
     memento = controller.grid
-    val (success, newgrid) = new Solver(controller.grid).solve
+    val (success, newgrid) = controller.grid.solve
     if (success) controller.gameStatus = SOLVED else controller.gameStatus= NOT_SOLVABLE
     controller.grid = newgrid
   }

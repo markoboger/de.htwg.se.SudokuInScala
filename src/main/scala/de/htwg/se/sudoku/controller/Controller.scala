@@ -1,12 +1,13 @@
 package de.htwg.se.sudoku.controller
 
 import de.htwg.se.sudoku.controller.GameStatus._
-import de.htwg.se.sudoku.model.{Grid, GridCreateRandomStrategy}
+import de.htwg.se.sudoku.model.gridComponent.GridInterface
+import de.htwg.se.sudoku.model.gridComponent.gridBaseImpl.Grid
 import de.htwg.se.sudoku.util.UndoManager
 
 import scala.swing.Publisher
 
-class Controller(var grid: Grid) extends Publisher {
+class Controller(var grid: GridInterface) extends Publisher {
 
   var gameStatus: GameStatus = IDLE
   var showAllCandidates: Boolean = false
@@ -24,7 +25,7 @@ class Controller(var grid: Grid) extends Publisher {
   }
 
   def createRandomGrid(size: Int, randomCells: Int): Unit = {
-    grid = (new GridCreateRandomStrategy).createNewGrid(size)
+    grid = grid.createNewGrid(size)
     gameStatus = NEW
     publish(new CellChanged)
   }

@@ -1,4 +1,4 @@
-package de.htwg.se.sudoku.model
+package de.htwg.se.sudoku.model.gridComponent.gridBaseImpl
 
 case class House(cells: Vector[Cell]) {
 
