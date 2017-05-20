@@ -8,7 +8,8 @@ import de.htwg.se.sudoku.aview.gui.SwingGui
 import scala.io.StdIn.readLine
 
 object Sudoku {
-  val controller = new Controller(new Grid(9))
+  val defaultsize=9
+  val controller = new Controller(new Grid(defaultsize))
   val tui = new Tui(controller)
   val gui = new SwingGui(controller)
   controller.publish(new CellChanged)

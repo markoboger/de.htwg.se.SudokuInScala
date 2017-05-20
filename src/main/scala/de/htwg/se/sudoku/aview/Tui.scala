@@ -9,8 +9,8 @@ import scala.swing.Reactor
 class Tui(controller: Controller) extends Reactor{
 
   listenTo(controller)
-  val size = 9
-  val randomCells:Int = size*size/8
+  def size = controller.gridSize
+  def randomCells:Int = size*size/8
 
   def processInputLine(input: String):Unit = {
     input match {
@@ -20,6 +20,9 @@ class Tui(controller: Controller) extends Reactor{
       case "z" => controller.undo
       case "y" => controller.redo
       case "s" => controller.solve
+      case "." => controller.resize(1)
+      case "+" => controller.resize(4)
+      case "#" => controller.resize(9)
       case _ => input.toList.filter(c => c != ' ').map(c => c.toString.toInt) match {
           case row :: col :: value :: Nil => controller.set(row, col, value)
           case row :: col::Nil => controller.showCandidates(row, col)
@@ -39,7 +42,6 @@ class Tui(controller: Controller) extends Reactor{
   def printTui: Unit = {
     println(controller.gridToString)
     println(GameStatus.message(controller.gameStatus))
-    controller.gameStatus=IDLE
   }
 
   def printCandidates: Unit = {
