@@ -1,5 +1,7 @@
 package de.htwg.se.sudoku.controller.controllerComponent.controllerBaseImpl
 
+import com.google.inject.{Guice, Inject}
+import de.htwg.se.sudoku.SudokuModule
 import de.htwg.se.sudoku.controller.controllerComponent.GameStatus._
 import de.htwg.se.sudoku.controller.controllerComponent._
 import de.htwg.se.sudoku.model.gridComponent.GridInterface
@@ -8,14 +10,15 @@ import de.htwg.se.sudoku.util.UndoManager
 
 import scala.swing.Publisher
 
-class Controller(var grid: GridInterface) extends ControllerInterface with Publisher {
+class  Controller @Inject() (var grid: GridInterface) extends ControllerInterface with Publisher {
 
   var gameStatus: GameStatus = IDLE
   var showAllCandidates: Boolean = false
   private val undoManager = new UndoManager
+  val injector = Guice.createInjector(new SudokuModule)
 
   def createEmptyGrid(size: Int): Unit = {
-    grid = new Grid(size)
+    grid = injector.getInstance(classOf[GridInterface])
     publish(new CellChanged)
   }
 
@@ -25,7 +28,8 @@ class Controller(var grid: GridInterface) extends ControllerInterface with Publi
     publish(new GridSizeChanged(newSize))
   }
 
-  def createRandomGrid(size: Int, randomCells: Int): Unit = {
+
+  override def createNewGrid(size: Int): Unit = {
     grid = grid.createNewGrid(size)
     gameStatus = NEW
     publish(new CellChanged)

@@ -1,11 +1,14 @@
 package de.htwg.se.sudoku.model.gridComponent.gridAdvancedImpl
 
+import com.google.inject.Inject
+import com.google.inject.name.Named
 import de.htwg.se.sudoku.model.gridComponent.GridInterface
 import de.htwg.se.sudoku.model.gridComponent.gridBaseImpl.{GridCreateRandomStrategy, GridCreateStrategyTemplate, Solver, Grid => BaseGrid}
 
 import scala.collection.immutable
 
-class Grid(size:Int) extends BaseGrid(size){
+
+class Grid @Inject() ( @Named("DefaultSize") size:Int) extends BaseGrid(size){
 
   override def createNewGrid(size:Int):GridInterface = (new GridCreateSymmetricStrategy).createNewGrid(size)
 

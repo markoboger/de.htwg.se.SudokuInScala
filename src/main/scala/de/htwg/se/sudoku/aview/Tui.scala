@@ -2,7 +2,7 @@ package de.htwg.se.sudoku.aview
 
 import de.htwg.se.sudoku.controller.controllerComponent.ControllerInterface
 import de.htwg.se.sudoku.controller.controllerComponent.GameStatus
-import de.htwg.se.sudoku.controller.controllerComponent.{GridSizeChanged, CellChanged, CandidatesChanged}
+import de.htwg.se.sudoku.controller.controllerComponent.{CandidatesChanged, CellChanged, GridSizeChanged}
 
 import scala.swing.Reactor
 
@@ -15,8 +15,8 @@ class Tui(controller: ControllerInterface) extends Reactor{
   def processInputLine(input: String):Unit = {
     input match {
       case "q" =>
-      case "n"=> controller.createEmptyGrid(size)
-      case "r" => controller.createRandomGrid(size, randomCells)
+      case "e" => controller.createEmptyGrid(size)
+      case "n" => controller.createNewGrid(size)
       case "z" => controller.undo
       case "y" => controller.redo
       case "s" => controller.solve

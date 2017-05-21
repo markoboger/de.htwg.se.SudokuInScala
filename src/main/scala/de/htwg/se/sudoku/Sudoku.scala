@@ -1,18 +1,18 @@
 package de.htwg.se.sudoku
 
+import com.google.inject.Guice
 import de.htwg.se.sudoku.aview.Tui
 import de.htwg.se.sudoku.aview.gui.SwingGui
-import de.htwg.se.sudoku.controller.controllerComponent.controllerBaseImpl.Controller
-import de.htwg.se.sudoku.model.gridComponent.gridAdvancedImpl.Grid
+import de.htwg.se.sudoku.controller.controllerComponent.ControllerInterface
 
 import scala.io.StdIn.readLine
 
 object Sudoku {
-  val defaultsize=9
-  val controller = new Controller(new Grid(defaultsize))
+  val injector = Guice.createInjector(new SudokuModule)
+  val controller = injector.getInstance(classOf[ControllerInterface])
   val tui = new Tui(controller)
   val gui = new SwingGui(controller)
-  controller.createRandomGrid(9,9)
+  controller.createNewGrid(9)
 
   def main(args: Array[String]): Unit = {
     var input: String = ""

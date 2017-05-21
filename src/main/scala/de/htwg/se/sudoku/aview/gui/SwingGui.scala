@@ -5,9 +5,6 @@ import de.htwg.se.sudoku.controller.controllerComponent.{CandidatesChanged, Cell
 import scala.swing._
 import scala.swing.Swing.LineBorder
 import scala.swing.event._
-import de.htwg.se.sudoku.controller._
-
-import scala.io.Source._
 
 class CellClicked(val row: Int, val column: Int) extends Event
 
@@ -64,8 +61,8 @@ class SwingGui(controller: ControllerInterface) extends Frame {
   menuBar = new MenuBar {
     contents += new Menu("File") {
       mnemonic = Key.F
-      contents += new MenuItem(Action("New") { controller.createEmptyGrid(controller.gridSize) })
-      contents += new MenuItem(Action("Random") { controller.createRandomGrid(controller.gridSize,controller.gridSize) })
+      contents += new MenuItem(Action("Empty") { controller.createEmptyGrid(controller.gridSize) })
+      contents += new MenuItem(Action("New") { controller.createNewGrid(controller.gridSize) })
       contents += new MenuItem(Action("Quit") { System.exit(0) })
     }
     contents += new Menu("Edit") {
