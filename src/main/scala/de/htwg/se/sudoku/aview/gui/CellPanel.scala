@@ -1,12 +1,11 @@
 package de.htwg.se.sudoku.aview.gui
 
 import scala.swing._
-import javax.swing.table._
 import scala.swing.event._
-import de.htwg.se.sudoku.controller.Controller
-import de.htwg.se.sudoku.controller.CellChanged
 
-class CellPanel(row: Int, column: Int, controller: Controller) extends FlowPanel {
+import de.htwg.se.sudoku.controller.controllerComponent.{CellChanged, ControllerInterface}
+
+class CellPanel(row: Int, column: Int, controller: ControllerInterface) extends FlowPanel {
 
   val givenCellColor = new Color(200, 200, 255)
   val cellColor = new Color(224, 224, 255)

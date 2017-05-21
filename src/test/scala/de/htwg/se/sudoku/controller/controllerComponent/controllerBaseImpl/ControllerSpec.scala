@@ -1,12 +1,11 @@
-package de.htwg.se.sudoku.controller
+package de.htwg.se.sudoku.controller.controllerComponent.controllerBaseImpl
 
 import de.htwg.se.sudoku.model.gridComponent.gridBaseImpl.Grid
-import de.htwg.se.sudoku.util.Observer
+import org.junit.runner.RunWith
+import org.scalatest.junit.JUnitRunner
+import org.scalatest.{Matchers, WordSpec}
 
 import scala.language.reflectiveCalls
-import org.junit.runner.RunWith
-import org.scalatest.{Matchers, WordSpec}
-import org.scalatest.junit.JUnitRunner
 
 @RunWith(classOf[JUnitRunner])
 class ControllerSpec extends WordSpec with Matchers {

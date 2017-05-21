@@ -1,13 +1,14 @@
-package de.htwg.se.sudoku.controller
+package de.htwg.se.sudoku.controller.controllerComponent.controllerBaseImpl
 
-import de.htwg.se.sudoku.controller.GameStatus._
+import de.htwg.se.sudoku.controller.controllerComponent.GameStatus._
+import de.htwg.se.sudoku.controller.controllerComponent._
 import de.htwg.se.sudoku.model.gridComponent.GridInterface
 import de.htwg.se.sudoku.model.gridComponent.gridBaseImpl.Grid
 import de.htwg.se.sudoku.util.UndoManager
 
 import scala.swing.Publisher
 
-class Controller(var grid: GridInterface) extends Publisher {
+class Controller(var grid: GridInterface) extends ControllerInterface with Publisher {
 
   var gameStatus: GameStatus = IDLE
   var showAllCandidates: Boolean = false

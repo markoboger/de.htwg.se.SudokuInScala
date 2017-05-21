@@ -1,9 +1,10 @@
 package de.htwg.se.sudoku
 
 import de.htwg.se.sudoku.model.gridComponent.gridBaseImpl.Grid
-import de.htwg.se.sudoku.controller.{CellChanged, Controller}
 import de.htwg.se.sudoku.aview.Tui
 import de.htwg.se.sudoku.aview.gui.SwingGui
+import de.htwg.se.sudoku.controller.controllerComponent.CellChanged
+import de.htwg.se.sudoku.controller.controllerComponent.controllerBaseImpl.Controller
 
 import scala.io.StdIn.readLine
 

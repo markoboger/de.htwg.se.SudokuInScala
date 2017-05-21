@@ -1,14 +1,17 @@
 package de.htwg.se.sudoku.aview.gui
 
+import de.htwg.se.sudoku.controller.controllerComponent.{CandidatesChanged, CellChanged, ControllerInterface, GridSizeChanged}
+
 import scala.swing._
 import scala.swing.Swing.LineBorder
 import scala.swing.event._
 import de.htwg.se.sudoku.controller._
+
 import scala.io.Source._
 
 class CellClicked(val row: Int, val column: Int) extends Event
 
-class SwingGui(controller: Controller) extends Frame {
+class SwingGui(controller: ControllerInterface) extends Frame {
 
   listenTo(controller)
 

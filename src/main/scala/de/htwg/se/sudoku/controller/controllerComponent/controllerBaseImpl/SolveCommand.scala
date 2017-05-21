@@ -1,9 +1,8 @@
-package de.htwg.se.sudoku.controller
+package de.htwg.se.sudoku.controller.controllerComponent.controllerBaseImpl
 
-import de.htwg.se.sudoku.controller.GameStatus.{NOT_SOLVABLE, SOLVED}
-import de.htwg.se.sudoku.model.gridComponent.gridBaseImpl.Solver
 import de.htwg.se.sudoku.model.gridComponent.GridInterface
 import de.htwg.se.sudoku.util.Command
+import de.htwg.se.sudoku.controller.controllerComponent.GameStatus._
 
 
 class SolveCommand(controller: Controller) extends Command {

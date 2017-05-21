@@ -1,4 +1,4 @@
-package de.htwg.se.sudoku.controller
+package de.htwg.se.sudoku.controller.controllerComponent.controllerBaseImpl
 
 import de.htwg.se.sudoku.util.Command
 

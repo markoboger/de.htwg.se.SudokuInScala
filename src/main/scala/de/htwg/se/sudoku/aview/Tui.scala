@@ -1,12 +1,12 @@
 package de.htwg.se.sudoku.aview
 
-import de.htwg.se.sudoku.controller.{Controller, GameStatus}
-import de.htwg.se.sudoku.controller.GameStatus._
-import de.htwg.se.sudoku.controller.{CellChanged, GridSizeChanged, CandidatesChanged}
+import de.htwg.se.sudoku.controller.controllerComponent.ControllerInterface
+import de.htwg.se.sudoku.controller.controllerComponent.GameStatus
+import de.htwg.se.sudoku.controller.controllerComponent.{GridSizeChanged, CellChanged, CandidatesChanged}
 
 import scala.swing.Reactor
 
-class Tui(controller: Controller) extends Reactor{
+class Tui(controller: ControllerInterface) extends Reactor{
 
   listenTo(controller)
   def size = controller.gridSize

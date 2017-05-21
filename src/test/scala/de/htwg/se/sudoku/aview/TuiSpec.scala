@@ -1,6 +1,6 @@
 package de.htwg.se.sudoku.aview
 
-import de.htwg.se.sudoku.controller.Controller
+import de.htwg.se.sudoku.controller.controllerComponent.controllerBaseImpl.Controller
 import de.htwg.se.sudoku.model.gridComponent.gridBaseImpl.Grid
 import org.junit.runner.RunWith
 import org.scalatest.{Matchers, WordSpec}
