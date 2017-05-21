@@ -5,7 +5,7 @@ import de.htwg.se.sudoku.model.gridComponent.GridInterface
 import scala.util.Random
 
 
-class Solver(grid:Grid){
+class Solver(grid:GridInterface){
 
   def options = for {
     row <- 0 until grid.size
@@ -14,14 +14,14 @@ class Solver(grid:Grid){
 
   def unsolvable:Boolean = options.isEmpty
 
-  def solve: Tuple2[Boolean, Grid] = solve(0)
+  def solve: (Boolean, GridInterface) = solve(0)
 
-  def solve(index: Int): Tuple2[Boolean, Grid] = {
+  def solve(index: Int): Tuple2[Boolean, GridInterface] = {
     if (grid.solved) return (true, grid) else if (unsolvable) return (false, grid) else {
       val (row, col) = grid.indexToRowCol(index)
       if (grid.cell(row, col).isSet) return solve(index + 1) else {
         val iter = Random.shuffle(grid.available(row, col).toList).iterator
-        var res: Tuple2[Boolean, Grid] = (false, grid)
+        var res: Tuple2[Boolean, GridInterface] = (false, grid)
         if (iter.hasNext) {
           for {v <- iter} {
             var g = grid.set(row, col, v)

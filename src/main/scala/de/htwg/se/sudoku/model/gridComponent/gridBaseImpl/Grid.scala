@@ -15,6 +15,8 @@ case class Grid(cells: Matrix[Cell]) extends GridInterface{
 
   def set(row: Int, col: Int, value: Int): Grid = copy(cells.replaceCell(row, col, Cell(value)))
 
+  def reset(row:Int, col:Int): Grid = copy(cells.replaceCell(row, col, Cell(0, false, false, false)))
+
   def setGiven(row: Int, col: Int, value: Int): Grid = copy(cells.replaceCell(row, col, Cell(value, given=true)))
 
   def highlight(index: Int):Grid = {
@@ -64,6 +66,15 @@ case class Grid(cells: Matrix[Cell]) extends GridInterface{
   }
 
   def valid: Boolean = allrows.forall(house => house.valid) && allcols.forall(house => house.valid) && allblocks.forall(house => house.valid)
+
+  def isSymmetric:Boolean = {
+    val resultList:IndexedSeq[Boolean] = for (row<- 0 until size; col <- 0 until size) yield {
+        if((cell(row, col).isSet == true && symmetricCell(row, col).isSet == true) || (cell(row, col).isSet == false && symmetricCell(row, col).isSet == false)) true else false
+      }
+    resultList.forall(_==true)
+  }
+
+  def symmetricCell(row:Int, col:Int):Cell = cell(size-1 -row, size-1 - col)
 
   def available(row: Int, col: Int): Set[Int] = if (cell(row, col).isSet) {
     Set.empty

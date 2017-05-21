@@ -34,7 +34,7 @@ class Controller(var grid: GridInterface) extends ControllerInterface{
 
   override def isGiven(row: Int, col: Int): Boolean = false
 
-  override def showCandidates(row: Int, col: Int): Unit = false
+  override def showCandidates(row: Int, col: Int): Unit = {}
 
   override def highlight(index: Int): Unit = {}
 
