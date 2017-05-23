@@ -2,7 +2,7 @@ package de.htwg.se.sudoku.model
 
 import org.junit.runner.RunWith
 import org.scalatest.junit.JUnitRunner
-import org.scalatest.{Matchers, WordSpec}
+import org.scalatest.{ Matchers, WordSpec }
 
 @RunWith(classOf[JUnitRunner])
 class CellSpec extends WordSpec with Matchers {

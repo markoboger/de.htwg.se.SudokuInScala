@@ -14,7 +14,7 @@ case class Grid(cells: Matrix[Cell]) {
 
   def set(row: Int, col: Int, value: Int): Grid = copy(cells.replaceCell(row, col, Cell(value)))
 
-  def setGiven(row: Int, col: Int, value: Int): Grid = copy(cells.replaceCell(row, col, Cell(value, given=true)))
+  def setGiven(row: Int, col: Int, value: Int): Grid = copy(cells.replaceCell(row, col, Cell(value, given = true)))
 
   def rows(row: Int): House = House(cells.rows(row))
 
@@ -45,8 +45,7 @@ case class Grid(cells: Matrix[Cell]) {
 
   def available(row: Int, col: Int): Set[Int] = if (cell(row, col).isSet) {
     Set.empty
-  }
-  else {
+  } else {
     (1 to size).toSet -- rows(row).toIntSet -- cols(col).toIntSet -- blocks(blockAt(row, col)).toIntSet
   }
 
@@ -72,7 +71,6 @@ case class Grid(cells: Matrix[Cell]) {
     box
   }
 
-  def toHtml:String = "<p  style=\"font-family:'Lucida Console', monospace\"> " + toString.replace("\n","<br>").replace("  "," _") +"</p>"
+  def toHtml: String = "<p  style=\"font-family:'Lucida Console', monospace\"> " + toString.replace("\n", "<br>").replace("  ", " _") + "</p>"
 }
-
 

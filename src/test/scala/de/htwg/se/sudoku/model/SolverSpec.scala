@@ -1,7 +1,7 @@
 package de.htwg.se.sudoku.model
 
 import org.junit.runner.RunWith
-import org.scalatest.{Matchers, WordSpec}
+import org.scalatest.{ Matchers, WordSpec }
 import org.scalatest.junit.JUnitRunner
 
 @RunWith(classOf[JUnitRunner])
@@ -12,7 +12,7 @@ class SolverSpec extends WordSpec with Matchers {
       val emptyTinyGrid = new Grid(1)
       val emptySmallGrid = new Grid(4)
       val emptyNormalGrid = new Grid(9)
-      val emptyGrids = List(emptyTinyGrid,emptySmallGrid,emptyNormalGrid)
+      val emptyGrids = List(emptyTinyGrid, emptySmallGrid, emptyNormalGrid)
       "solve a Grid without any problems" in {
         for (emptyGrid <- emptyGrids) {
           val (solvable, solvedGrid) = new Solver(emptyGrid).solve
@@ -26,7 +26,7 @@ class SolverSpec extends WordSpec with Matchers {
       val randomTinyGrid = (new GridCreateRandomStrategy).createNewGrid(1)
       val randomSmallGrid = (new GridCreateRandomStrategy).createNewGrid(4)
       val randomNormalGrid = (new GridCreateRandomStrategy).createNewGrid(9)
-      val grids = List(randomTinyGrid,randomSmallGrid,randomNormalGrid)
+      val grids = List(randomTinyGrid, randomSmallGrid, randomNormalGrid)
       "solve a Grid without any problems" in {
         for (grid <- grids) {
           grid.valid should be(true)
@@ -38,6 +38,5 @@ class SolverSpec extends WordSpec with Matchers {
       }
     }
   }
-
 
 }

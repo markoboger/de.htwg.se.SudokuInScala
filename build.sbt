@@ -19,3 +19,4 @@ libraryDependencies += "junit" % "junit" % "4.8" % "test"
 
 libraryDependencies += "com.typesafe.akka" %% "akka-http" % "10.0.0"
 
+libraryDependencies += "io.gatling.highcharts" % "gatling-charts-highcharts" % "2.2.5"

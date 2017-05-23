@@ -1,7 +1,7 @@
 package de.htwg.se.sudoku.model
 
 import org.junit.runner.RunWith
-import org.scalatest.{Matchers, WordSpec}
+import org.scalatest.{ Matchers, WordSpec }
 import org.scalatest.junit.JUnitRunner
 
 @RunWith(classOf[JUnitRunner])
@@ -18,7 +18,7 @@ class HouseSpec extends WordSpec with Matchers {
   }
 
   "A new House with one empty Cell" should {
-    val house = House(Vector( Cell(0)))
+    val house = House(Vector(Cell(0)))
     "be valid" in {
       house.valid should be(true)
     }

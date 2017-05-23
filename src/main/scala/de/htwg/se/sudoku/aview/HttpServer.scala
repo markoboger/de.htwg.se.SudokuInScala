@@ -3,9 +3,9 @@ package de.htwg.se.sudoku.aview
 import akka.actor.ActorSystem
 import akka.http.javadsl.server.directives.RouteDirectives
 import akka.http.scaladsl.Http
-import akka.http.scaladsl.model.{ContentTypes, HttpEntity}
+import akka.http.scaladsl.model.{ ContentTypes, HttpEntity }
 import akka.http.scaladsl.server.Directives._
-import akka.http.scaladsl.server.{Route, StandardRoute}
+import akka.http.scaladsl.server.{ Route, StandardRoute }
 import akka.stream.ActorMaterializer
 import de.htwg.se.sudoku.controller.Controller
 
@@ -45,10 +45,11 @@ class HttpServer(controller: Controller) {
         controller.redo
         gridtoHtml
       } ~
-      path("sudoku" / Segment) { command => {
-        processInputLine(command)
-        gridtoHtml
-      }
+      path("sudoku" / Segment) { command =>
+        {
+          processInputLine(command)
+          gridtoHtml
+        }
       }
   }
 

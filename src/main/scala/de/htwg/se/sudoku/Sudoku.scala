@@ -1,8 +1,8 @@
 package de.htwg.se.sudoku
 
-import de.htwg.se.sudoku.model.{Grid, GridCreateRandomStrategy, Player, Solver}
+import de.htwg.se.sudoku.model.{ Grid, GridCreateRandomStrategy, Player, Solver }
 import de.htwg.se.sudoku.controller.Controller
-import de.htwg.se.sudoku.aview.{HttpServer, Tui}
+import de.htwg.se.sudoku.aview.{ HttpServer, Tui }
 
 import scala.io.StdIn.readLine
 

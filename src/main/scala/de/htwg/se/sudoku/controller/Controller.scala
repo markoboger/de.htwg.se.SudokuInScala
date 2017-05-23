@@ -1,8 +1,8 @@
 package de.htwg.se.sudoku.controller
 
 import de.htwg.se.sudoku.controller.GameStatus._
-import de.htwg.se.sudoku.model.{Grid, GridCreateRandomStrategy}
-import de.htwg.se.sudoku.util.{Observable, UndoManager}
+import de.htwg.se.sudoku.model.{ Grid, GridCreateRandomStrategy }
+import de.htwg.se.sudoku.util.{ Observable, UndoManager }
 
 class Controller(var grid: Grid) extends Observable {
 

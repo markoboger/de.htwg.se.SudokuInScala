@@ -1,7 +1,7 @@
 package de.htwg.se.sudoku.model
 
 import org.junit.runner.RunWith
-import org.scalatest.{Matchers, WordSpec}
+import org.scalatest.{ Matchers, WordSpec }
 import org.scalatest.junit.JUnitRunner
 
 @RunWith(classOf[JUnitRunner])
