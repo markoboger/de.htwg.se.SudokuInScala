@@ -1,0 +1,105 @@
+package de.htwg.se.sudoku.aview
+
+import io.gatling.core.Predef._
+import io.gatling.http.Predef._
+
+class SudokuSimulation extends Simulation {
+
+  val httpProtocol = http
+    .baseURL("http://localhost:8080")
+    .inferHtmlResources()
+    .acceptHeader("text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8")
+    .acceptEncodingHeader("gzip, deflate")
+    .acceptLanguageHeader("en-US,en;q=0.5")
+    .userAgentHeader("Mozilla/5.0 (Macintosh; Intel Mac OS X 10.11; rv:36.0) Gecko/20100101 Firefox/36.0")
+
+  val uri1 = "http://localhost:8080/sudoku"
+
+  object Enter {
+    val solvePaperSudoku = exec(http("Create an empty Sudoko")
+        .get("/sudoku/new"))
+      .pause(2)
+      .exec(http("Copy cells from paper")
+        .get("/sudoku/005"))
+      .exec(http("Copy cells from paper")
+        .get("/sudoku/013"))
+      .exec(http("Copy cells from paper")
+        .get("/sudoku/047"))
+      .exec(http("Copy cells from paper")
+        .get("/sudoku/106"))
+      .exec(http("Copy cells from paper")
+        .get("/sudoku/131"))
+      .exec(http("Copy cells from paper")
+        .get("/sudoku/149"))
+      .exec(http("Copy cells from paper")
+        .get("/sudoku/155"))
+      .exec(http("Copy cells from paper")
+        .get("/sudoku/219"))
+      .exec(http("Copy cells from paper")
+        .get("/sudoku/228"))
+      .exec(http("Copy cells from paper")
+        .get("/sudoku/276"))
+      .exec(http("Copy cells from paper")
+        .get("/sudoku/308"))
+      .exec(http("Copy cells from paper")
+        .get("/sudoku/346"))
+      .exec(http("Copy cells from paper")
+        .get("/sudoku/383"))
+      .exec(http("Copy cells from paper")
+        .get("/sudoku/404"))
+      .exec(http("Copy cells from paper")
+        .get("/sudoku/438"))
+      .exec(http("Copy cells from paper")
+        .get("/sudoku/453"))
+      .exec(http("Copy cells from paper")
+        .get("/sudoku/481"))
+      .exec(http("Copy cells from paper")
+        .get("/sudoku/507"))
+      .exec(http("Copy cells from paper")
+        .get("/sudoku/552"))
+      .exec(http("Copy cells from paper")
+        .get("/sudoku/586"))
+      .exec(http("Copy cells from paper")
+        .get("/sudoku/616"))
+      .exec(http("Copy cells from paper")
+        .get("/sudoku/662"))
+      .exec(http("Copy cells from paper")
+        .get("/sudoku/"))
+      .exec(http("Copy cells from paper")
+        .get("/sudoku/678"))
+      .exec(http("Copy cells from paper")
+        .get("/sudoku/734"))
+      .exec(http("Copy cells from paper")
+        .get("/sudoku/741"))
+      .exec(http("Copy cells from paper")
+        .get("/sudoku/759"))
+      .exec(http("Copy cells from paper")
+        .get("/sudoku/785"))
+      .exec(http("Copy cells from paper")
+        .get("/sudoku/848"))
+      .exec(http("Copy cells from paper")
+        .get("/sudoku/877"))
+      .exec(http("Copy cells from paper")
+        .get("/sudoku/889"))
+      .pause(2)
+      .exec(http("solve paper sudoku")
+        .get("/sudoku/solve"))
+  }
+
+  object Solve {
+    val solveRandomSudoku = exec(http("request_4")
+        .get("/sudoku/new"))
+      .pause(11)
+      .exec(http("request_5")
+        .get("/sudoku/random"))
+      .pause(5)
+      .exec(http("request_6")
+        .get("/sudoku/solve"))
+
+  }
+
+  val scn  = scenario("Enter and Solve").exec(Enter.solvePaperSudoku, Solve.solveRandomSudoku)
+
+  setUp(scn.inject(atOnceUsers(10))).protocols(httpProtocol)
+ // setUp(solveRandomSudok.inject(rampUsers(100) over(10 seconds))).protocols(httpProtocol)
+}
