@@ -14,9 +14,9 @@ class Controller(var grid: GridInterface) extends ControllerInterface{
 
   override def blockSize: Int = 1
 
-  override def createEmptyGrid(size: Int): Unit = {}
+  override def createEmptyGrid: Unit = {}
 
-  override def createNewGrid(size: Int): Unit = {}
+  override def createNewGrid: Unit = {}
 
   override def undo: Unit = {}
 

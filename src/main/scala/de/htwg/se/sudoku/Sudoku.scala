@@ -12,7 +12,7 @@ object Sudoku {
   val controller = injector.getInstance(classOf[ControllerInterface])
   val tui = new Tui(controller)
   val gui = new SwingGui(controller)
-  controller.createNewGrid(9)
+  controller.createNewGrid
 
   def main(args: Array[String]): Unit = {
     var input: String = ""

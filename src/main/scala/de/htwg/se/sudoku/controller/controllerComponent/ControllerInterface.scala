@@ -11,8 +11,8 @@ trait ControllerInterface extends Publisher{
 
   def gridSize:Int
   def blockSize:Int
-  def createEmptyGrid(size:Int):Unit
-  def createNewGrid(size: Int): Unit
+  def createEmptyGrid:Unit
+  def createNewGrid: Unit
   def undo:Unit
   def redo:Unit
   def solve: Unit

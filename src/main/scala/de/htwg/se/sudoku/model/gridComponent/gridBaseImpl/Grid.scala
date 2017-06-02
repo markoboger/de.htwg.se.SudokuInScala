@@ -105,7 +105,7 @@ case class Grid(cells: Matrix[Cell]) extends GridInterface{
     box
   }
 
-  override def createNewGrid(size: Int): GridInterface = (new GridCreateRandomStrategy).createNewGrid(size)
+  override def createNewGrid: GridInterface = (new GridCreateRandomStrategy).createNewGrid(size)
 
   override def solve: (Boolean, GridInterface) = new Solver(this).solve
 }

@@ -61,8 +61,8 @@ class SwingGui(controller: ControllerInterface) extends Frame {
   menuBar = new MenuBar {
     contents += new Menu("File") {
       mnemonic = Key.F
-      contents += new MenuItem(Action("Empty") { controller.createEmptyGrid(controller.gridSize) })
-      contents += new MenuItem(Action("New") { controller.createNewGrid(controller.gridSize) })
+      contents += new MenuItem(Action("Empty") { controller.createEmptyGrid })
+      contents += new MenuItem(Action("New") { controller.createNewGrid })
       contents += new MenuItem(Action("Quit") { System.exit(0) })
     }
     contents += new Menu("Edit") {

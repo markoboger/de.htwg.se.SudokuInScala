@@ -14,7 +14,7 @@ class Grid(var size:Int) extends GridInterface{
 
    def setShowCandidates(row: Int, col: Int): GridInterface = this
 
-   def createNewGrid(size: Int): GridInterface = this
+   def createNewGrid: GridInterface = this
 
    def solve: (Boolean, GridInterface) = (true, this)
 
