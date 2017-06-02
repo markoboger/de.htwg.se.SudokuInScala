@@ -20,3 +20,5 @@ libraryDependencies += "junit" % "junit" % "4.8" % "test"
 libraryDependencies += "org.scala-lang" % "scala-swing" % "2.11+"
 
 libraryDependencies += "com.google.inject" % "guice" % "3.0"
+
+libraryDependencies += "net.codingwell" %% "scala-guice" % "4.1.0"
