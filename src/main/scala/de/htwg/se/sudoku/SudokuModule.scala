@@ -17,6 +17,10 @@ package de.htwg.se.sudoku
       bindConstant().annotatedWith(Names.named("DefaultSize")).to(defaultSize)
       bind[GridInterface].to[Grid]
       bind[ControllerInterface].to[controllerBaseImpl.Controller]
+      bind[GridInterface].annotatedWithName("tiny").toInstance(new Grid(1))
+      bind[GridInterface].annotatedWithName("small").toInstance(new Grid(4))
+      bind[GridInterface].annotatedWithName("normal").toInstance(new Grid(9))
+
     }
 
 }

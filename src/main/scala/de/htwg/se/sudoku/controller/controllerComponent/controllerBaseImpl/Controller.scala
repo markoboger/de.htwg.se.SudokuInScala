@@ -1,11 +1,12 @@
 package de.htwg.se.sudoku.controller.controllerComponent.controllerBaseImpl
 
+import com.google.inject.name.Names
 import com.google.inject.{Guice, Inject}
+import net.codingwell.scalaguice.InjectorExtensions._
 import de.htwg.se.sudoku.SudokuModule
 import de.htwg.se.sudoku.controller.controllerComponent.GameStatus._
 import de.htwg.se.sudoku.controller.controllerComponent._
 import de.htwg.se.sudoku.model.gridComponent.GridInterface
-import de.htwg.se.sudoku.model.gridComponent.gridBaseImpl.Grid
 import de.htwg.se.sudoku.util.UndoManager
 
 import scala.swing.Publisher
@@ -18,18 +19,34 @@ class  Controller @Inject() (var grid: GridInterface) extends ControllerInterfac
   val injector = Guice.createInjector(new SudokuModule)
 
   def createEmptyGrid(size: Int): Unit = {
-    grid = injector.getInstance(classOf[GridInterface])
+    size match {
+      case 1 => grid = injector.instance[GridInterface](Names.named("tiny"))
+      case 4 => grid = injector.instance[GridInterface](Names.named("small"))
+      case 9 => grid = injector.instance[GridInterface](Names.named("normal"))
+      case _ =>
+    }
     publish(new CellChanged)
   }
 
   def resize(newSize:Int) :Unit = {
-    grid = new Grid(newSize)
+    newSize match {
+      case 1 => grid = injector.instance[GridInterface](Names.named("tiny"))
+      case 4 => grid = injector.instance[GridInterface](Names.named("small"))
+      case 9 => grid = injector.instance[GridInterface](Names.named("normal"))
+      case _ =>
+    }
     gameStatus=RESIZE
     publish(new GridSizeChanged(newSize))
   }
 
 
   override def createNewGrid(size: Int): Unit = {
+    size match {
+      case 1 => grid = injector.instance[GridInterface](Names.named("tiny"))
+      case 4 => grid = injector.instance[GridInterface](Names.named("small"))
+      case 9 => grid = injector.instance[GridInterface](Names.named("normal"))
+      case _ =>
+    }
     grid = grid.createNewGrid(size)
     gameStatus = NEW
     publish(new CellChanged)
