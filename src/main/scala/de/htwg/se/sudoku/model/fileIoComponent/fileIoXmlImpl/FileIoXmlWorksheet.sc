@@ -17,7 +17,7 @@ object ioWorksheet {
   val filledGrid = grid.set(0, 0, 1)
   println(filledGrid.toString)
 
-  val fileIO = new FileIOXml(filledGrid)
+  val fileIO = new FileIO(filledGrid)
   val xml = fileIO.gridToXml
 
 }

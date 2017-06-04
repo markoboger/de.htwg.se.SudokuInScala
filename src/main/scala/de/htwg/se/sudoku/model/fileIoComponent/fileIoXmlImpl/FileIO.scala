@@ -4,13 +4,13 @@ import com.google.inject.Guice
 import com.google.inject.name.Names
 import net.codingwell.scalaguice.InjectorExtensions._
 import de.htwg.se.sudoku.SudokuModule
-import de.htwg.se.sudoku.model.fileIoComponent.FileIO
+import de.htwg.se.sudoku.model.fileIoComponent.FileIOInterface
 import de.htwg.se.sudoku.model.gridComponent.GridInterface
-import de.htwg.se.sudoku.model.gridComponent.gridBaseImpl.Grid
+
 
 import scala.xml.{NodeSeq, PrettyPrinter}
 
-class FileIOXml extends FileIO {
+class FileIO extends FileIOInterface {
 
   override def load: GridInterface = {
     var grid: GridInterface = null
