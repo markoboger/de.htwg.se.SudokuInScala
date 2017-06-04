@@ -12,7 +12,7 @@ import de.htwg.se.sudoku.util.UndoManager
 
 import scala.swing.Publisher
 
-class  Controller @Inject() (var grid: GridInterface) extends ControllerInterface with Publisher {
+class  Controller @Inject() (var grid: GridInterface) extends ControllerInterface with Publisher with ControllerIoInterface{
 
   var gameStatus: GameStatus = IDLE
   var showAllCandidates: Boolean = false
@@ -120,4 +120,11 @@ class  Controller @Inject() (var grid: GridInterface) extends ControllerInterfac
     publish(new CellChanged)
   }
 
+  override def setGiven(row: Int, col: Int, value:Int): Unit = {
+    grid = grid.setGiven(row, col, value)
+  }
+
+  override def setShowCandidates(row: Int, col: Int): Unit = {
+    grid = grid.setShowCandidates(row, col)
+  }
 }

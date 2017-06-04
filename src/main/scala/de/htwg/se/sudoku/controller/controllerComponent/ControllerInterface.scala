@@ -11,9 +11,9 @@ trait ControllerInterface extends Publisher {
 
   def blockSize: Int
 
-  def createEmptyGrid(size: Int): Unit
+  def createEmptyGrid: Unit
 
-  def createNewGrid(size: Int): Unit
+  def createNewGrid: Unit
 
   def undo: Unit
 
@@ -54,6 +54,12 @@ trait ControllerInterface extends Publisher {
   def gameStatus: GameStatus
 
   def statusText: String
+}
+
+trait ControllerIoInterface  {
+
+  def setGiven(row:Int, col:Int, value:Int)
+  def setShowCandidates(row:Int, col:Int)
 }
 
 

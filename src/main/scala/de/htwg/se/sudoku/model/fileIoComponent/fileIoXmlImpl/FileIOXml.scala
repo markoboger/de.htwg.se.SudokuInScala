@@ -1,27 +1,38 @@
 package de.htwg.se.sudoku.model.fileIoComponent.fileIoXmlImpl
 
+import com.google.inject.Guice
+import com.google.inject.name.Names
+import net.codingwell.scalaguice.InjectorExtensions._
+import de.htwg.se.sudoku.SudokuModule
 import de.htwg.se.sudoku.model.fileIoComponent.FileIO
 import de.htwg.se.sudoku.model.gridComponent.GridInterface
 import de.htwg.se.sudoku.model.gridComponent.gridBaseImpl.Grid
 
 import scala.xml.{NodeSeq, PrettyPrinter}
 
-class FileIOXml(grid:GridInterface) extends FileIO {
+class FileIOXml(var grid:GridInterface) extends FileIO {
 
   override def load: GridInterface = {
     val file = scala.xml.XML.loadFile("grid.xml")
     val sizeAttr = (file \\ "grid" \ "@size")
     val size = sizeAttr.text.toInt
-    var grid = new Grid(size)
-
+    val injector = Guice.createInjector(new SudokuModule)
+    size match {
+      case 1 => grid = injector.instance[GridInterface](Names.named("tiny"))
+      case 4 => grid = injector.instance[GridInterface](Names.named("small"))
+      case 9 => grid = injector.instance[GridInterface](Names.named("normal"))
+      case _ =>
+    }
     val cellNodes= (file \\ "cell")
     for (cell <- cellNodes) {
       val row:Int = (cell \ "@row").text.toInt
       val col:Int = (cell \ "@col").text.toInt
       val value:Int = cell.text.trim.toInt
       grid = grid.set(row, col, value)
-
-      println("row =" + row + " col= "+ col + " value =" + value)
+      val given = (cell \ "@given").text.toBoolean
+      val showCandidates = (cell \ "@showCandidates").text.toBoolean
+      if (given) grid = grid.setGiven(row, col, value)
+      if (showCandidates) grid = grid.setShowCandidates(row, col)
     }
     grid
   }
@@ -57,6 +68,4 @@ class FileIOXml(grid:GridInterface) extends FileIO {
     </cell>
   }
 
-  def xmlToGrid = ???
-  def xmlToCell = ???
 }

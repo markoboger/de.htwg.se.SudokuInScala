@@ -1,6 +1,7 @@
 package de.htwg.se.sudoku
 
 import com.google.inject.Guice
+import com.google.inject.name.Names
 import de.htwg.se.sudoku.aview.Tui
 import de.htwg.se.sudoku.aview.gui.SwingGui
 import de.htwg.se.sudoku.controller.controllerComponent.ControllerInterface

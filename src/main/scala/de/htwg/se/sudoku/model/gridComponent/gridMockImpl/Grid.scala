@@ -33,6 +33,8 @@ class Grid(var size:Int) extends GridInterface{
    def markFilledCellsAsGiven: GridInterface = this
 
    def isSymmetric:Boolean = true
+
+  override def setGiven(row: Int, col: Int, value: Int): GridInterface = this
 }
 
 object EmptyCell extends CellInterface {

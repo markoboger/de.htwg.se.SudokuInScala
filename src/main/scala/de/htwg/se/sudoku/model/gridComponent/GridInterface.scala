@@ -19,6 +19,7 @@ trait GridInterface {
   def available(row: Int, col: Int): Set[Int]
   def indexToRowCol(index: Int):(Int, Int)
   def markFilledCellsAsGiven:GridInterface
+  def setGiven(row:Int, col:Int, value:Int):GridInterface
 
 }
 
