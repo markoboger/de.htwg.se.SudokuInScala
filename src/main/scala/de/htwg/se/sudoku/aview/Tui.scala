@@ -20,6 +20,8 @@ class Tui(controller: ControllerInterface) extends Reactor{
       case "z" => controller.undo
       case "y" => controller.redo
       case "s" => controller.solve
+      case "f" => controller.save
+      case "l" => controller.load
       case "." => controller.resize(1)
       case "+" => controller.resize(4)
       case "#" => controller.resize(9)

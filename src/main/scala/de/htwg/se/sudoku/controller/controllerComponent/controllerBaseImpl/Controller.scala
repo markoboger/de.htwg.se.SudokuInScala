@@ -4,6 +4,7 @@ import com.google.inject.{Guice, Inject}
 import de.htwg.se.sudoku.SudokuModule
 import de.htwg.se.sudoku.controller.controllerComponent.GameStatus._
 import de.htwg.se.sudoku.controller.controllerComponent._
+import de.htwg.se.sudoku.model.fileIoComponent.fileIoXmlImpl.FileIOXml
 import de.htwg.se.sudoku.model.gridComponent.GridInterface
 import de.htwg.se.sudoku.model.gridComponent.gridBaseImpl.Grid
 import de.htwg.se.sudoku.util.UndoManager
@@ -46,6 +47,20 @@ class  Controller @Inject() (var grid: GridInterface) extends ControllerInterfac
   def solve: Unit = {
     undoManager.doStep(new SolveCommand(this))
     gameStatus = SOLVED
+    publish(new CellChanged)
+  }
+
+  def save: Unit = {
+    val fileIo = new FileIOXml(grid)
+    fileIo.save
+    gameStatus = SAVED
+    publish(new CellChanged)
+  }
+
+  def load: Unit = {
+    val fileIo = new FileIOXml(grid)
+    grid = fileIo.load
+    gameStatus = LOADED
     publish(new CellChanged)
   }
 

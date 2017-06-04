@@ -53,4 +53,8 @@ class Controller(var grid: GridInterface) extends ControllerInterface{
   override def gameStatus: GameStatus = IDLE
 
   override def statusText: String = GameStatus.message(gameStatus)
+
+  override def save: Unit = {}
+
+  override def load: Unit = {}
 }
