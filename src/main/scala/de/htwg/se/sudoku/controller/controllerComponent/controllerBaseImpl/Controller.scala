@@ -6,6 +6,7 @@ import net.codingwell.scalaguice.InjectorExtensions._
 import de.htwg.se.sudoku.SudokuModule
 import de.htwg.se.sudoku.controller.controllerComponent.GameStatus._
 import de.htwg.se.sudoku.controller.controllerComponent._
+import de.htwg.se.sudoku.model.fileIoComponent.fileIoJsonImpl.FileIOJson
 import de.htwg.se.sudoku.model.fileIoComponent.fileIoXmlImpl.FileIOXml
 import de.htwg.se.sudoku.model.gridComponent.GridInterface
 import de.htwg.se.sudoku.util.UndoManager
@@ -68,14 +69,14 @@ class  Controller @Inject() (var grid: GridInterface) extends ControllerInterfac
   }
 
   def save: Unit = {
-    val fileIo = new FileIOXml(grid)
-    fileIo.save
+    val fileIo = new FileIOJson
+    fileIo.save(grid)
     gameStatus = SAVED
     publish(new CellChanged)
   }
 
   def load: Unit = {
-    val fileIo = new FileIOXml(grid)
+    val fileIo = new FileIOXml
     grid = fileIo.load
     gameStatus = LOADED
     publish(new CellChanged)

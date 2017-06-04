@@ -10,9 +10,10 @@ import de.htwg.se.sudoku.model.gridComponent.gridBaseImpl.Grid
 
 import scala.xml.{NodeSeq, PrettyPrinter}
 
-class FileIOXml(var grid:GridInterface) extends FileIO {
+class FileIOXml extends FileIO {
 
   override def load: GridInterface = {
+    var grid: GridInterface = null
     val file = scala.xml.XML.loadFile("grid.xml")
     val sizeAttr = (file \\ "grid" \ "@size")
     val size = sizeAttr.text.toInt
@@ -37,32 +38,32 @@ class FileIOXml(var grid:GridInterface) extends FileIO {
     grid
   }
 
-  def save:Unit = saveString
+  def save(grid:GridInterface):Unit = saveString(grid)
 
-  def saveXML:Unit = {
-    scala.xml.XML.save("grid.xml", gridToXml)
+  def saveXML(grid:GridInterface):Unit = {
+    scala.xml.XML.save("grid.xml", gridToXml(grid))
   }
 
-  def saveString: Unit = {
+  def saveString(grid:GridInterface): Unit = {
     import java.io._
     val pw = new PrintWriter(new File("grid.xml" ))
     val prettyPrinter = new PrettyPrinter(120,4)
-    val xml = prettyPrinter.format(gridToXml)
+    val xml = prettyPrinter.format(gridToXml(grid))
     pw.write(xml)
     pw.close
   }
-  def gridToXml = {
+  def gridToXml(grid:GridInterface) = {
     <grid size ={grid.size.toString}>
       {
       for {
         row <- 0 until grid.size
         col <- 0 until grid.size
-      } yield cellToXml(row, col)
+      } yield cellToXml(grid, row, col)
       }
     </grid>
   }
 
-  def cellToXml(row:Int, col:Int) ={
+  def cellToXml(grid:GridInterface, row:Int, col:Int) ={
     <cell row ={row.toString} col={col.toString} given={grid.cell(row,col).given.toString} isHighlighted={grid.isHighlighted(row,col).toString} showCandidates={grid.cell(row, col).showCandidates.toString}>
       {grid.cell(row,col).value}
     </cell>

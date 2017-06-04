@@ -6,6 +6,6 @@ import de.htwg.se.sudoku.model.gridComponent.GridInterface
 trait FileIO {
 
   def load:GridInterface
-  def save:Unit
+  def save(grid:GridInterface):Unit
 
 }
