@@ -15,8 +15,8 @@ class Tui(controller: ControllerInterface) extends Reactor{
   def processInputLine(input: String):Unit = {
     input match {
       case "q" =>
-      case "e" => controller.createEmptyGrid(size)
-      case "n" => controller.createNewGrid(size)
+      case "e" => controller.createEmptyGrid
+      case "n" => controller.createNewGrid
       case "z" => controller.undo
       case "y" => controller.redo
       case "s" => controller.solve

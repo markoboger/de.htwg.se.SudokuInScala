@@ -7,7 +7,7 @@ trait GridInterface {
   def reset(row:Int, col:Int): GridInterface
   def highlight(index: Int):GridInterface
   def setShowCandidates(row: Int, col: Int): GridInterface
-  def createNewGrid(size:Int):GridInterface
+  def createNewGrid:GridInterface
   def solve:(Boolean, GridInterface)
   def valid:Boolean
   def isSymmetric:Boolean

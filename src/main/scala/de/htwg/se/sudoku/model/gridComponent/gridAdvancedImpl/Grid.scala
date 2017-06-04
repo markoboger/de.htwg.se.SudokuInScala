@@ -10,7 +10,7 @@ import scala.collection.immutable
 
 class Grid @Inject() ( @Named("DefaultSize") size:Int) extends BaseGrid(size){
 
-  override def createNewGrid(size:Int):GridInterface = (new GridCreateSymmetricStrategy).createNewGrid(size)
+  override def createNewGrid:GridInterface = (new GridCreateSymmetricStrategy).createNewGrid(size)
 
 }
 
