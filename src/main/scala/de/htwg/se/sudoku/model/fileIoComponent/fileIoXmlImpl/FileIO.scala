@@ -7,8 +7,7 @@ import de.htwg.se.sudoku.SudokuModule
 import de.htwg.se.sudoku.model.fileIoComponent.FileIOInterface
 import de.htwg.se.sudoku.model.gridComponent.GridInterface
 
-
-import scala.xml.{NodeSeq, PrettyPrinter}
+import scala.xml.{ NodeSeq, PrettyPrinter }
 
 class FileIO extends FileIOInterface {
 
@@ -24,11 +23,11 @@ class FileIO extends FileIOInterface {
       case 9 => grid = injector.instance[GridInterface](Names.named("normal"))
       case _ =>
     }
-    val cellNodes= (file \\ "cell")
+    val cellNodes = (file \\ "cell")
     for (cell <- cellNodes) {
-      val row:Int = (cell \ "@row").text.toInt
-      val col:Int = (cell \ "@col").text.toInt
-      val value:Int = cell.text.trim.toInt
+      val row: Int = (cell \ "@row").text.toInt
+      val col: Int = (cell \ "@col").text.toInt
+      val value: Int = cell.text.trim.toInt
       grid = grid.set(row, col, value)
       val given = (cell \ "@given").text.toBoolean
       val showCandidates = (cell \ "@showCandidates").text.toBoolean
@@ -38,34 +37,34 @@ class FileIO extends FileIOInterface {
     grid
   }
 
-  def save(grid:GridInterface):Unit = saveString(grid)
+  def save(grid: GridInterface): Unit = saveString(grid)
 
-  def saveXML(grid:GridInterface):Unit = {
+  def saveXML(grid: GridInterface): Unit = {
     scala.xml.XML.save("grid.xml", gridToXml(grid))
   }
 
-  def saveString(grid:GridInterface): Unit = {
+  def saveString(grid: GridInterface): Unit = {
     import java.io._
-    val pw = new PrintWriter(new File("grid.xml" ))
-    val prettyPrinter = new PrettyPrinter(120,4)
+    val pw = new PrintWriter(new File("grid.xml"))
+    val prettyPrinter = new PrettyPrinter(120, 4)
     val xml = prettyPrinter.format(gridToXml(grid))
     pw.write(xml)
     pw.close
   }
-  def gridToXml(grid:GridInterface) = {
-    <grid size ={grid.size.toString}>
+  def gridToXml(grid: GridInterface) = {
+    <grid size={ grid.size.toString }>
       {
-      for {
-        row <- 0 until grid.size
-        col <- 0 until grid.size
-      } yield cellToXml(grid, row, col)
+        for {
+          row <- 0 until grid.size
+          col <- 0 until grid.size
+        } yield cellToXml(grid, row, col)
       }
     </grid>
   }
 
-  def cellToXml(grid:GridInterface, row:Int, col:Int) ={
-    <cell row ={row.toString} col={col.toString} given={grid.cell(row,col).given.toString} isHighlighted={grid.isHighlighted(row,col).toString} showCandidates={grid.cell(row, col).showCandidates.toString}>
-      {grid.cell(row,col).value}
+  def cellToXml(grid: GridInterface, row: Int, col: Int) = {
+    <cell row={ row.toString } col={ col.toString } given={ grid.cell(row, col).given.toString } isHighlighted={ grid.isHighlighted(row, col).toString } showCandidates={ grid.cell(row, col).showCandidates.toString }>
+      { grid.cell(row, col).value }
     </cell>
   }
 

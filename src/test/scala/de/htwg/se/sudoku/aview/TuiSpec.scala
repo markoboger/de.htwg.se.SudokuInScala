@@ -3,11 +3,11 @@ package de.htwg.se.sudoku.aview
 import de.htwg.se.sudoku.controller.controllerComponent.controllerBaseImpl.Controller
 import de.htwg.se.sudoku.model.gridComponent.gridBaseImpl.Grid
 import org.junit.runner.RunWith
-import org.scalatest.{Matchers, WordSpec}
+import org.scalatest.{ Matchers, WordSpec }
 import org.scalatest.junit.JUnitRunner
 
 @RunWith(classOf[JUnitRunner])
-class TuiSpec  extends WordSpec with Matchers{
+class TuiSpec extends WordSpec with Matchers {
 
   "A Sudoku Tui" should {
     val controller = new Controller(new Grid(9))
@@ -18,7 +18,7 @@ class TuiSpec  extends WordSpec with Matchers{
     }
     "set a cell on input '123'" in {
       tui.processInputLine("123")
-      controller.grid.cell(1,2).value should be(3)
+      controller.grid.cell(1, 2).value should be(3)
     }
     "create a new Sudoku on input 'n'" in {
       tui.processInputLine("n")

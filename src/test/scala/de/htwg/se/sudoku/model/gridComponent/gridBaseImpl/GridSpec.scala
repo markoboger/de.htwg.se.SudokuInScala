@@ -2,7 +2,7 @@ package de.htwg.se.sudoku.model.gridComponent.gridBaseImpl
 
 import org.junit.runner.RunWith
 import org.scalatest.junit.JUnitRunner
-import org.scalatest.{Matchers, WordSpec}
+import org.scalatest.{ Matchers, WordSpec }
 
 @RunWith(classOf[JUnitRunner])
 class GridSpec extends WordSpec with Matchers {
@@ -78,22 +78,22 @@ class GridSpec extends WordSpec with Matchers {
     }
     "set with one value" should {
       val smallGrid = new Grid(4)
-      val setGrid = smallGrid.set(0,0,1)
+      val setGrid = smallGrid.set(0, 0, 1)
       "have that one cell set" in {
-        setGrid.cell(0,0).isSet should be(true)
-        setGrid.cell(0,1).isSet should be(false)
+        setGrid.cell(0, 0).isSet should be(true)
+        setGrid.cell(0, 1).isSet should be(false)
       }
       "have available candidates" in {
-        setGrid.available(0,1).contains(1) should be(false)
-        setGrid.available(0,1).contains(2) should be(true)
+        setGrid.available(0, 1).contains(1) should be(false)
+        setGrid.available(0, 1).contains(2) should be(true)
       }
     }
     "when highlighted" should {
       val smallGrid = new Grid(4)
-      val setGrid = smallGrid.set(0,0,1)
+      val setGrid = smallGrid.set(0, 0, 1)
       val highlightedGrid = setGrid.highlight(2)
       "have highlighted cells" in {
-        highlightedGrid.cell(1,1).isHighlighted should be(true)
+        highlightedGrid.cell(1, 1).isHighlighted should be(true)
       }
     }
   }
