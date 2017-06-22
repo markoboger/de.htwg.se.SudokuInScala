@@ -75,8 +75,17 @@ class  Controller @Inject() (var grid: GridInterface) extends ControllerInterfac
   }
 
   def load: Unit = {
-    grid = fileIo.load
-    gameStatus = LOADED
+    val gridOption = fileIo.load
+    gridOption match {
+      case None => {
+        createEmptyGrid
+        gameStatus = COULDNOTLOAD
+      }
+      case Some(_grid) => {
+        grid = _grid
+        gameStatus = LOADED
+      }
+    }
     publish(new CellChanged)
   }
 

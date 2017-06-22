@@ -12,30 +12,37 @@ import scala.xml.{NodeSeq, PrettyPrinter}
 
 class FileIO extends FileIOInterface {
 
-  override def load: GridInterface = {
-    var grid: GridInterface = null
+  override def load: Option[GridInterface] = {
+    var gridOption: Option[GridInterface] = None
     val file = scala.xml.XML.loadFile("grid.xml")
     val sizeAttr = (file \\ "grid" \ "@size")
     val size = sizeAttr.text.toInt
     val injector = Guice.createInjector(new SudokuModule)
     size match {
-      case 1 => grid = injector.instance[GridInterface](Names.named("tiny"))
-      case 4 => grid = injector.instance[GridInterface](Names.named("small"))
-      case 9 => grid = injector.instance[GridInterface](Names.named("normal"))
+      case 1 => gridOption = Some(injector.instance[GridInterface](Names.named("tiny")))
+      case 4 => gridOption = Some(injector.instance[GridInterface](Names.named("small")))
+      case 9 => gridOption = Some(injector.instance[GridInterface](Names.named("normal")))
       case _ =>
     }
     val cellNodes= (file \\ "cell")
-    for (cell <- cellNodes) {
-      val row:Int = (cell \ "@row").text.toInt
-      val col:Int = (cell \ "@col").text.toInt
-      val value:Int = cell.text.trim.toInt
-      grid = grid.set(row, col, value)
-      val given = (cell \ "@given").text.toBoolean
-      val showCandidates = (cell \ "@showCandidates").text.toBoolean
-      if (given) grid = grid.setGiven(row, col, value)
-      if (showCandidates) grid = grid.setShowCandidates(row, col)
+    gridOption match {
+      case Some(grid)=> {
+        var _grid = grid
+        for (cell <- cellNodes) {
+          val row: Int = (cell \ "@row").text.toInt
+          val col: Int = (cell \ "@col").text.toInt
+          val value: Int = cell.text.trim.toInt
+          _grid = _grid.set(row, col, value)
+          val given = (cell \ "@given").text.toBoolean
+          val showCandidates = (cell \ "@showCandidates").text.toBoolean
+          if (given) _grid = _grid.setGiven(row, col, value)
+          if (showCandidates) _grid = _grid.setShowCandidates(row, col)
+        }
+        gridOption = Some(_grid)
+      }
+      case None =>
     }
-    grid
+    gridOption
   }
 
   def save(grid:GridInterface):Unit = saveString(grid)
