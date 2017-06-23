@@ -24,3 +24,7 @@ libraryDependencies += "com.google.inject" % "guice" % "3.0"
 libraryDependencies += "net.codingwell" %% "scala-guice" % "4.1.0"
 
 libraryDependencies += "com.typesafe.play" %% "play-json" % "2.5.15"
+
+libraryDependencies += "com.typesafe.scala-logging" %% "scala-logging" % "3.5.0"
+
+libraryDependencies += "ch.qos.logback" % "logback-classic" % "1.1.7"
