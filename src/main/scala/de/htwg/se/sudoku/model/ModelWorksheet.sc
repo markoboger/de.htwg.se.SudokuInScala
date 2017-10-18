@@ -1,4 +1,5 @@
-import de.htwg.se.sudoku.model._
+import de.htwg.se.sudoku.model.gridComponent.gridAdvancedImpl._
+import de.htwg.se.sudoku.model.gridComponent.gridBaseImpl.Cell
 
 object ModelWorksheet {
 
