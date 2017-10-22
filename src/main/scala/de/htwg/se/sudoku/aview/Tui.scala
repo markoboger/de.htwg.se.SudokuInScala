@@ -1,5 +1,6 @@
 package de.htwg.se.sudoku.aview
 
+import com.typesafe.scalalogging.{LazyLogging, Logger}
 import de.htwg.se.sudoku.controller.controllerComponent.ControllerInterface
 import de.htwg.se.sudoku.controller.controllerComponent.GameStatus
 import de.htwg.se.sudoku.controller.controllerComponent.{CandidatesChanged, CellChanged, GridSizeChanged}
@@ -7,7 +8,7 @@ import de.htwg.se.sudoku.controller.controllerComponent.{CandidatesChanged, Cell
 import scala.swing.Reactor
 import scala.swing.event.Event
 
-class Tui(controller: ControllerInterface) extends Reactor{
+class Tui(controller: ControllerInterface) extends Reactor with LazyLogging{
 
   listenTo(controller)
   def size = controller.gridSize
@@ -43,12 +44,12 @@ class Tui(controller: ControllerInterface) extends Reactor{
   }
 
   def printTui: Unit = {
-    println(controller.gridToString)
-    println(GameStatus.message(controller.gameStatus))
+    logger.info(controller.gridToString)
+    logger.info(GameStatus.message(controller.gameStatus))
   }
 
   def printCandidates: Unit = {
-    println("Candidates: ")
+    logger.info("Candidates: ")
     for (row <- 0 until size; col <- 0 until size) {
       if (controller.isShowCandidates(row, col)) println("("+row+","+col+"):"+controller.available(row, col).toList.sorted)
     }
