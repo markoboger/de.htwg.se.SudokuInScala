@@ -5,6 +5,7 @@ import de.htwg.se.sudoku.controller.controllerComponent.GameStatus
 import de.htwg.se.sudoku.controller.controllerComponent.{CandidatesChanged, CellChanged, GridSizeChanged}
 
 import scala.swing.Reactor
+import scala.swing.event.Event
 
 class Tui(controller: ControllerInterface) extends Reactor{
 

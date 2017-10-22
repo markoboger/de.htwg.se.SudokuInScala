@@ -52,6 +52,15 @@ class FileIO extends FileIOInterface {
     pw.close
   }
 
+
+  implicit val cellWrites = new Writes[CellInterface] {
+    def writes(cell: CellInterface) = Json.obj(
+      "value" -> cell.value,
+      "given" -> cell.given,
+      "showCandidates" -> cell.showCandidates
+    )
+  }
+
   def gridToJson(grid: GridInterface) = {
     Json.obj(
       "grid" -> Json.obj(
@@ -69,12 +78,6 @@ class FileIO extends FileIOInterface {
     )
   }
 
-  implicit val cellWrites = new Writes[CellInterface] {
-    def writes(cell: CellInterface) = Json.obj(
-      "value" -> cell.value,
-      "given" -> cell.given,
-      "showCandidates" -> cell.showCandidates
-    )
-  }
+
 
 }

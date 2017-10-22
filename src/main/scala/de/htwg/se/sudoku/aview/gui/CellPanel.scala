@@ -2,10 +2,10 @@ package de.htwg.se.sudoku.aview.gui
 
 import scala.swing._
 import scala.swing.event._
-
 import de.htwg.se.sudoku.controller.controllerComponent.{CellChanged, ControllerInterface}
+import de.htwg.se.sudoku.util.Observer
 
-class CellPanel(row: Int, column: Int, controller: ControllerInterface) extends FlowPanel {
+class CellPanel(row: Int, column: Int, controller: ControllerInterface) extends FlowPanel with Observer{
 
   val givenCellColor = new Color(200, 200, 255)
   val cellColor = new Color(224, 224, 255)
@@ -27,7 +27,7 @@ class CellPanel(row: Int, column: Int, controller: ControllerInterface) extends 
     background = if (controller.isGiven(row, column)) givenCellColor else cellColor
     border = Swing.BeveledBorder(Swing.Raised)
     listenTo(mouse.clicks)
-    listenTo(controller)
+    //controller.add(self)
     reactions += {
       case e: CellChanged => {
         label.text = cellText(row, column)
@@ -49,7 +49,7 @@ class CellPanel(row: Int, column: Int, controller: ControllerInterface) extends 
         background = cellColor
         border = Swing.BeveledBorder(Swing.Raised)
         listenTo(mouse.clicks)
-        listenTo(controller)
+        //listenTo(controller)
         reactions += {
           case e: CellChanged => {
             text = if (controller.available(row, column).contains(value)) value.toString else " "
@@ -85,5 +85,7 @@ class CellPanel(row: Int, column: Int, controller: ControllerInterface) extends 
   def setBackground(p: Panel) = p.background = if (controller.isGiven(row, column)) givenCellColor
   else if (controller.isHighlighted(row, column)) highlightedCellColor
   else cellColor
+
+  override def update: Unit = repaint()
 
 }

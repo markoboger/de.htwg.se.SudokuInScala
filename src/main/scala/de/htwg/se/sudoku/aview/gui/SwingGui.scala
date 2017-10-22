@@ -1,6 +1,8 @@
 package de.htwg.se.sudoku.aview.gui
 
+
 import de.htwg.se.sudoku.controller.controllerComponent.{CandidatesChanged, CellChanged, ControllerInterface, GridSizeChanged}
+import de.htwg.se.sudoku.util.Observer
 
 import scala.swing._
 import scala.swing.Swing.LineBorder
@@ -8,7 +10,7 @@ import scala.swing.event._
 
 class CellClicked(val row: Int, val column: Int) extends Event
 
-class SwingGui(controller: ControllerInterface) extends Frame {
+class SwingGui(controller: ControllerInterface) extends Frame with Observer{
 
   listenTo(controller)
 
@@ -117,4 +119,6 @@ class SwingGui(controller: ControllerInterface) extends Frame {
     statusline.text = controller.statusText
     repaint
   }
+
+  override def update: Unit = redraw
 }

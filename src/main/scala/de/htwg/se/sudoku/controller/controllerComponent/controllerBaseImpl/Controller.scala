@@ -10,9 +10,8 @@ import de.htwg.se.sudoku.model.fileIoComponent.FileIOInterface
 import de.htwg.se.sudoku.model.gridComponent.GridInterface
 import de.htwg.se.sudoku.util.UndoManager
 
-import scala.swing.Publisher
 
-class  Controller @Inject() (var grid: GridInterface) extends ControllerInterface with Publisher with ControllerIoInterface{
+class  Controller @Inject() (var grid: GridInterface) extends ControllerInterface with ControllerIoInterface{
 
   var gameStatus: GameStatus = IDLE
   var showAllCandidates: Boolean = false

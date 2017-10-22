@@ -57,4 +57,5 @@ class Controller(var grid: GridInterface) extends ControllerInterface{
   override def save: Unit = {}
 
   override def load: Unit = {}
+
 }

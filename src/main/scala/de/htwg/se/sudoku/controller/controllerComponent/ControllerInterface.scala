@@ -5,6 +5,7 @@ import de.htwg.se.sudoku.model.gridComponent.CellInterface
 
 import scala.swing.Publisher
 
+
 trait ControllerInterface extends Publisher {
 
   def gridSize: Int
@@ -54,6 +55,8 @@ trait ControllerInterface extends Publisher {
   def gameStatus: GameStatus
 
   def statusText: String
+
+
 }
 
 trait ControllerIoInterface  {
