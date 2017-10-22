@@ -3,9 +3,8 @@ package de.htwg.se.sudoku.aview.gui
 import scala.swing._
 import scala.swing.event._
 import de.htwg.se.sudoku.controller.controllerComponent.{CellChanged, ControllerInterface}
-import de.htwg.se.sudoku.util.Observer
 
-class CellPanel(row: Int, column: Int, controller: ControllerInterface) extends FlowPanel with Observer{
+class CellPanel(row: Int, column: Int, controller: ControllerInterface) extends FlowPanel {
 
   val givenCellColor = new Color(200, 200, 255)
   val cellColor = new Color(224, 224, 255)
@@ -85,7 +84,5 @@ class CellPanel(row: Int, column: Int, controller: ControllerInterface) extends 
   def setBackground(p: Panel) = p.background = if (controller.isGiven(row, column)) givenCellColor
   else if (controller.isHighlighted(row, column)) highlightedCellColor
   else cellColor
-
-  override def update: Unit = repaint()
 
 }
