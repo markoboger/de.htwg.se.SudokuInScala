@@ -1,13 +1,14 @@
-package de.htwg.se.sudoku.model
+import de.htwg.se.sudoku.model.Grid
 
-object ModelWorksheet {
+1+2
 
-  val grid1:Grid = new Grid(4)
+val grid1 = new Grid(4)
 
-  grid1.cell(0, 0).isSet
-  val grid2:Grid = grid1.set(0, 0, 1)
-  grid2.cell(0, 0).isSet
-  grid2.row(0)
-  grid2.col(0)
-  grid2.block(0)
-}
+grid1.cell(0, 0).isSet
+val grid2 = grid1.set(0, 0, 1)
+grid2.cell(0, 0).isSet
+grid2.row(0)
+grid2.col(0)
+grid2.block(0)
+
+
