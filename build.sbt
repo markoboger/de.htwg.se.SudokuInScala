@@ -1,32 +1,22 @@
 name          := "Sudoku in Scala"
 organization  := "de.htwg.se"
-version       := "0.0.1"
-scalaVersion  := "2.11.8"
-scalacOptions := Seq("-unchecked", "-feature", "-deprecation", "-encoding", "utf8")
+version       := "0.1.0"
+scalaVersion  := "2.12.4"
 
-resolvers += Resolver.jcenterRepo
-
-libraryDependencies ++= {
-  val scalaTestV       = "3.0.1"
-  val scalaMockV       = "3.2.2"
-  Seq(
-    "org.scalatest" %% "scalatest"                   % scalaTestV       % "test",
-    "org.scalamock" %% "scalamock-scalatest-support" % scalaMockV       % "test"
-  )
-}
+libraryDependencies += "org.scalatest" %% "scalatest" % "3.0.4" % "test"
 
 libraryDependencies += "junit" % "junit" % "4.8" % "test"
 
-libraryDependencies += "org.scala-lang.modules" %% "scala-xml" % "1.0.6"
+//*******************************************************************************//
+//Libraries that we will use in later lectures compatible with this scala version
+// uncomment to use!!
 
-libraryDependencies += "org.scala-lang" % "scala-swing" % "2.11+"
+libraryDependencies += "org.scala-lang.modules" % "scala-swing_2.12" % "2.0.1"
 
-libraryDependencies += "com.google.inject" % "guice" % "3.0"
+//libraryDependencies += "com.google.inject" % "guice" % "4.1.0"
 
-libraryDependencies += "net.codingwell" %% "scala-guice" % "4.1.0"
+//libraryDependencies += "net.codingwell" %% "scala-guice" % "4.1.0"
 
-libraryDependencies += "com.typesafe.play" %% "play-json" % "2.5.15"
+//libraryDependencies += "org.scala-lang.modules" % "scala-xml_2.12" % "1.0.6"
 
-libraryDependencies += "com.typesafe.scala-logging" %% "scala-logging" % "3.5.0"
-
-libraryDependencies += "ch.qos.logback" % "logback-classic" % "1.1.7"
+//libraryDependencies += "com.typesafe.play" %% "play-json" % "2.6.6"
