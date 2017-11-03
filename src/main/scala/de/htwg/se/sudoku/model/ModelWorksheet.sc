@@ -1,3 +1,4 @@
+
 import de.htwg.se.sudoku.model.Grid
 
 1+2
@@ -10,5 +11,6 @@ grid2.cell(0, 0).isSet
 grid2.row(0)
 grid2.col(0)
 grid2.block(0)
+
 
 
