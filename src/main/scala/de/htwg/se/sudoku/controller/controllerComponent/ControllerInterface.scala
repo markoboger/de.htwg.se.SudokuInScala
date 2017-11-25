@@ -2,6 +2,7 @@ package de.htwg.se.sudoku.controller.controllerComponent
 
 import de.htwg.se.sudoku.controller.controllerComponent.GameStatus.GameStatus
 import de.htwg.se.sudoku.model.gridComponent.CellInterface
+import play.api.libs.json.JsValue
 
 import scala.swing.Publisher
 
@@ -56,6 +57,7 @@ trait ControllerInterface extends Publisher {
 
   def statusText: String
 
+  def toJson:JsValue
 
 }
 

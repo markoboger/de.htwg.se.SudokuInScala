@@ -1,6 +1,7 @@
 package de.htwg.se.sudoku.model.gridComponent.gridBaseImpl
 
-import de.htwg.se.sudoku.model.gridComponent.GridInterface
+import de.htwg.se.sudoku.model.gridComponent.{CellInterface, GridInterface}
+import play.api.libs.json.{JsNumber, JsValue, Json, Writes}
 
 import scala.math.sqrt
 
@@ -103,6 +104,31 @@ case class Grid(cells: Matrix[Cell]) extends GridInterface{
       col <- 0 until size
     } box = box.replaceFirst("x ", cell(row, col).toString)
     box
+  }
+
+  implicit val cellWrites = new Writes[CellInterface] {
+    def writes(cell: CellInterface) = Json.obj(
+      "value" -> cell.value,
+      "given" -> cell.given,
+      "showCandidates" -> cell.showCandidates
+    )
+  }
+
+  def toJson:JsValue = {
+    Json.obj(
+      "grid" -> Json.obj(
+        "size" -> JsNumber(size),
+        "cells" -> Json.toJson(
+          for {row <- 0 until size;
+               col <- 0 until size} yield {
+            Json.obj(
+              "row" -> row,
+              "col" -> col,
+              "cell" -> Json.toJson(cell(row, col)))
+          }
+        )
+      )
+    )
   }
 
   override def createNewGrid: GridInterface = (new GridCreateRandomStrategy).createNewGrid(size)

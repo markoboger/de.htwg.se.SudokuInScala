@@ -73,6 +73,9 @@ class  Controller @Inject() (var grid: GridInterface) extends ControllerInterfac
     publish(new CellChanged)
   }
 
+  def toJson = grid.toJson
+
+
   def load: Unit = {
     val gridOption = fileIo.load
     gridOption match {
