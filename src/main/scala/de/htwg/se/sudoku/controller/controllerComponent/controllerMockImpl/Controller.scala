@@ -1,12 +1,13 @@
 package de.htwg.se.sudoku.controller.controllerComponent.controllerMockImpl
 
-import de.htwg.se.sudoku.controller.controllerComponent.{ ControllerInterface, GameStatus }
+import de.htwg.se.sudoku.controller.controllerComponent.{ControllerInterface, GameStatus}
 import de.htwg.se.sudoku.controller.controllerComponent.GameStatus.GameStatus
-import de.htwg.se.sudoku.model.gridComponent.{ CellInterface, GridInterface }
+import de.htwg.se.sudoku.model.gridComponent.{CellInterface, GridInterface}
 import de.htwg.se.sudoku.model.gridComponent.gridMockImpl.Grid
 import de.htwg.se.sudoku.controller.controllerComponent.GameStatus._
+import play.api.libs.json.JsValue
 
-class Controller(var grid: GridInterface) extends ControllerInterface {
+class Controller(var grid: GridInterface) extends ControllerInterface{
 
   grid = new Grid(1)
 
@@ -57,4 +58,7 @@ class Controller(var grid: GridInterface) extends ControllerInterface {
   override def save: Unit = {}
 
   override def load: Unit = {}
+
+  override def toJson: JsValue = grid.toJson()
+
 }

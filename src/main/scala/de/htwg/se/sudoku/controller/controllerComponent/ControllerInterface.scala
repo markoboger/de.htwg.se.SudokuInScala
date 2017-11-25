@@ -2,8 +2,10 @@ package de.htwg.se.sudoku.controller.controllerComponent
 
 import de.htwg.se.sudoku.controller.controllerComponent.GameStatus.GameStatus
 import de.htwg.se.sudoku.model.gridComponent.CellInterface
+import play.api.libs.json.JsValue
 
 import scala.swing.Publisher
+
 
 trait ControllerInterface extends Publisher {
 
@@ -54,13 +56,17 @@ trait ControllerInterface extends Publisher {
   def gameStatus: GameStatus
 
   def statusText: String
+
+  def toJson:JsValue
+
 }
 
-trait ControllerIoInterface {
+trait ControllerIoInterface  {
 
-  def setGiven(row: Int, col: Int, value: Int)
-  def setShowCandidates(row: Int, col: Int)
+  def setGiven(row:Int, col:Int, value:Int)
+  def setShowCandidates(row:Int, col:Int)
 }
+
 
 import scala.swing.event.Event
 

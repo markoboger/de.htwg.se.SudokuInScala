@@ -1,6 +1,7 @@
 package de.htwg.se.sudoku.model.gridComponent.gridMockImpl
 
 import de.htwg.se.sudoku.model.gridComponent.{CellInterface, GridInterface}
+import play.api.libs.json.{JsValue, Json}
 
 class Grid(var size:Int) extends GridInterface{
 
@@ -33,6 +34,8 @@ class Grid(var size:Int) extends GridInterface{
    def markFilledCellsAsGiven: GridInterface = this
 
    def isSymmetric:Boolean = true
+
+  override def toJson(): JsValue = Json.obj()
 
   override def setGiven(row: Int, col: Int, value: Int): GridInterface = this
 }
