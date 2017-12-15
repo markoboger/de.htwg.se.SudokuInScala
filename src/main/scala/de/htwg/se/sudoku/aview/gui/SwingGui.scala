@@ -24,9 +24,13 @@ class SwingGui(controller: ControllerInterface) extends Frame with Observer{
         controller.highlight(index)
       }
       button.preferredSize_=(new Dimension(30, 30))
+      resizable = false
+      resizable = true
       contents += button
       listenTo(button)
     }
+    resizable = false
+    resizable = true
   }
 
   def gridPanel = new GridPanel(controller.blockSize, controller.blockSize) {
@@ -117,6 +121,8 @@ class SwingGui(controller: ControllerInterface) extends Frame with Observer{
       column <- 0 until controller.gridSize
     } cells(row)(column).redraw
     statusline.text = controller.statusText
+    resizable = false
+    resizable = true
     repaint
   }
 
