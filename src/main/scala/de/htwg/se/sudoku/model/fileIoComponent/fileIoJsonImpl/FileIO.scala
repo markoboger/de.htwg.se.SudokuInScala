@@ -19,18 +19,23 @@ class FileIO extends FileIOInterface {
     val size = (json \ "grid" \ "size").get.toString.toInt
     val injector = Guice.createInjector(new SudokuModule)
     size match {
-      case 1 => gridOption = Some(injector.instance[GridInterface](Names.named("tiny")))
-      case 4 => gridOption = Some(injector.instance[GridInterface](Names.named("small")))
-      case 9 => gridOption = Some(injector.instance[GridInterface](Names.named("normal")))
+      case 1 =>
+        gridOption = Some(injector.instance[GridInterface](Names.named("tiny")))
+      case 4 =>
+        gridOption = Some(
+          injector.instance[GridInterface](Names.named("small")))
+      case 9 =>
+        gridOption = Some(
+          injector.instance[GridInterface](Names.named("normal")))
       case _ =>
     }
     gridOption match {
       case Some(grid) => {
         var _grid = grid
         for (index <- 0 until size * size) {
-          val row = (json \\ "row") (index).as[Int]
-          val col = (json \\ "col") (index).as[Int]
-          val cell = (json \\ "cell") (index)
+          val row = (json \\ "row")(index).as[Int]
+          val col = (json \\ "col")(index).as[Int]
+          val cell = (json \\ "cell")(index)
           val value = (cell \ "value").as[Int]
           _grid = _grid.set(row, col, value)
           val given = (cell \ "given").as[Boolean]
@@ -38,7 +43,7 @@ class FileIO extends FileIOInterface {
           if (given) _grid = _grid.setGiven(row, col, value)
           if (showCandidates) _grid = _grid.setShowCandidates(row, col)
         }
-        gridOption=Some(_grid)
+        gridOption = Some(_grid)
       }
       case None =>
     }
@@ -53,8 +58,5 @@ class FileIO extends FileIOInterface {
   }
 
   def gridToJson(grid: GridInterface) = grid.toJson
-
-
-
 
 }

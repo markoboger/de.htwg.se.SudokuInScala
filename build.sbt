@@ -1,7 +1,7 @@
-name          := "Sudoku in Scala"
-organization  := "de.htwg.se"
-version       := "0.0.1"
-scalaVersion  := "2.12.4"
+name := "Sudoku in Scala"
+organization := "de.htwg.se"
+version := "0.0.1"
+scalaVersion := "2.12.4"
 
 libraryDependencies += "org.scalatest" %% "scalatest" % "3.0.4" % "test"
 
