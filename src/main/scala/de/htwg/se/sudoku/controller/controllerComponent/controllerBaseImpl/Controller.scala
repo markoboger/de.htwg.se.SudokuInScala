@@ -10,9 +10,13 @@ import de.htwg.se.sudoku.model.fileIoComponent.FileIOInterface
 import de.htwg.se.sudoku.model.gridComponent.GridInterface
 import de.htwg.se.sudoku.util.UndoManager
 
+import scala.util.{Success, Failure}
+import com.typesafe.scalalogging.{LazyLogging, Logger}
+
 class Controller @Inject()(var grid: GridInterface)
     extends ControllerInterface
-    with ControllerIoInterface {
+    with ControllerIoInterface
+    with LazyLogging {
 
   var gameStatus: GameStatus = IDLE
   var showAllCandidates: Boolean = false
@@ -68,25 +72,40 @@ class Controller @Inject()(var grid: GridInterface)
   }
 
   def save: Unit = {
-    fileIo.save(grid)
-    gameStatus = SAVED
+    fileIo.save(grid) match {
+      case Success(_) =>
+        gameStatus = SAVED
+      case Failure(e) =>
+        logger.error(
+          "Error occured while storing game to file: " + e.getMessage)
+        gameStatus = COULD_NOT_SAVE
+    }
+
     publish(new CellChanged)
   }
 
   def toJson = grid.toJson
 
   def load: Unit = {
-    val gridOption = fileIo.load
-    gridOption match {
-      case None => {
+    val gridOptionResult = fileIo.load
+
+    gridOptionResult match {
+      case Success(gridOption) =>
+        gridOption match {
+          case Some(_grid) =>
+            grid = _grid
+            gameStatus = LOADED
+          case None =>
+            createEmptyGrid
+            gameStatus = COULD_NOT_LOAD
+        }
+      case Failure(e) =>
+        logger.error(
+          "Error occured while loading game from file: " + e.getMessage)
         createEmptyGrid
-        gameStatus = COULDNOTLOAD
-      }
-      case Some(_grid) => {
-        grid = _grid
-        gameStatus = LOADED
-      }
+        gameStatus = COULD_NOT_LOAD
     }
+
     publish(new CellChanged)
   }
 
