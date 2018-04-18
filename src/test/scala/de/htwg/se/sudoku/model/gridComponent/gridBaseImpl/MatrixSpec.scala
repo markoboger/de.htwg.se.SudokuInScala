@@ -30,7 +30,7 @@ class MatrixSpec extends WordSpec with Matchers {
       }
       "be filled using fill operation" in {
         val returnedMatrix = matrix.fill(Cell(3))
-        returnedMatrix.cell(0,0) should be(Cell(3))
+        returnedMatrix.cell(0, 0) should be(Cell(3))
       }
     }
   }
