@@ -5,15 +5,13 @@ import org.scalatest.{Matchers, WordSpec}
 import org.scalatest.junit.JUnitRunner
 
 class incrCommand extends Command {
-  var state:Int =0
-  override def doStep: Unit = state+=1
+  var state: Int = 0
+  override def doStep: Unit = state += 1
 
-  override def undoStep: Unit = state-=1
+  override def undoStep: Unit = state -= 1
 
-  override def redoStep: Unit = state+=1
+  override def redoStep: Unit = state += 1
 }
-
-
 @RunWith(classOf[JUnitRunner])
 class CommandSpec extends WordSpec with Matchers {
   "A Command" should {
@@ -47,5 +45,3 @@ class CommandSpec extends WordSpec with Matchers {
     }
   }
 }
-
-

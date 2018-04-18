@@ -4,18 +4,18 @@ import de.htwg.se.sudoku.model.gridComponent.GridInterface
 
 import scala.util.Random
 
-class GridCreateRandomStrategy extends GridCreateStrategyTemplate{
+class GridCreateRandomStrategy extends GridCreateStrategyTemplate {
 
-  def fill(_grid:GridInterface): GridInterface = {
+  def fill(_grid: GridInterface): GridInterface = {
     val num = Math.sqrt(_grid.size).toInt
-    var grid:GridInterface = new Grid(_grid.size)
-    for {index <- 1 to num} {
+    var grid: GridInterface = new Grid(_grid.size)
+    for { index <- 1 to num } {
       grid = setRandomCell(grid)
     }
     grid
   }
 
-  private def setRandomCell(grid:GridInterface): GridInterface = {
+  private def setRandomCell(grid: GridInterface): GridInterface = {
     val row = Random.nextInt(grid.size)
     val column = Random.nextInt(grid.size)
     val availableValueSet = grid.available(row, column).toIndexedSeq
