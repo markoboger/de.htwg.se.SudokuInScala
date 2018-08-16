@@ -10,6 +10,34 @@ cell1.isSet
 val cell2= Cell(0)
 cell2.isSet
 
+case class House(cells:Vector[Cell])
+
+val house = House(Vector(cell1,cell2))
+
+house.cells(0).value
+house.cells(0).isSet
+
+
+case class Matrix[T] (rows:Vector[Vector[T]]) {
+  def this(size:Int, filling:T) = this(Vector.tabulate(size, size){(row, col) => filling})
+  val size:Int = rows.size
+  def cell(row:Int, col:Int):T = rows (row)(col)
+  def replaceCell(row:Int, col:Int, cell:T):Matrix[T] = copy(rows.updated(row, rows(row).updated(col, cell)))
+  def fill (filling:T):Matrix[T]= copy( Vector.tabulate(size, size){(row, col) => filling})
+}
+
+val matrix = Matrix(Vector(Vector(cell1,cell2)))
+
+matrix.rows(0)(0).value
+matrix.size
+matrix.cell(0,0)
+
+val replaced = matrix.replaceCell(0,0, Cell(3))
+replaced.cell(0,0).value
+
+val filledWithEmptyCells = new Matrix(Vector(Vector(cell1,cell2))).fill(Cell(0))
+filledWithEmptyCells.cell(0,0).value
+
 case class Grid(cells:Matrix[Cell]) {
   def this(size:Int) = this(new Matrix[Cell](size, Cell(0)))
   val size:Int = cells.size
@@ -27,17 +55,6 @@ case class Grid(cells:Matrix[Cell]) {
   }
 }
 
-case class Matrix[T] (rows:Vector[Vector[T]]) {
-  def this(size:Int, filling:T) = this(Vector.tabulate(size, size){(row, col) => filling})
-  val size:Int = rows.size
-  def cell(row:Int, col:Int):T = rows (row)(col)
-  def fill (filling:T):Matrix[T]= copy( Vector.tabulate(size, size){(row, col) => filling})
-  def replaceCell(row:Int, col:Int, cell:T):Matrix[T] = copy(rows.updated(row, rows(row).updated(col, cell)))
-}
-
-case class House(cells:Vector[Cell])  {
-
-}
 
 val grid1 = new Grid(4)
 
