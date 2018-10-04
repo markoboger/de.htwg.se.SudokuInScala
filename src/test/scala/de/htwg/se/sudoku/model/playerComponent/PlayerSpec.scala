@@ -1,5 +1,6 @@
 package de.htwg.se.sudoku.model.playerComponent
 
+import de.htwg.se.sudoku.model.playerComponent.playerBaseImpl.Player
 import org.junit.runner.RunWith
 import org.scalatest._
 import org.scalatest.junit.JUnitRunner

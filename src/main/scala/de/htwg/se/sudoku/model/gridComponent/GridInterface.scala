@@ -22,8 +22,7 @@ trait GridInterface {
   def indexToRowCol(index: Int): (Int, Int)
   def markFilledCellsAsGiven: GridInterface
   def setGiven(row: Int, col: Int, value: Int): GridInterface
-  def toJson(): JsValue
-
+  def toJson: JsValue
 }
 
 trait CellInterface {

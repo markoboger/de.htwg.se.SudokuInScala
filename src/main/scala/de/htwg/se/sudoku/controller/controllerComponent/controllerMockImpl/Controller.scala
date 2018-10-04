@@ -62,6 +62,6 @@ class Controller(var grid: GridInterface) extends ControllerInterface {
 
   override def load: Unit = {}
 
-  override def toJson: JsValue = grid.toJson()
+  override def gridToJson: JsValue = grid.toJson
 
 }
