@@ -1,6 +1,6 @@
 name          := "Sudoku in Scala"
 organization  := "de.htwg.se"
-version       := "0.12.0"
+version       := "0.13.0"
 scalaVersion  := "2.12.7"
 
 libraryDependencies += "org.scalactic" %% "scalactic" % "3.0.5"
