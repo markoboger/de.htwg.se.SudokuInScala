@@ -1,10 +1,7 @@
 package de.htwg.se.sudoku.model.playerComponent
 
-import org.junit.runner.RunWith
 import org.scalatest._
-import org.scalatest.junit.JUnitRunner
 
-@RunWith(classOf[JUnitRunner])
 class PlayerSpec extends WordSpec with Matchers {
   "A Player" when {
     "new" should {

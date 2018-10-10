@@ -1,10 +1,7 @@
 package de.htwg.se.sudoku.model.gridComponent.gridBaseImpl
 
-import org.junit.runner.RunWith
-import org.scalatest.junit.JUnitRunner
-import org.scalatest.{ Matchers, WordSpec }
+import org.scalatest.{Matchers, WordSpec}
 
-@RunWith(classOf[JUnitRunner])
 class MatrixSpec extends WordSpec with Matchers {
   "A Matrix is a tailor-made immutable data type that contains a two-dimentional Vector of Cells. A Matrix" when {
     "empty " should {
@@ -30,7 +27,7 @@ class MatrixSpec extends WordSpec with Matchers {
       }
       "be filled using fill operation" in {
         val returnedMatrix = matrix.fill(Cell(3))
-        returnedMatrix.cell(0, 0) should be(Cell(3))
+        returnedMatrix.cell(0,0) should be(Cell(3))
       }
     }
   }
