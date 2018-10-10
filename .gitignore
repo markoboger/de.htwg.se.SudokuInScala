@@ -10,6 +10,9 @@ bin/
 .idea/
 target/
 
+# VS Code
+.vscode/settings.json
+
 # Maven
 log/
 target/
@@ -42,5 +45,5 @@ project/.sbtserver
 # Sonar
 .sonar/
 
-# Application
-yourgame.log
+# Application log
+sudoku.log

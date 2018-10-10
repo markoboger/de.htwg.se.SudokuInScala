@@ -15,7 +15,7 @@ class HouseSpec extends WordSpec with Matchers {
   }
 
   "A new House with one empty Cell" should {
-    val house = House(Vector( Cell(0)))
+    val house = House(Vector(Cell(0)))
     "be valid" in {
       house.valid should be(true)
     }
@@ -77,9 +77,36 @@ class HouseSpec extends WordSpec with Matchers {
     }
   }
   "A House with nine different cells" should {
-    val house1 = House(Vector(Cell(1), Cell(2), Cell(3), Cell(4), Cell(5), Cell(6), Cell(7), Cell(8), Cell(9)))
-    val house2 = House(Vector(Cell(3), Cell(1), Cell(2), Cell(4), Cell(8), Cell(7), Cell(5), Cell(6), Cell(9)))
-    val house3 = House(Vector(Cell(0), Cell(1), Cell(0), Cell(4), Cell(0), Cell(7), Cell(0), Cell(6), Cell(0)))
+    val house1 = House(
+      Vector(Cell(1),
+             Cell(2),
+             Cell(3),
+             Cell(4),
+             Cell(5),
+             Cell(6),
+             Cell(7),
+             Cell(8),
+             Cell(9)))
+    val house2 = House(
+      Vector(Cell(3),
+             Cell(1),
+             Cell(2),
+             Cell(4),
+             Cell(8),
+             Cell(7),
+             Cell(5),
+             Cell(6),
+             Cell(9)))
+    val house3 = House(
+      Vector(Cell(0),
+             Cell(1),
+             Cell(0),
+             Cell(4),
+             Cell(0),
+             Cell(7),
+             Cell(0),
+             Cell(6),
+             Cell(0)))
     "be valid" in {
       house1.valid should be(true)
       house2.valid should be(true)

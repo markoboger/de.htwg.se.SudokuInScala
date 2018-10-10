@@ -13,7 +13,9 @@ class GridSpec extends WordSpec with Matchers {
       }
       "for test purposes only created with a Matrix of Cells" in {
         val awkwardGrid = Grid(new Matrix(2, Cell(0)))
-        val testGrid = Grid(Matrix[Cell](Vector(Vector(Cell(0), Cell(0)), Vector(Cell(0), Cell(0)))))
+        val testGrid = Grid(
+          Matrix[Cell](
+            Vector(Vector(Cell(0), Cell(0)), Vector(Cell(0), Cell(0)))))
       }
     }
     "created properly but empty" should {
@@ -36,7 +38,9 @@ class GridSpec extends WordSpec with Matchers {
     }
     "prefilled with values 1 to n" should {
       val tinyGrid = Grid(new Matrix[Cell](Vector(Vector(Cell(1)))))
-      val smallGrid = Grid(new Matrix[Cell](Vector(Vector(Cell(1), Cell(2)), Vector(Cell(3), Cell(4)))))
+      val smallGrid = Grid(
+        new Matrix[Cell](
+          Vector(Vector(Cell(1), Cell(2)), Vector(Cell(3), Cell(4)))))
       "have the right values in the right places" in {
         smallGrid.cell(0, 0) should be(Cell(1))
         smallGrid.cell(0, 1) should be(Cell(2))
@@ -60,7 +64,16 @@ class GridSpec extends WordSpec with Matchers {
     }
     "prefilled with 1 to n on the diagonal" should {
       val normalGrid = new Grid(9)
-      val diagonalGrid = normalGrid.set(0, 0, 1).set(1, 1, 2).set(2, 2, 3).set(3, 3, 4).set(4, 4, 5).set(5, 5, 6).set(6, 6, 7).set(7, 7, 8).set(8, 8, 9)
+      val diagonalGrid = normalGrid
+        .set(0, 0, 1)
+        .set(1, 1, 2)
+        .set(2, 2, 3)
+        .set(3, 3, 4)
+        .set(4, 4, 5)
+        .set(5, 5, 6)
+        .set(6, 6, 7)
+        .set(7, 7, 8)
+        .set(8, 8, 9)
       "have blocks with the right cells" in {
         diagonalGrid.blocks(0).cells(0) should be(Cell(1))
         diagonalGrid.blocks(0).cells(4) should be(Cell(2))
@@ -75,22 +88,22 @@ class GridSpec extends WordSpec with Matchers {
     }
     "set with one value" should {
       val smallGrid = new Grid(4)
-      val setGrid = smallGrid.set(0,0,1)
+      val setGrid = smallGrid.set(0, 0, 1)
       "have that one cell set" in {
-        setGrid.cell(0,0).isSet should be(true)
-        setGrid.cell(0,1).isSet should be(false)
+        setGrid.cell(0, 0).isSet should be(true)
+        setGrid.cell(0, 1).isSet should be(false)
       }
       "have available candidates" in {
-        setGrid.available(0,1).contains(1) should be(false)
-        setGrid.available(0,1).contains(2) should be(true)
+        setGrid.available(0, 1).contains(1) should be(false)
+        setGrid.available(0, 1).contains(2) should be(true)
       }
     }
     "when highlighted" should {
       val smallGrid = new Grid(4)
-      val setGrid = smallGrid.set(0,0,1)
+      val setGrid = smallGrid.set(0, 0, 1)
       val highlightedGrid = setGrid.highlight(2)
       "have highlighted cells" in {
-        highlightedGrid.cell(1,1).isHighlighted should be(true)
+        highlightedGrid.cell(1, 1).isHighlighted should be(true)
       }
     }
   }

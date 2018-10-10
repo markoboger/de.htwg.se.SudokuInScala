@@ -10,9 +10,13 @@ import de.htwg.se.sudoku.model.fileIoComponent.FileIOInterface
 import de.htwg.se.sudoku.model.gridComponent.GridInterface
 import de.htwg.se.sudoku.util.UndoManager
 
-import scala.swing.Publisher
+import scala.util.{Success, Failure}
+import com.typesafe.scalalogging.{LazyLogging, Logger}
 
-class Controller @Inject() (var grid: GridInterface) extends ControllerInterface with Publisher with ControllerIoInterface {
+class Controller @Inject()(var grid: GridInterface)
+    extends ControllerInterface
+    with ControllerIoInterface
+    with LazyLogging {
 
   var gameStatus: GameStatus = IDLE
   var showAllCandidates: Boolean = false
@@ -40,7 +44,6 @@ class Controller @Inject() (var grid: GridInterface) extends ControllerInterface
     gameStatus=RESIZE
     publish(new GridSizeChanged(newSize))
   }
-
 
   override def createNewGrid: Unit = {
     grid.size match {

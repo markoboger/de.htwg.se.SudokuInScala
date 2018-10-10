@@ -6,7 +6,6 @@ import play.api.libs.json.JsValue
 
 import scala.swing.Publisher
 
-
 trait ControllerInterface extends Publisher {
 
   def gridSize: Int
@@ -57,7 +56,7 @@ trait ControllerInterface extends Publisher {
 
   def statusText: String
 
-  def toJson:JsValue
+  def toJson: JsValue
 
 }
 

@@ -27,7 +27,7 @@ class CellPanel(row: Int, column: Int, controller: ControllerInterface) extends 
     background = if (controller.isGiven(row, column)) givenCellColor else cellColor
     border = Swing.BeveledBorder(Swing.Raised)
     listenTo(mouse.clicks)
-    listenTo(controller)
+    //controller.add(self)
     reactions += {
       case e: CellChanged => {
         label.text = cellText(row, column)

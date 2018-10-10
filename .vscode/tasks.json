@@ -1,0 +1,33 @@
+{
+    "version": "2.0.0",
+    "command": "sbt",
+    "type": "shell",
+    "presentation": {
+        "reveal": "always"
+    },
+    "tasks": [
+        {
+            "label": "build",
+            "type": "shell",
+            "command": "sbt compile",
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            }
+        },
+        {
+            "label": "test",
+            "type": "shell",
+            "command": "sbt test",
+            "group": {
+                "kind": "test",
+                "isDefault": true
+            }
+        },
+        {
+            "label": "run",
+            "type": "shell",
+            "command": "sbt run"
+        }
+    ]
+}
