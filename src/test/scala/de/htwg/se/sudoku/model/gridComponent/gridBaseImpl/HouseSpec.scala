@@ -1,10 +1,7 @@
 package de.htwg.se.sudoku.model.gridComponent.gridBaseImpl
 
-import org.junit.runner.RunWith
-import org.scalatest.junit.JUnitRunner
 import org.scalatest.{Matchers, WordSpec}
 
-@RunWith(classOf[JUnitRunner])
 class HouseSpec extends WordSpec with Matchers {
 
   "A new House with zero Cells" should {

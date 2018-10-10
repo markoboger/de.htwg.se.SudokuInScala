@@ -1,15 +1,12 @@
 name          := "Sudoku in Scala"
 organization  := "de.htwg.se"
-version       := "0.1.0"
-scalaVersion  := "2.12.4"
+version       := "0.10.0"
+scalaVersion  := "2.12.7"
 
-libraryDependencies += "org.scalatest" %% "scalatest" % "3.0.4" % "test"
+libraryDependencies += "org.scalactic" %% "scalactic" % "3.0.5"
+libraryDependencies += "org.scalatest" %% "scalatest" % "3.0.5" % "test"
 
-libraryDependencies += "junit" % "junit" % "4.8" % "test"
-
-//*******************************************************************************//
-//Libraries that we will use in later lectures compatible with this scala version
-// uncomment to use!!
+libraryDependencies += "org.scala-lang.modules" % "scala-swing_2.12" % "2.0.3"
 
 libraryDependencies += "org.scala-lang.modules" % "scala-swing_2.12" % "2.0.1"
 
