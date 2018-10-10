@@ -1,4 +1,5 @@
 package de.htwg.se.sudoku.model.gridComponent
+import play.api.libs.json.JsValue
 
 trait GridInterface {
 
