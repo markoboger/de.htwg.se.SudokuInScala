@@ -1,11 +1,8 @@
 package de.htwg.se.sudoku.model
 
-import org.junit.runner.RunWith
 import org.scalatest.{Matchers, WordSpec}
-import org.scalatest.junit.JUnitRunner
 
-@RunWith(classOf[JUnitRunner])
-class SolverSpec extends WordSpec with Matchers {
+class GridSolverSpec extends WordSpec with Matchers {
 
   "A GridSolver" when {
     "Grid is empty" should {
@@ -19,7 +16,6 @@ class SolverSpec extends WordSpec with Matchers {
           solvable should be(true)
           solvedGrid.solved should be(true)
         }
-
       }
     }
     "Grid is not empty" should {
@@ -34,10 +30,7 @@ class SolverSpec extends WordSpec with Matchers {
           solvable should be(true)
           solvedGrid.solved should be(true)
         }
-
       }
     }
   }
-
-
 }

@@ -2,11 +2,9 @@ package de.htwg.se.sudoku.aview
 
 import de.htwg.se.sudoku.controller.Controller
 import de.htwg.se.sudoku.model.Grid
-import org.junit.runner.RunWith
-import org.scalatest.{Matchers, WordSpec}
-import org.scalatest.junit.JUnitRunner
 
-@RunWith(classOf[JUnitRunner])
+import org.scalatest.{Matchers, WordSpec}
+
 class TuiSpec  extends WordSpec with Matchers{
 
   "A Sudoku Tui" should {
