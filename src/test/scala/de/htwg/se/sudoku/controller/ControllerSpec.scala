@@ -4,11 +4,8 @@ import de.htwg.se.sudoku.model.Grid
 import de.htwg.se.sudoku.util.Observer
 
 import scala.language.reflectiveCalls
-import org.junit.runner.RunWith
 import org.scalatest.{Matchers, WordSpec}
-import org.scalatest.junit.JUnitRunner
 
-@RunWith(classOf[JUnitRunner])
 class ControllerSpec extends WordSpec with Matchers {
 
   "A Controller" when {
