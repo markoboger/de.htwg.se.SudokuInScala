@@ -1,8 +1,6 @@
 package de.htwg.se.sudoku.util
 
-import org.junit.runner.RunWith
 import org.scalatest.{Matchers, WordSpec}
-import org.scalatest.junit.JUnitRunner
 
 class incrCommand extends Command {
   var state:Int =0
@@ -13,8 +11,6 @@ class incrCommand extends Command {
   override def redoStep: Unit = state+=1
 }
 
-
-@RunWith(classOf[JUnitRunner])
 class CommandSpec extends WordSpec with Matchers {
   "A Command" should {
 
@@ -47,5 +43,4 @@ class CommandSpec extends WordSpec with Matchers {
     }
   }
 }
-
 

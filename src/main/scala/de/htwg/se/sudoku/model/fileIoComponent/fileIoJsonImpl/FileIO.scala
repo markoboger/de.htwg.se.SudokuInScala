@@ -52,23 +52,6 @@ class FileIO extends FileIOInterface {
     pw.close
   }
 
-  def gridToJson(grid: GridInterface) = {
-    Json.obj(
-      "grid" -> Json.obj(
-        "size" -> JsNumber(grid.size),
-        "cells" -> Json.toJson(
-          for {row <- 0 until grid.size;
-               col <- 0 until grid.size} yield {
-            Json.obj(
-              "row" -> row,
-              "col" -> col,
-              "cell" -> Json.toJson(grid.cell(row, col)))
-          }
-        )
-      )
-    )
-  }
-
   implicit val cellWrites = new Writes[CellInterface] {
     def writes(cell: CellInterface) = Json.obj(
       "value" -> cell.value,
@@ -76,5 +59,27 @@ class FileIO extends FileIOInterface {
       "showCandidates" -> cell.showCandidates
     )
   }
+
+  def gridToJson(grid: GridInterface) = {
+    Json.obj(
+      "grid" -> Json.obj(
+        "size" -> JsNumber(grid.size),
+        "cells" -> Json.toJson(
+          for {
+            row <- 0 until grid.size;
+            col <- 0 until grid.size
+          } yield {
+            Json.obj(
+              "row" -> row,
+              "col" -> col,
+              "cell" -> Json.toJson(grid.cell(row, col))
+            )
+          }
+        )
+      )
+    )
+  }
+
+
 
 }

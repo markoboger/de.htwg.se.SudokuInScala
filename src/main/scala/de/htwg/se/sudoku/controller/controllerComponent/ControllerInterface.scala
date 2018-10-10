@@ -56,12 +56,11 @@ trait ControllerInterface extends Publisher {
   def statusText: String
 }
 
-trait ControllerIoInterface  {
+trait ControllerIoInterface {
 
-  def setGiven(row:Int, col:Int, value:Int)
-  def setShowCandidates(row:Int, col:Int)
+  def setGiven(row: Int, col: Int, value: Int)
+  def setShowCandidates(row: Int, col: Int)
 }
-
 
 import scala.swing.event.Event
 
