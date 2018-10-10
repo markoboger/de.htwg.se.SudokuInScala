@@ -3,7 +3,7 @@ package de.htwg.se.sudoku.aview.gui
 import scala.swing._
 import scala.swing.event._
 
-import de.htwg.se.sudoku.controller.controllerComponent.{CellChanged, ControllerInterface}
+import de.htwg.se.sudoku.controller.controllerComponent.{ CellChanged, ControllerInterface }
 
 class CellPanel(row: Int, column: Int, controller: ControllerInterface) extends FlowPanel {
 

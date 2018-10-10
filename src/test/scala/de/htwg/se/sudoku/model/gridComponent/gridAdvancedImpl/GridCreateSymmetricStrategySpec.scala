@@ -1,10 +1,7 @@
 package de.htwg.se.sudoku.model.gridComponent.gridAdvancedImpl
 
-import org.junit.runner.RunWith
 import org.scalatest.{Matchers, WordSpec}
-import org.scalatest.junit.JUnitRunner
 
-@RunWith(classOf[JUnitRunner])
 class GridCreateSymmetricStrategySpec extends WordSpec with Matchers  {
 
   "An  GridCreateSymmetricStrategy" should {

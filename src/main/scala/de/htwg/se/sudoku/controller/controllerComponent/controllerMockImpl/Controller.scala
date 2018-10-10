@@ -1,12 +1,12 @@
 package de.htwg.se.sudoku.controller.controllerComponent.controllerMockImpl
 
-import de.htwg.se.sudoku.controller.controllerComponent.{ControllerInterface, GameStatus}
+import de.htwg.se.sudoku.controller.controllerComponent.{ ControllerInterface, GameStatus }
 import de.htwg.se.sudoku.controller.controllerComponent.GameStatus.GameStatus
-import de.htwg.se.sudoku.model.gridComponent.{CellInterface, GridInterface}
+import de.htwg.se.sudoku.model.gridComponent.{ CellInterface, GridInterface }
 import de.htwg.se.sudoku.model.gridComponent.gridMockImpl.Grid
 import de.htwg.se.sudoku.controller.controllerComponent.GameStatus._
 
-class Controller(var grid: GridInterface) extends ControllerInterface{
+class Controller(var grid: GridInterface) extends ControllerInterface {
 
   grid = new Grid(1)
 
