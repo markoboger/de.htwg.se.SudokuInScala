@@ -1,8 +1,6 @@
-import de.htwg.se.sudoku.model.gridComponent.gridBaseImpl._
+import de.htwg.se.sudoku.model._
 
-
-
-  val grid4 = new Grid(1)
+  val grid4:Grid = new Grid(1)
 
   grid4
 
