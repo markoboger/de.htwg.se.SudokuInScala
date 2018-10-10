@@ -1,6 +1,6 @@
 package de.htwg.se.sudoku.controller.controllerComponent
 
-object GameStatus extends Enumeration{
+object GameStatus extends Enumeration {
   type GameStatus = Value
   val IDLE, RESIZE, SET, NEW, UNDO, REDO, LOADED, COULDNOTLOAD, SAVED, CANDIDATES, SOLVED, NOT_SOLVABLE = Value
 

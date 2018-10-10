@@ -2,7 +2,8 @@ package de.htwg.se.sudoku.aview.gui
 
 import scala.swing._
 import scala.swing.event._
-import de.htwg.se.sudoku.controller.controllerComponent.{CellChanged, ControllerInterface}
+
+import de.htwg.se.sudoku.controller.controllerComponent.{ CellChanged, ControllerInterface }
 
 class CellPanel(row: Int, column: Int, controller: ControllerInterface) extends FlowPanel {
 
@@ -26,7 +27,7 @@ class CellPanel(row: Int, column: Int, controller: ControllerInterface) extends 
     background = if (controller.isGiven(row, column)) givenCellColor else cellColor
     border = Swing.BeveledBorder(Swing.Raised)
     listenTo(mouse.clicks)
-    //controller.add(self)
+    listenTo(controller)
     reactions += {
       case e: CellChanged => {
         label.text = cellText(row, column)
@@ -48,7 +49,7 @@ class CellPanel(row: Int, column: Int, controller: ControllerInterface) extends 
         background = cellColor
         border = Swing.BeveledBorder(Swing.Raised)
         listenTo(mouse.clicks)
-        //listenTo(controller)
+        listenTo(controller)
         reactions += {
           case e: CellChanged => {
             text = if (controller.available(row, column).contains(value)) value.toString else " "

@@ -10,8 +10,9 @@ import de.htwg.se.sudoku.model.fileIoComponent.FileIOInterface
 import de.htwg.se.sudoku.model.gridComponent.GridInterface
 import de.htwg.se.sudoku.util.UndoManager
 
+import scala.swing.Publisher
 
-class  Controller @Inject() (var grid: GridInterface) extends ControllerInterface with ControllerIoInterface{
+class Controller @Inject() (var grid: GridInterface) extends ControllerInterface with Publisher with ControllerIoInterface {
 
   var gameStatus: GameStatus = IDLE
   var showAllCandidates: Boolean = false
@@ -72,9 +73,6 @@ class  Controller @Inject() (var grid: GridInterface) extends ControllerInterfac
     gameStatus = SAVED
     publish(new CellChanged)
   }
-
-  def toJson = grid.toJson
-
 
   def load: Unit = {
     val gridOption = fileIo.load

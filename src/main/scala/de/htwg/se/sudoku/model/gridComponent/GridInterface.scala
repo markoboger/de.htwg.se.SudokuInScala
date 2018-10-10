@@ -1,9 +1,6 @@
 package de.htwg.se.sudoku.model.gridComponent
 
-import play.api.libs.json.JsValue
-
 trait GridInterface {
-
 
   def cell(row: Int, col: Int): CellInterface
   def set(row:Int, col:Int, value:Int): GridInterface

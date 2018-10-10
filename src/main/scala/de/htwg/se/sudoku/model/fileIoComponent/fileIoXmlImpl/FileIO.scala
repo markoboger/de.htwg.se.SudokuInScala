@@ -7,8 +7,7 @@ import de.htwg.se.sudoku.SudokuModule
 import de.htwg.se.sudoku.model.fileIoComponent.FileIOInterface
 import de.htwg.se.sudoku.model.gridComponent.GridInterface
 
-
-import scala.xml.{NodeSeq, PrettyPrinter}
+import scala.xml.{ NodeSeq, PrettyPrinter }
 
 class FileIO extends FileIOInterface {
 

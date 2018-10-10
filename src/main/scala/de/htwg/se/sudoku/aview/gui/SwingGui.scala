@@ -1,5 +1,6 @@
 package de.htwg.se.sudoku.aview.gui
 
+import de.htwg.se.sudoku.controller.controllerComponent.{ CandidatesChanged, CellChanged, ControllerInterface, GridSizeChanged }
 
 import de.htwg.se.sudoku.controller.controllerComponent.{CandidatesChanged, CellChanged, ControllerInterface, GridSizeChanged}
 import de.htwg.se.sudoku.util.Observer
