@@ -5,13 +5,15 @@ import akka.http.scaladsl.Http
 import akka.http.scaladsl.model.StatusCodes
 import akka.http.scaladsl.server.{Directives, Route}
 import akka.stream.ActorMaterializer
+import com.google.inject.Inject
+import com.google.inject.name.Named
 import play.api.libs.json.Json
 
 import scala.concurrent.{ExecutionContextExecutor, Future}
 import scala.io.Source
 import scala.util.Try
 
-class FileIoHttpServer extends Directives {
+class FileIoHttpServer @Inject()(@Named("FileHost") host: String, @Named("FilePort") port: Int) extends Directives {
   implicit val system: ActorSystem = ActorSystem("system")
   implicit val materializer: ActorMaterializer = ActorMaterializer()
   implicit val executionContext: ExecutionContextExecutor = system.dispatcher
@@ -54,7 +56,7 @@ class FileIoHttpServer extends Directives {
       }
     }
 
-  val bindingFuture: Future[Http.ServerBinding] = Http().bindAndHandle(route, "localhost", 8089)
+  val bindingFuture: Future[Http.ServerBinding] = Http().bindAndHandle(route, host, port)
 
   def unbind(): Unit = {
     bindingFuture

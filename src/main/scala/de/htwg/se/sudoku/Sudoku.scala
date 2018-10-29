@@ -14,7 +14,7 @@ object Sudoku {
   val tui = new Tui(controller)
   val gui = new SwingGui(controller)
 
-  val fileIoHttpServer: FileIoHttpServer = new FileIoHttpServer
+  val fileIoHttpServer: FileIoHttpServer = injector.getInstance(classOf[FileIoHttpServer])
   val webserver = new HttpServer(controller)
 
   controller.createNewGrid

@@ -6,8 +6,8 @@ import akka.http.scaladsl.model.HttpMethods.POST
 import akka.http.scaladsl.model._
 import akka.http.scaladsl.unmarshalling.Unmarshal
 import akka.stream.ActorMaterializer
-import com.google.inject.Guice
-import com.google.inject.name.Names
+import com.google.inject.name.{Named, Names}
+import com.google.inject.{Guice, Inject}
 import de.htwg.se.sudoku.MicroSudokuModule
 import de.htwg.se.sudoku.model.fileIoComponent.FileIOInterface
 import de.htwg.se.sudoku.model.gridComponent.GridInterface
@@ -18,14 +18,16 @@ import scala.concurrent.duration._
 import scala.concurrent.{Await, ExecutionContextExecutor, Future}
 import scala.util.{Success, Try}
 
-class FileIO extends FileIOInterface {
+class FileIO @Inject()(@Named("FileHost") host: String, @Named("FilePort") port: Int) extends FileIOInterface {
   implicit val system: ActorSystem = ActorSystem()
   implicit val materializer: ActorMaterializer = ActorMaterializer()
   implicit val executionContext: ExecutionContextExecutor = system.dispatcher
 
+  val serverPath: String = "http://" + host + ":" + port + "/"
+
   override def load: Try[Option[GridInterface]] = {
     val responseFuture = Http()
-      .singleRequest(HttpRequest(uri = "http://localhost:8089/sudoku/model/fileio/v1/load"))
+      .singleRequest(HttpRequest(uri = serverPath + "sudoku/model/fileio/v1/load"))
 
     val result = Await.result(responseFuture, 5000 millis)
 
@@ -39,9 +41,11 @@ class FileIO extends FileIOInterface {
   override def save(grid: GridInterface): Try[Unit] = {
     Try {
       val httpRequest = HttpRequest(POST,
-        uri = "http://localhost:8089/sudoku/model/fileio/v1/save",
+        uri = serverPath + "sudoku/model/fileio/v1/save",
         entity = grid.toJson.toString())
+
       val responseFuture: Future[HttpResponse] = Http().singleRequest(httpRequest)
+
       val result = Await.result(responseFuture, 5000 millis)
 
       if (!result.status.isSuccess()) {

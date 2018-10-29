@@ -30,6 +30,8 @@ class SudokuModule extends AbstractModule with ScalaModule {
 class MicroSudokuModule extends AbstractModule with ScalaModule {
 
   val defaultSize: Int = 9
+  val defaultHostname: String = "localhost"
+  val defaultFilePort: Int = 8089
 
   def configure(): Unit = {
     bindConstant().annotatedWith(Names.named("DefaultSize")).to(defaultSize)
@@ -40,8 +42,10 @@ class MicroSudokuModule extends AbstractModule with ScalaModule {
     bind[GridInterface].annotatedWithName("small").toInstance(new Grid(4))
     bind[GridInterface].annotatedWithName("normal").toInstance(new Grid(9))
 
-    bind[FileIOInterface].to[fileIoMicroImpl.FileIO]
+    bindConstant().annotatedWith(Names.named("FileHost")).to(defaultHostname)
+    bindConstant().annotatedWith(Names.named("FilePort")).to(defaultFilePort)
 
+    bind[FileIOInterface].to[fileIoMicroImpl.FileIO]
   }
 
 }
