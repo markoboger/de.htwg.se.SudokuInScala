@@ -12,7 +12,7 @@ import scala.concurrent.{ExecutionContextExecutor, Future}
 
 class HttpServer(controller: ControllerInterface) {
 
-  implicit val system: ActorSystem = ActorSystem("system")
+  implicit val system: ActorSystem = ActorSystem("RestHttpServerSystem")
   implicit val materializer: ActorMaterializer = ActorMaterializer()
   // needed for the future flatMap/onComplete in the end
   implicit val executionContext: ExecutionContextExecutor = system.dispatcher

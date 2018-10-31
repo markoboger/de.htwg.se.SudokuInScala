@@ -14,7 +14,7 @@ import scala.io.Source
 import scala.util.Try
 
 class FileIoHttpServer @Inject()(@Named("FileHost") host: String, @Named("FilePort") port: Int) extends Directives {
-  implicit val system: ActorSystem = ActorSystem("system")
+  implicit val system: ActorSystem = ActorSystem("FileIoHttpServerSystem")
   implicit val materializer: ActorMaterializer = ActorMaterializer()
   implicit val executionContext: ExecutionContextExecutor = system.dispatcher
 
