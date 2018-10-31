@@ -16,6 +16,12 @@ RUN apt-get update
 RUN apt-get install -y mongodb
 
 # install Xvfb
-RUN apt-get install -y xvfb
+RUN apt-get -y update && apt-get install -y xvfb
+RUN apt-get -y update && apt-get install -y libxrender1
+RUN apt-get -y update && apt-get install -y libxi6
 
 RUN service mongodb start
+
+WORKDIR /sudoku
+
+ADD . /sudoku
