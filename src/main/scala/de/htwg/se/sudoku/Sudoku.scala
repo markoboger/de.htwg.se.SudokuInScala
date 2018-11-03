@@ -29,8 +29,6 @@ object Sudoku {
       if (Console.in.ready()) {
         input = readLine()
         tui.processInputLine(input)
-      } else {
-        input = ""
       }
     } while (input != "q")
     webserver.unbind()
