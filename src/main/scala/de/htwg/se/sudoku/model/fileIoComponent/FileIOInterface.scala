@@ -8,5 +8,6 @@ trait FileIOInterface {
 
   def load: Try[Option[GridInterface]]
   def save(grid: GridInterface): Try[Unit]
+  def unbind()
 
 }

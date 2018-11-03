@@ -1,13 +1,12 @@
 package de.htwg.se.sudoku.controller.controllerComponent
 
 import de.htwg.se.sudoku.controller.controllerComponent.GameStatus.GameStatus
-import de.htwg.se.sudoku.model.gridComponent.CellInterface
+import de.htwg.se.sudoku.model.gridComponent.{CellInterface, GridInterface}
 import play.api.libs.json.JsValue
 
 import scala.swing.Publisher
 
 trait ControllerInterface extends Publisher {
-
   def gridSize: Int
 
   def blockSize: Int
@@ -56,8 +55,9 @@ trait ControllerInterface extends Publisher {
 
   def statusText: String
 
-  def toJson: JsValue
+  def gridToJson: JsValue
 
+  def finish(): Unit
 }
 
 trait ControllerIoInterface {
