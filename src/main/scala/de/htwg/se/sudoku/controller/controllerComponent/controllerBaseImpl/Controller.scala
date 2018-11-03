@@ -79,19 +79,26 @@ class Controller @Inject()(var grid: GridInterface)
 
   def toJson = grid.toJson
 
-
   def load: Unit = {
-    val gridOption = fileIo.load
-    gridOption match {
-      case None => {
+    val gridOptionResult = fileIo.load
+
+    gridOptionResult match {
+      case Success(gridOption) =>
+        gridOption match {
+          case Some(_grid) =>
+            grid = _grid
+            gameStatus = LOADED
+          case None =>
+            createEmptyGrid
+            gameStatus = COULD_NOT_LOAD
+        }
+      case Failure(e) =>
+        logger.error(
+          "Error occured while loading game from file: " + e.getMessage)
         createEmptyGrid
-        gameStatus = COULDNOTLOAD
-      }
-      case Some(_grid) => {
-        grid = _grid
-        gameStatus = LOADED
-      }
+        gameStatus = COULD_NOT_LOAD
     }
+
     publish(new CellChanged)
   }
 
