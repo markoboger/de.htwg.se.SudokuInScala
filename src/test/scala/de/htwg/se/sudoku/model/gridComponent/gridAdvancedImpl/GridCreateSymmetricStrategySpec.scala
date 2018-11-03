@@ -1,11 +1,8 @@
 package de.htwg.se.sudoku.model.gridComponent.gridAdvancedImpl
 
-import org.junit.runner.RunWith
 import org.scalatest.{Matchers, WordSpec}
-import org.scalatest.junit.JUnitRunner
 
-@RunWith(classOf[JUnitRunner])
-class GridCreateSymmetricStrategySpec extends WordSpec with Matchers {
+class GridCreateSymmetricStrategySpec extends WordSpec with Matchers  {
 
   "An  GridCreateSymmetricStrategy" should {
     val createStrategy = new GridCreateSymmetricStrategy
@@ -22,15 +19,14 @@ class GridCreateSymmetricStrategySpec extends WordSpec with Matchers {
 
     }
     "should remove a pair of Cells" in {
-      val removePairGrid =
-        createStrategy.removePair(preparedSmallGrid, 0, 0, 3, 3)
+      val removePairGrid = createStrategy.removePair(preparedSmallGrid, 0,0,3,3)
       removePairGrid.solved should be(false)
-      removePairGrid.cell(0, 0).value should be(0)
-      removePairGrid.cell(3, 3).value should be(0)
+      removePairGrid.cell(0,0).value should be(0)
+      removePairGrid.cell(3,3).value should be(0)
     }
     "should find a symmetric Cell" in {
-      createStrategy.symmetricCell(4, 0, 0) should be(3, 3)
-      createStrategy.symmetricCell(4, 0, 3) should be(3, 0)
+      createStrategy.symmetricCell(4, 0,0) should be(3,3)
+      createStrategy.symmetricCell(4, 0,3) should be(3,0)
     }
     "solve a Grid with a symmetric solution" in {
       val symmetricGrid = createStrategy.createNewGrid(4)

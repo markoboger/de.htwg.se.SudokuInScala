@@ -1,7 +1,6 @@
+import de.htwg.se.sudoku.model.gridComponent.gridBaseImpl._
 
-import de.htwg.se.sudoku.model.gridComponent.gridBaseImpl.{Cell, Grid}
-
-object ModelWorksheet {
+import de.htwg.se.sudoku.model.gridComponent.gridBaseImpl._
 
   val grid4:Grid = new Grid(1)
 
@@ -10,4 +9,3 @@ object ModelWorksheet {
   val cell1 = Cell(0)
   cell1.toString
 
-}

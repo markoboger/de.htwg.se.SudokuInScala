@@ -1,11 +1,8 @@
 package de.htwg.se.sudoku.aview.gui
 
-import de.htwg.se.sudoku.controller.controllerComponent.{
-  CandidatesChanged,
-  CellChanged,
-  ControllerInterface,
-  GridSizeChanged
-}
+import de.htwg.se.sudoku.controller.controllerComponent.{ CandidatesChanged, CellChanged, ControllerInterface, GridSizeChanged }
+
+import de.htwg.se.sudoku.controller.controllerComponent.{CandidatesChanged, CellChanged, ControllerInterface, GridSizeChanged}
 import de.htwg.se.sudoku.util.Observer
 
 import scala.swing._
@@ -14,7 +11,7 @@ import scala.swing.event._
 
 class CellClicked(val row: Int, val column: Int) extends Event
 
-class SwingGui(controller: ControllerInterface) extends Frame with Observer {
+class SwingGui(controller: ControllerInterface) extends Frame with Observer{
 
   listenTo(controller)
 
@@ -23,7 +20,7 @@ class SwingGui(controller: ControllerInterface) extends Frame with Observer {
 
   def highlightpanel = new FlowPanel {
     contents += new Label("Highlight:")
-    for { index <- 0 to controller.gridSize } {
+    for {index <- 0 to controller.gridSize} {
       val button = Button(if (index == 0) "" else index.toString) {
         controller.highlight(index)
       }
@@ -73,14 +70,14 @@ class SwingGui(controller: ControllerInterface) extends Frame with Observer {
       mnemonic = Key.F
       contents += new MenuItem(Action("Empty") { controller.createEmptyGrid })
       contents += new MenuItem(Action("New") { controller.createNewGrid })
-      contents += new MenuItem(Action("Save") { controller.save })
-      contents += new MenuItem(Action("Load") { controller.load })
+      contents += new MenuItem(Action("Save") {controller.save})
+      contents += new MenuItem(Action("Load") {controller.load})
       contents += new MenuItem(Action("Quit") { System.exit(0) })
     }
     contents += new Menu("Edit") {
       mnemonic = Key.E
-      contents += new MenuItem(Action("Undo") { controller.undo })
-      contents += new MenuItem(Action("Redo") { controller.redo })
+            contents += new MenuItem(Action("Undo") { controller.undo })
+            contents += new MenuItem(Action("Redo") { controller.redo })
     }
     contents += new Menu("Solve") {
       mnemonic = Key.S
@@ -89,16 +86,12 @@ class SwingGui(controller: ControllerInterface) extends Frame with Observer {
     contents += new Menu("Highlight") {
       mnemonic = Key.H
       for { index <- 0 to controller.gridSize } {
-        contents += new MenuItem(Action(index.toString) {
-          controller.highlight(index)
-        })
+        contents += new MenuItem(Action(index.toString) { controller.highlight(index) })
       }
     }
     contents += new Menu("Options") {
       mnemonic = Key.O
-      contents += new MenuItem(Action("Show all candidates") {
-        controller.toggleShowAllCandidates
-      })
+      contents += new MenuItem(Action("Show all candidates") { controller.toggleShowAllCandidates })
       contents += new MenuItem(Action("Size 1*1") { controller.resize(1) })
       contents += new MenuItem(Action("Size 4*4") { controller.resize(4) })
       contents += new MenuItem(Action("Size 9*9") { controller.resize(9) })
@@ -110,8 +103,8 @@ class SwingGui(controller: ControllerInterface) extends Frame with Observer {
   redraw
 
   reactions += {
-    case event: GridSizeChanged   => resize(event.newSize)
-    case event: CellChanged       => redraw
+    case event: GridSizeChanged => resize(event.newSize)
+    case event: CellChanged     => redraw
     case event: CandidatesChanged => redraw
   }
 

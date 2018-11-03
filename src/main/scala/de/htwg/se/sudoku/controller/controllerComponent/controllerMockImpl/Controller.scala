@@ -1,11 +1,8 @@
 package de.htwg.se.sudoku.controller.controllerComponent.controllerMockImpl
 
-import de.htwg.se.sudoku.controller.controllerComponent.{
-  ControllerInterface,
-  GameStatus
-}
+import de.htwg.se.sudoku.controller.controllerComponent.{ ControllerInterface, GameStatus }
 import de.htwg.se.sudoku.controller.controllerComponent.GameStatus.GameStatus
-import de.htwg.se.sudoku.model.gridComponent.{CellInterface, GridInterface}
+import de.htwg.se.sudoku.model.gridComponent.{ CellInterface, GridInterface }
 import de.htwg.se.sudoku.model.gridComponent.gridMockImpl.Grid
 import de.htwg.se.sudoku.controller.controllerComponent.GameStatus._
 import play.api.libs.json.JsValue

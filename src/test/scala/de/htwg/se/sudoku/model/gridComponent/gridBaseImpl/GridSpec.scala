@@ -1,10 +1,7 @@
 package de.htwg.se.sudoku.model.gridComponent.gridBaseImpl
 
-import org.junit.runner.RunWith
-import org.scalatest.junit.JUnitRunner
 import org.scalatest.{Matchers, WordSpec}
 
-@RunWith(classOf[JUnitRunner])
 class GridSpec extends WordSpec with Matchers {
   "A Grid is the playingfield of Sudoku. A Grid" when {
     "to be constructed" should {

@@ -14,3 +14,4 @@ case class Cell(value: Int,
                                         else if (isHighlighted) "'"
                                         else " ")
 }
+

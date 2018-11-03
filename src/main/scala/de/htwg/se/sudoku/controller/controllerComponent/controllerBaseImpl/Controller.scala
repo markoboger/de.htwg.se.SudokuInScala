@@ -34,14 +34,14 @@ class Controller @Inject()(var grid: GridInterface)
     publish(new CellChanged)
   }
 
-  def resize(newSize: Int): Unit = {
+  def resize(newSize:Int) :Unit = {
     newSize match {
       case 1 => grid = injector.instance[GridInterface](Names.named("tiny"))
       case 4 => grid = injector.instance[GridInterface](Names.named("small"))
       case 9 => grid = injector.instance[GridInterface](Names.named("normal"))
       case _ =>
     }
-    gameStatus = RESIZE
+    gameStatus=RESIZE
     publish(new GridSizeChanged(newSize))
   }
 
@@ -72,40 +72,26 @@ class Controller @Inject()(var grid: GridInterface)
   }
 
   def save: Unit = {
-    fileIo.save(grid) match {
-      case Success(_) =>
-        gameStatus = SAVED
-      case Failure(e) =>
-        logger.error(
-          "Error occured while storing game to file: " + e.getMessage)
-        gameStatus = COULD_NOT_SAVE
-    }
-
+    fileIo.save(grid)
+    gameStatus = SAVED
     publish(new CellChanged)
   }
 
   def toJson = grid.toJson
 
+
   def load: Unit = {
-    val gridOptionResult = fileIo.load
-
-    gridOptionResult match {
-      case Success(gridOption) =>
-        gridOption match {
-          case Some(_grid) =>
-            grid = _grid
-            gameStatus = LOADED
-          case None =>
-            createEmptyGrid
-            gameStatus = COULD_NOT_LOAD
-        }
-      case Failure(e) =>
-        logger.error(
-          "Error occured while loading game from file: " + e.getMessage)
+    val gridOption = fileIo.load
+    gridOption match {
+      case None => {
         createEmptyGrid
-        gameStatus = COULD_NOT_LOAD
+        gameStatus = COULDNOTLOAD
+      }
+      case Some(_grid) => {
+        grid = _grid
+        gameStatus = LOADED
+      }
     }
-
     publish(new CellChanged)
   }
 
@@ -121,35 +107,34 @@ class Controller @Inject()(var grid: GridInterface)
     publish(new CellChanged)
   }
 
-  def cell(row: Int, col: Int) = grid.cell(row, col)
+  def cell(row:Int, col:Int) = grid.cell(row,col)
 
-  def isGiven(row: Int, col: Int): Boolean = grid.cell(row, col).given
-  def isSet(row: Int, col: Int): Boolean = grid.cell(row, col).isSet
-  def available(row: Int, col: Int): Set[Int] = grid.available(row, col)
-  def showCandidates(row: Int, col: Int): Unit = {
-    grid = grid.setShowCandidates(row, col)
+  def isGiven(row: Int, col: Int):Boolean = grid.cell(row, col).given
+  def isSet(row:Int, col:Int):Boolean = grid.cell(row, col).isSet
+  def available(row:Int, col:Int):Set[Int] = grid.available(row, col)
+  def showCandidates(row:Int, col:Int):Unit = {
+    grid=grid.setShowCandidates(row, col)
     gameStatus = CANDIDATES
     publish(new CandidatesChanged)
   }
 
-  def isShowCandidates(row: Int, col: Int): Boolean =
-    grid.cell(row, col).showCandidates
-  def gridSize: Int = grid.size
-  def blockSize: Int = Math.sqrt(grid.size).toInt
-  def isShowAllCandidates: Boolean = showAllCandidates
-  def toggleShowAllCandidates: Unit = {
+  def isShowCandidates(row:Int, col:Int):Boolean = grid.cell(row, col).showCandidates
+  def gridSize:Int = grid.size
+  def blockSize:Int = Math.sqrt(grid.size).toInt
+  def isShowAllCandidates:Boolean = showAllCandidates
+  def toggleShowAllCandidates:Unit = {
     showAllCandidates = !showAllCandidates
     gameStatus = CANDIDATES
     publish(new CellChanged)
   }
-  def isHighlighted(row: Int, col: Int): Boolean = grid.isHighlighted(row, col)
-  def statusText: String = GameStatus.message(gameStatus)
-  def highlight(index: Int): Unit = {
+  def isHighlighted(row:Int, col: Int):Boolean = grid.isHighlighted(row, col)
+  def statusText:String = GameStatus.message(gameStatus)
+  def highlight(index:Int):Unit = {
     grid = grid.highlight(index)
     publish(new CellChanged)
   }
 
-  override def setGiven(row: Int, col: Int, value: Int): Unit = {
+  override def setGiven(row: Int, col: Int, value:Int): Unit = {
     grid = grid.setGiven(row, col, value)
   }
 
