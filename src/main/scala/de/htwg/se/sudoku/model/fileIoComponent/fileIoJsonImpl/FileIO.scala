@@ -2,14 +2,14 @@ package de.htwg.se.sudoku.model.fileIoComponent.fileIoJsonImpl
 
 import com.google.inject.Guice
 import com.google.inject.name.Names
-import net.codingwell.scalaguice.InjectorExtensions._
 import de.htwg.se.sudoku.SudokuModule
 import de.htwg.se.sudoku.model.fileIoComponent.FileIOInterface
-import de.htwg.se.sudoku.model.gridComponent.{CellInterface, GridInterface}
+import de.htwg.se.sudoku.model.gridComponent.GridInterface
+import net.codingwell.scalaguice.InjectorExtensions._
 import play.api.libs.json._
 
-import scala.util.{Try, Success, Failure}
 import scala.io.Source
+import scala.util.Try
 
 class FileIO extends FileIOInterface {
 
@@ -23,7 +23,8 @@ class FileIO extends FileIOInterface {
 
       val json: JsValue = Json.parse(source)
       val size = (json \ "grid" \ "size").get.toString.toInt
-      val injector = Guice.createInjector(new SudokuModule)
+      val injector:ScalaInjector = Guice.createInjector(new SudokuModule)
+
       size match {
         case 1 =>
           gridOption =
@@ -40,9 +41,9 @@ class FileIO extends FileIOInterface {
         case Some(grid) => {
           var _grid = grid
           for (index <- 0 until size * size) {
-            val row = (json \\ "row")(index).as[Int]
-            val col = (json \\ "col")(index).as[Int]
-            val cell = (json \\ "cell")(index)
+            val row = (json \\ "row") (index).as[Int]
+            val col = (json \\ "col") (index).as[Int]
+            val cell = (json \\ "cell") (index)
             val value = (cell \ "value").as[Int]
             _grid = _grid.set(row, col, value)
             val given = (cell \ "given").as[Boolean]
@@ -70,7 +71,5 @@ class FileIO extends FileIOInterface {
 
   def gridToJson(grid: GridInterface) = grid.toJson
 
-
-
-
+  override def unbind(): Unit = {}
 }

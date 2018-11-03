@@ -6,18 +6,21 @@ import com.google.inject.{Guice, Injector}
 import de.htwg.se.sudoku.aview.gui.SwingGui
 import de.htwg.se.sudoku.aview.{HttpServer, Tui}
 import de.htwg.se.sudoku.controller.controllerComponent.ControllerInterface
+import de.htwg.se.sudoku.model.fileIoComponent.FileIOInterface
+import de.htwg.se.sudoku.model.fileIoComponent.fileIoMicroImpl.FileIoHttpServer
 
 import scala.io.StdIn.readLine
 
 object Sudoku {
-  val injector: Injector = Guice.createInjector(new SudokuModule)
+  val injector: Injector = Guice.createInjector(new MicroSudokuModule)
   val controller: ControllerInterface = injector.getInstance(classOf[ControllerInterface])
   val tui = new Tui(controller)
-
+  
   if (!GraphicsEnvironment.isHeadless) {
     val gui = new SwingGui(controller)
   }
-
+  
+  val fileIoHttpServer: FileIoHttpServer = injector.getInstance(classOf[FileIoHttpServer])
   val webserver = new HttpServer(controller)
 
   controller.createNewGrid
@@ -32,5 +35,7 @@ object Sudoku {
       }
     } while (input != "q")
     webserver.unbind()
+    fileIoHttpServer.unbind()
+    controller.finish()
   }
 }
