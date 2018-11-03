@@ -71,4 +71,5 @@ class FileIO extends FileIOInterface {
 
   def gridToJson(grid: GridInterface) = grid.toJson
 
+  override def unbind(): Unit = {}
 }

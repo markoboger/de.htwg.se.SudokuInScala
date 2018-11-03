@@ -19,7 +19,7 @@ import scala.concurrent.{Await, ExecutionContextExecutor, Future}
 import scala.util.{Success, Try}
 
 class FileIO @Inject()(@Named("FileHost") host: String, @Named("FilePort") port: Int) extends FileIOInterface {
-  implicit val system: ActorSystem = ActorSystem("FileIoHttpServerSystem")
+  implicit val system: ActorSystem = ActorSystem("FileIoSystem")
   implicit val materializer: ActorMaterializer = ActorMaterializer()
   implicit val executionContext: ExecutionContextExecutor = system.dispatcher
 
@@ -54,6 +54,9 @@ class FileIO @Inject()(@Named("FileHost") host: String, @Named("FilePort") port:
     }
   }
 
+  override def unbind(): Unit = {
+    system.terminate()
+  }
 
   def jsonGridToGridOption(jsonString: Future[String]): Option[GridInterface] = {
 

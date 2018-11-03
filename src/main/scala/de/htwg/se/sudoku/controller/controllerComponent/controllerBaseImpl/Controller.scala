@@ -167,4 +167,6 @@ class Controller @Inject()(var grid: GridInterface)
   override def setShowCandidates(row: Int, col: Int): Unit = {
     grid = grid.setShowCandidates(row, col)
   }
+
+  override def finish(): Unit = fileIo.unbind()
 }

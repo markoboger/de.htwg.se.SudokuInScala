@@ -7,7 +7,6 @@ import play.api.libs.json.JsValue
 import scala.swing.Publisher
 
 trait ControllerInterface extends Publisher {
-
   def gridSize: Int
 
   def blockSize: Int
@@ -57,6 +56,8 @@ trait ControllerInterface extends Publisher {
   def statusText: String
 
   def gridToJson: JsValue
+
+  def finish(): Unit
 }
 
 trait ControllerIoInterface {

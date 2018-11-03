@@ -4,6 +4,7 @@ import com.google.inject.{Guice, Injector}
 import de.htwg.se.sudoku.aview.gui.SwingGui
 import de.htwg.se.sudoku.aview.{HttpServer, Tui}
 import de.htwg.se.sudoku.controller.controllerComponent.ControllerInterface
+import de.htwg.se.sudoku.model.fileIoComponent.FileIOInterface
 import de.htwg.se.sudoku.model.fileIoComponent.fileIoMicroImpl.FileIoHttpServer
 
 import scala.io.StdIn.readLine
@@ -28,5 +29,6 @@ object Sudoku {
     } while (input != "q")
     webserver.unbind()
     fileIoHttpServer.unbind()
+    controller.finish()
   }
 }

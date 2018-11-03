@@ -91,4 +91,5 @@ class FileIO extends FileIOInterface {
     </cell>
   }
 
+  override def unbind(): Unit = {}
 }
