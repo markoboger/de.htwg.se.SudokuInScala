@@ -10,8 +10,9 @@ import de.htwg.se.sudoku.model.fileIoComponent.FileIOInterface
 import de.htwg.se.sudoku.model.gridComponent.GridInterface
 import de.htwg.se.sudoku.util.UndoManager
 
-import scala.util.{Success, Failure}
+import scala.util.{Failure, Success}
 import com.typesafe.scalalogging.{LazyLogging, Logger}
+import org.mongodb.scala.{MongoClient, MongoDatabase}
 
 class Controller @Inject()(var grid: GridInterface)
     extends ControllerInterface
@@ -23,6 +24,14 @@ class Controller @Inject()(var grid: GridInterface)
   private val undoManager = new UndoManager
   val injector = Guice.createInjector(new SudokuModule)
   val fileIo = injector.instance[FileIOInterface]
+
+  // database connection (could be injected later if database is running on another server)
+  // connects to the default server localhost on port 27017
+  private val mongoClient: MongoClient = MongoClient()
+  private val db: MongoDatabase = mongoClient.getDatabase("sudoku-in-scala")
+  private val collection = db.getCollection("sudoku-in-scala-col")
+  // uncomment to delete the current database
+  //Await.result(collection.drop().toFuture(), Duration.Inf)
 
   def createEmptyGrid: Unit = {
     grid.size match {
