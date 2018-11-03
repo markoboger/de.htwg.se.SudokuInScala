@@ -1,5 +1,7 @@
 package de.htwg.se.sudoku
 
+import java.awt.GraphicsEnvironment
+
 import com.google.inject.{Guice, Injector}
 import de.htwg.se.sudoku.aview.gui.SwingGui
 import de.htwg.se.sudoku.aview.{HttpServer, Tui}
@@ -13,8 +15,11 @@ object Sudoku {
   val injector: Injector = Guice.createInjector(new MicroSudokuModule)
   val controller: ControllerInterface = injector.getInstance(classOf[ControllerInterface])
   val tui = new Tui(controller)
-  val gui = new SwingGui(controller)
-
+  
+  if (!GraphicsEnvironment.isHeadless) {
+    val gui = new SwingGui(controller)
+  }
+  
   val fileIoHttpServer: FileIoHttpServer = injector.getInstance(classOf[FileIoHttpServer])
   val webserver = new HttpServer(controller)
 
@@ -24,8 +29,10 @@ object Sudoku {
     var input: String = ""
 
     do {
-      input = readLine()
-      tui.processInputLine(input)
+      if (Console.in.ready()) {
+        input = readLine()
+        tui.processInputLine(input)
+      }
     } while (input != "q")
     webserver.unbind()
     fileIoHttpServer.unbind()
