@@ -2,7 +2,7 @@ package de.htwg.se.sudoku.model.fileIoComponent.fileIoMongoDBImpl
 
 import com.google.inject.{Guice, Inject}
 import com.google.inject.name.{Named, Names}
-import de.htwg.se.sudoku.SudokuModule
+import de.htwg.se.sudoku.{MongoDBModule, SudokuModule}
 import de.htwg.se.sudoku.model.fileIoComponent.FileIOInterface
 import de.htwg.se.sudoku.model.gridComponent.GridInterface
 import net.codingwell.scalaguice.InjectorExtensions.ScalaInjector
@@ -29,7 +29,7 @@ class FileIO @Inject()(@Named("MongoDBHost") host: String, @Named("MongoDBPort")
     Try {
       val json: JsValue = Json.parse(result.head.toJson())
       val size = (json \ "grid" \ "size").get.toString.toInt
-      val injector = Guice.createInjector(new SudokuModule)
+      val injector = Guice.createInjector(new MongoDBModule)
 
       size match {
         case 1 =>
