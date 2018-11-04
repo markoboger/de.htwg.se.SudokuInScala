@@ -69,3 +69,25 @@ class MongoDBModule extends AbstractModule with ScalaModule {
     bind[FileIOInterface].to[fileIoMongoDBImpl.FileIO]
   }
 }
+
+class SlickModule extends AbstractModule with ScalaModule {
+
+  val defaultSize: Int = 9
+  val databaseUrl: String = "jdbc:h2:~/sudoku-in-scala" // in memory on localhost
+  val databaseUser: String = "SA"
+
+  override def configure(): Unit = {
+    bindConstant().annotatedWith(Names.named("DefaultSize")).to(defaultSize)
+    bind[GridInterface].to[Grid]
+    bind[ControllerInterface].to[controllerBaseImpl.Controller]
+
+    bind[GridInterface].annotatedWithName("tiny").toInstance(new Grid(1))
+    bind[GridInterface].annotatedWithName("small").toInstance(new Grid(4))
+    bind[GridInterface].annotatedWithName("normal").toInstance(new Grid(9))
+
+    bindConstant().annotatedWith(Names.named("H2Url")).to(databaseUrl)
+    bindConstant().annotatedWith(Names.named("H2User")).to(databaseUser)
+
+    bind[FileIOInterface].to[fileIoSlickImpl.FileIO]
+  }
+}
