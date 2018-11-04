@@ -3,7 +3,7 @@ package de.htwg.se.sudoku.controller.controllerComponent.controllerBaseImpl
 import com.google.inject.name.Names
 import com.google.inject.{Guice, Inject, Injector}
 import com.typesafe.scalalogging.LazyLogging
-import de.htwg.se.sudoku.{MongoDBModule}
+import de.htwg.se.sudoku.{MicroSudokuModule, MongoDBModule}
 import de.htwg.se.sudoku.controller.controllerComponent.GameStatus._
 import de.htwg.se.sudoku.controller.controllerComponent._
 import de.htwg.se.sudoku.model.fileIoComponent.FileIOInterface
@@ -22,7 +22,8 @@ class Controller @Inject()(var grid: GridInterface)
   var gameStatus: GameStatus = IDLE
   var showAllCandidates: Boolean = false
   private val undoManager = new UndoManager
-  val injector: Injector = Guice.createInjector(new MongoDBModule)
+  val injector: Injector = Guice.createInjector(new MicroSudokuModule)
+  // val injector: Injector = Guice.createInjector(new MongoDBModule) // can only be used with mongo db installed and configured
   val fileIo: FileIOInterface = injector.instance[FileIOInterface]
 
   def createEmptyGrid: Unit = {
