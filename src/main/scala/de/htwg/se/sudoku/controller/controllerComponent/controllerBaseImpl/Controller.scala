@@ -3,7 +3,7 @@ package de.htwg.se.sudoku.controller.controllerComponent.controllerBaseImpl
 import com.google.inject.name.Names
 import com.google.inject.{Guice, Inject, Injector}
 import com.typesafe.scalalogging.LazyLogging
-import de.htwg.se.sudoku.MicroSudokuModule
+import de.htwg.se.sudoku.{MongoDBModule}
 import de.htwg.se.sudoku.controller.controllerComponent.GameStatus._
 import de.htwg.se.sudoku.controller.controllerComponent._
 import de.htwg.se.sudoku.model.fileIoComponent.FileIOInterface
@@ -13,8 +13,6 @@ import net.codingwell.scalaguice.InjectorExtensions._
 import play.api.libs.json.JsValue
 
 import scala.util.{Failure, Success}
-import com.typesafe.scalalogging.{LazyLogging, Logger}
-import org.mongodb.scala.{MongoClient, MongoDatabase}
 
 class Controller @Inject()(var grid: GridInterface)
   extends ControllerInterface
@@ -24,16 +22,8 @@ class Controller @Inject()(var grid: GridInterface)
   var gameStatus: GameStatus = IDLE
   var showAllCandidates: Boolean = false
   private val undoManager = new UndoManager
-  val injector: Injector = Guice.createInjector(new MicroSudokuModule)
+  val injector: Injector = Guice.createInjector(new MongoDBModule)
   val fileIo: FileIOInterface = injector.instance[FileIOInterface]
-
-  // database connection (could be injected later if database is running on another server)
-  // connects to the default server localhost on port 27017
-  private val mongoClient: MongoClient = MongoClient()
-  private val db: MongoDatabase = mongoClient.getDatabase("sudoku-in-scala")
-  private val collection = db.getCollection("sudoku-in-scala-col")
-  // uncomment to delete the current database
-  //Await.result(collection.drop().toFuture(), Duration.Inf)
 
   def createEmptyGrid: Unit = {
     grid.size match {
