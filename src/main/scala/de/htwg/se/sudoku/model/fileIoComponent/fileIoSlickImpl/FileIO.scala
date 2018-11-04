@@ -2,7 +2,7 @@ package de.htwg.se.sudoku.model.fileIoComponent.fileIoSlickImpl
 
 import com.google.inject.{Guice, Inject}
 import com.google.inject.name.{Named, Names}
-import de.htwg.se.sudoku.SudokuModule
+import de.htwg.se.sudoku.{SlickModule}
 import de.htwg.se.sudoku.model.database.{Cell, Grid}
 import de.htwg.se.sudoku.model.fileIoComponent.FileIOInterface
 import de.htwg.se.sudoku.model.gridComponent.GridInterface
@@ -39,7 +39,7 @@ class FileIO @Inject()(@Named("H2Url") url: String, @Named("H2User") dbUser: Str
     var gridOption: Option[GridInterface] = None
 
     Try {
-      val injector = Guice.createInjector(new SudokuModule)
+      val injector = Guice.createInjector(new SlickModule)
 
       val grids = TableQuery[Grid]
       val cells = TableQuery[Cell]
