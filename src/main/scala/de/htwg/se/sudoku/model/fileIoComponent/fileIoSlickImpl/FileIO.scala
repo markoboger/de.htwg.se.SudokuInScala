@@ -48,9 +48,9 @@ class FileIO @Inject()(@Named("H2Url") url: String, @Named("H2User") dbUser: Str
         grid <- grids
       ) yield grid
 
-      val gridF = db.run(gridQuery.result)
-      val gridRes = Await.result(gridF, Duration.Inf)
-      val gridSize = gridRes.head._2
+      val gridFuture = db.run(gridQuery.result)
+      val gridResult = Await.result(gridFuture, Duration.Inf)
+      val gridSize = gridResult.head._2
 
       gridSize match {
         case 1 =>
@@ -68,14 +68,14 @@ class FileIO @Inject()(@Named("H2Url") url: String, @Named("H2User") dbUser: Str
         cell <- cells
       ) yield cell
 
-      val cellsF = db.run(cellsQuery.result)
-      val cellsRes = Await.result(cellsF, Duration.Inf)
+      val cellsFuture = db.run(cellsQuery.result)
+      val cellsResult = Await.result(cellsFuture, Duration.Inf)
 
       gridOption match {
         case Some(grid) => {
           var _grid = grid
 
-          cellsRes.foreach(c => {
+          cellsResult.foreach(c => {
             _grid = _grid.set(c._2, c._3, c._4)
             val given = c._5
             val showCandidates = c._6
