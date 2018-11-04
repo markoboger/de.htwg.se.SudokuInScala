@@ -75,8 +75,15 @@ class Controller @Inject()(var grid: GridInterface)
   }
 
   def save: Unit = {
-    fileIo.save(grid)
-    gameStatus = SAVED
+    fileIo.save(grid) match {
+      case Success(_) =>
+        gameStatus = SAVED
+      case Failure(e) =>
+        logger.error(
+          "Error occured while saving game: " + e.getMessage)
+        gameStatus = COULD_NOT_SAVE
+    }
+
     publish(new CellChanged)
   }
 
@@ -97,7 +104,7 @@ class Controller @Inject()(var grid: GridInterface)
         }
       case Failure(e) =>
         logger.error(
-          "Error occured while loading game from file: " + e.getMessage)
+          "Error occured while loading game: " + e.getMessage)
         createEmptyGrid
         gameStatus = COULD_NOT_LOAD
     }
