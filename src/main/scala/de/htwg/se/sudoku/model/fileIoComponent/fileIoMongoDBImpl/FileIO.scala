@@ -21,13 +21,13 @@ class FileIO @Inject()(@Named("MongoDBHost") host: String, @Named("MongoDBPort")
   private val collection = db.getCollection("sudoku-in-scala-col")
 
   override def load: Try[Option[GridInterface]] = {
-    val resF = collection.find().projection(Projections.excludeId()).toFuture()
-    val res = Await.result(resF, Duration.Inf)
+    val resultFuture = collection.find().projection(Projections.excludeId()).toFuture()
+    val result = Await.result(resultFuture, Duration.Inf)
 
     var gridOption: Option[GridInterface] = None
 
     Try {
-      val json: JsValue = Json.parse(res.head.toJson())
+      val json: JsValue = Json.parse(result.head.toJson())
       val size = (json \ "grid" \ "size").get.toString.toInt
       val injector = Guice.createInjector(new SudokuModule)
 
@@ -69,8 +69,8 @@ class FileIO @Inject()(@Named("MongoDBHost") host: String, @Named("MongoDBPort")
     Try {
       Await.result(collection.drop().toFuture(), Duration.Inf)
       val gameStateDoc = Document.apply(gridToJson(grid).toString())
-      val resF = collection.insertOne(gameStateDoc).toFuture()
-      Await.result(resF, Duration.Inf)
+      val resultFuture = collection.insertOne(gameStateDoc).toFuture()
+      Await.result(resultFuture, Duration.Inf)
     }
   }
 

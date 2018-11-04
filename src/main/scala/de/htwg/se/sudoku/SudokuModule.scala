@@ -52,7 +52,7 @@ class MongoDBModule extends AbstractModule with ScalaModule {
 
   val defaultSize: Int = 9
   val defaultHostname: String = "localhost"
-  val defaultFilePort: Int = 27017
+  val defaultMongoDBPort: Int = 27017
 
   override def configure(): Unit = {
     bindConstant().annotatedWith(Names.named("DefaultSize")).to(defaultSize)
@@ -64,7 +64,7 @@ class MongoDBModule extends AbstractModule with ScalaModule {
     bind[GridInterface].annotatedWithName("normal").toInstance(new Grid(9))
 
     bindConstant().annotatedWith(Names.named("MongoDBHost")).to(defaultHostname)
-    bindConstant().annotatedWith(Names.named("MongoDBPort")).to(defaultFilePort)
+    bindConstant().annotatedWith(Names.named("MongoDBPort")).to(defaultMongoDBPort)
 
     bind[FileIOInterface].to[fileIoMongoDBImpl.FileIO]
   }
