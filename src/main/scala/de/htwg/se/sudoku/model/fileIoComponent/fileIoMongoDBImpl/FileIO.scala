@@ -2,7 +2,7 @@ package de.htwg.se.sudoku.model.fileIoComponent.fileIoMongoDBImpl
 
 import com.google.inject.{Guice, Inject}
 import com.google.inject.name.{Named, Names}
-import de.htwg.se.sudoku.{MongoDBModule}
+import de.htwg.se.sudoku.MongoDBModule
 import de.htwg.se.sudoku.model.fileIoComponent.FileIOInterface
 import de.htwg.se.sudoku.model.gridComponent.GridInterface
 import net.codingwell.scalaguice.InjectorExtensions.ScalaInjector
@@ -74,7 +74,7 @@ class FileIO @Inject()(@Named("MongoDBHost") host: String, @Named("MongoDBPort")
     }
   }
 
-  def gridToJson(grid: GridInterface) = grid.toJson
+  private def gridToJson(grid: GridInterface) = grid.toJson
 
   override def unbind(): Unit = {}
 }

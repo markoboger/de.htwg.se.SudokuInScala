@@ -2,8 +2,8 @@ package de.htwg.se.sudoku.model.fileIoComponent.fileIoSlickImpl
 
 import com.google.inject.{Guice, Inject}
 import com.google.inject.name.{Named, Names}
-import de.htwg.se.sudoku.{SlickModule}
-import de.htwg.se.sudoku.model.database.{Cell, Grid}
+import de.htwg.se.sudoku.SlickModule
+import de.htwg.se.sudoku.model.database.{CellSchema, GridSchema}
 import de.htwg.se.sudoku.model.fileIoComponent.FileIOInterface
 import de.htwg.se.sudoku.model.gridComponent.GridInterface
 import net.codingwell.scalaguice.InjectorExtensions.ScalaInjector
@@ -18,19 +18,19 @@ import scala.concurrent.ExecutionContext.Implicits.global
 
 class FileIO @Inject()(@Named("H2Url") url: String, @Named("H2User") dbUser: String) extends FileIOInterface{
 
-  val db =  Database.forURL(url, user = dbUser)
+  val db = Database.forURL(url, user = dbUser)
 
   // create schema if it doesn't exist
   val tables = List(
-    TableQuery[Grid],
-    TableQuery[Cell]
+    TableQuery[GridSchema],
+    TableQuery[CellSchema]
   )
 
-  val existingTables = db.run(MTable.getTables)
-  val createSchemaFuture = existingTables.flatMap( v => {
-    val names = v.map(mt => mt.name.name)
+  private val existingTables = db.run(MTable.getTables)
+  private val createSchemaFuture = existingTables.flatMap(table => {
+    val names = table.map(table => table.name.name)
     val createIfNotExist = tables.filter( table =>
-      (!names.contains(table.baseTableRow.tableName))).map(_.schema.create)
+      !names.contains(table.baseTableRow.tableName)).map(_.schema.create)
     db.run(DBIO.sequence(createIfNotExist))
   })
   Await.result(createSchemaFuture, Duration.Inf)
@@ -41,8 +41,8 @@ class FileIO @Inject()(@Named("H2Url") url: String, @Named("H2User") dbUser: Str
     Try {
       val injector = Guice.createInjector(new SlickModule)
 
-      val grids = TableQuery[Grid]
-      val cells = TableQuery[Cell]
+      val grids = TableQuery[GridSchema]
+      val cells = TableQuery[CellSchema]
 
       val gridQuery = for (
         grid <- grids
@@ -72,7 +72,7 @@ class FileIO @Inject()(@Named("H2Url") url: String, @Named("H2User") dbUser: Str
       val cellsResult = Await.result(cellsFuture, Duration.Inf)
 
       gridOption match {
-        case Some(grid) => {
+        case Some(grid) =>
           var _grid = grid
 
           cellsResult.foreach(c => {
@@ -84,7 +84,6 @@ class FileIO @Inject()(@Named("H2Url") url: String, @Named("H2User") dbUser: Str
           })
 
           gridOption = Some(_grid)
-        }
         case None =>
       }
 
@@ -95,20 +94,20 @@ class FileIO @Inject()(@Named("H2Url") url: String, @Named("H2User") dbUser: Str
   override def save(grid: GridInterface): Try[Unit] = {
 
     Try{
-      val grids = TableQuery[Grid]
-      val cells = TableQuery[Cell]
+      val grids = TableQuery[GridSchema]
+      val cells = TableQuery[CellSchema]
 
       Await.result(db.run(grids.delete), Duration.Inf)
       Await.result(db.run(cells.delete), Duration.Inf)
 
       val gridCells = for {
-        row <- 0 to grid.size - 1
-        col <- 0 to grid.size - 1
+        row <- 0 until grid.size
+        col <- 0 until grid.size
       } yield (row, col, grid.cell(row, col))
 
-      val cellSeq = gridCells.zipWithIndex.map{case (c, idx) => {
+      val cellSeq = gridCells.zipWithIndex.map{case (c, idx) =>
         cells += (0, c._1, c._2, c._3.value, c._3.given, c._3.showCandidates)
-      }}
+      }
 
       db.run(DBIO.seq(
         grids += (0, grid.size),
