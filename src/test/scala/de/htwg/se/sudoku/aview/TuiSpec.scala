@@ -10,6 +10,9 @@ class TuiSpec  extends WordSpec with Matchers{
   "A Sudoku Tui" should {
     val controller = new Controller(new Grid(9))
     val tui = new Tui(controller)
+    "do nothing on input 'q'" in {
+      tui.processInputLine("q")
+    }
     "create and empty Sudoku on input 'n'" in {
       tui.processInputLine("n")
       controller.grid should be(new Grid(9))
