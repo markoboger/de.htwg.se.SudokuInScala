@@ -15,7 +15,10 @@ class Solver(grid:Grid){
   def solve: Tuple2[Boolean, Grid] = solve(0)
 
   def solve(index: Int): Tuple2[Boolean, Grid] = {
-    if (grid.solved) return (true, grid) else if (unsolvable) return (false, grid) else {
+    if (grid.solved) return (true, grid)
+    else
+    if (unsolvable) return (false, grid)
+    else {
       val (row, col) = grid.indexToRowCol(index)
       if (grid.cell(row, col).isSet) return solve(index + 1) else {
         val iter = Random.shuffle(grid.available(row, col).toList).iterator
