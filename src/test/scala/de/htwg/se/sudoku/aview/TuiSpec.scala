@@ -30,6 +30,11 @@ class TuiSpec  extends WordSpec with Matchers{
       tui.processInputLine("s")
       controller.grid.solved should be(true)
     }
+    "do nothing on bad input like'99999'" in {
+      val old = controller.gridToString
+      tui.processInputLine("99999")
+      controller.gridToString should be(old)
+    }
   }
 
 }
