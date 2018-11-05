@@ -14,10 +14,8 @@ class ControllerSpec extends WordSpec with Matchers {
       val controller = new Controller(smallGrid)
       val observer = new Observer {
         var updated: Boolean = false
-
         def isUpdated: Boolean = updated
-
-        override def update: Unit = updated = true
+        override def update: Boolean = {updated = true; updated}
       }
       controller.add(observer)
       "notify its Observer after creation" in {
@@ -31,9 +29,9 @@ class ControllerSpec extends WordSpec with Matchers {
         controller.grid.valid should be(true)
       }
       "notify its Observer after setting a cell" in {
-        controller.set(1, 1, 4)
+        controller.set(1,1,4)
         observer.updated should be(true)
-        controller.grid.cell(1, 1).value should be(4)
+        controller.grid.cell(1,1).value should be (4)
       }
       "notify its Observer after solving" in {
         controller.solve

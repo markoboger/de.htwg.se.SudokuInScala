@@ -12,9 +12,9 @@ object Sudoku {
   controller.notifyObservers
 
   def main(args: Array[String]): Unit = {
-    var input: String = ""
-
-    do {
+    var input: String = args(0)
+    if (!input.isEmpty) tui.processInputLine(input)
+    else do {
       input = readLine()
       tui.processInputLine(input)
     } while (input != "q")
