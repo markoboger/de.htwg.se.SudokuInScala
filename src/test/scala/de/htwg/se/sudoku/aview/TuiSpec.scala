@@ -21,6 +21,17 @@ class TuiSpec  extends WordSpec with Matchers{
       tui.processInputLine("123")
       controller.grid.cell(1,2).value should be(3)
     }
+    "undo on input 'z'" in {
+      tui.processInputLine("123")
+      tui.processInputLine("z")
+      controller.grid.cell(1,2).value should be(0)
+    }
+    "redo on input 'y'" in {
+      tui.processInputLine("123")
+      tui.processInputLine("z")
+      tui.processInputLine("y")
+      controller.grid.cell(1,2).value should be(3)
+    }
     "create a random Sudoku on input 'r'" in {
       tui.processInputLine("r")
       controller.grid.valid should be(true)
