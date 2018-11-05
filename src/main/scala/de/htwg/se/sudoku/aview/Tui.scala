@@ -18,9 +18,9 @@ class Tui(controller: Controller) extends Observer{
       case "s" =>
         val success= controller.solve
         if (success) println("Puzzle solved")else println("This puzzle could not be solved!")
-      case _ => input.toList.filter(c => c != ' ').map(c => c.toString.toInt) match {
+      case _ => input.toList.filter(c => c != ' ').filter(_.isDigit).map(c => c.toString.toInt) match {
           case row :: column :: value :: Nil => controller.set(row, column, value)
-          case _ =>
+          case _ => println("Wrong input!")
         }
 
     }
