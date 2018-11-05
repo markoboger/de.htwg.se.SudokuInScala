@@ -56,5 +56,21 @@ class ControllerSpec extends WordSpec with Matchers {
       controller.grid.cell(0, 0).isSet should be(true)
       controller.grid.solved should be(true)
     }
+    "handle undo/redo of setting a cell correctly" in {
+      controller.set(0,0,0)
+      controller.grid.cell(0, 0).isSet should be(false)
+      controller.grid.solved should be(false)
+      controller.set(0,0,1)
+      controller.grid.cell(0, 0).isSet should be(true)
+      controller.grid.cell(0,0).value should be(1)
+      controller.undo
+      controller.grid.cell(0, 0).isSet should be(false)
+      controller.grid.solved should be(false)
+      controller.grid.cell(0,0).value should be(0)
+      controller.redo
+      controller.grid.cell(0, 0).isSet should be(true)
+      controller.grid.cell(0,0).value should be(1)
+      controller.grid.solved should be(true)
+    }
   }
 }

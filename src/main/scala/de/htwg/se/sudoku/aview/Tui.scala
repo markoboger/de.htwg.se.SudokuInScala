@@ -1,7 +1,6 @@
 package de.htwg.se.sudoku.aview
 
-import de.htwg.se.sudoku.controller.Controller
-import de.htwg.se.sudoku.model.{Grid, GridCreator, Solver}
+import de.htwg.se.sudoku.controller.{Controller, GameStatus}
 import de.htwg.se.sudoku.util.Observer
 
 class Tui(controller: Controller) extends Observer{
@@ -29,7 +28,7 @@ class Tui(controller: Controller) extends Observer{
   override def update: Boolean = {
     println(controller.gridToString)
     println(GameStatus.message(controller.gameStatus))
-    controller.gameStatus=IDLE
+    controller.gameStatus=GameStatus.IDLE
     true
   }
 }
