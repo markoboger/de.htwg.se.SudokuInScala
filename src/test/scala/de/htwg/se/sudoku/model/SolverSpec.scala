@@ -32,5 +32,14 @@ class GridSolverSpec extends WordSpec with Matchers {
         }
       }
     }
+    "Grid is not solvable"  should {
+      val unsolvableGrid =new Grid(4).set(0,0,1).set(1,1,1)
+      "find out that it is unsolvable" in {
+        val (solvable, solvedGrid) = new Solver(unsolvableGrid).solve
+        solvable should be(false)
+        solvedGrid.solved should be(false)
+      }
+
+    }
   }
 }
