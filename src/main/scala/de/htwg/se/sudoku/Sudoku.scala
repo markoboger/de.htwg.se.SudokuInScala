@@ -1,6 +1,7 @@
 package de.htwg.se.sudoku
 
 import java.awt.GraphicsEnvironment
+import java.io.BufferedReader
 
 import akka.actor.{ActorSystem, Props}
 import akka.pattern.ask
@@ -38,18 +39,9 @@ object Sudoku {
   controller.createNewGrid
 
   def main(args: Array[String]): Unit = {
-    var input: String = ""
+    tui.processInput(new BufferedReader(Console.in))
 
-    do {
-      Thread.sleep(200)
-
-      if (Console.in.ready()) {
-        input = readLine()
-        tui.processInputLine(input)
-      }
-    } while (input != "q")
     webserver.unbind()
     fileIoHttpServer.unbind()
-    controller.finish()
   }
 }

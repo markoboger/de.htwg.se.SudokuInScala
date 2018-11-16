@@ -1,7 +1,10 @@
 package de.htwg.se.sudoku.aview.gui
 
-import de.htwg.se.sudoku.controller.controllerComponent.{CandidatesChanged, CellChanged, ControllerInterface, GridSizeChanged}
+import java.awt.event.WindowEvent
+
+import de.htwg.se.sudoku.controller.controllerComponent._
 import de.htwg.se.sudoku.util.Observer
+import javax.swing.WindowConstants
 
 import scala.swing.Swing.LineBorder
 import scala.swing._
@@ -16,7 +19,9 @@ class SwingGui(controller: ControllerInterface) extends Frame with Observer {
   title = "HTWG Sudoku"
   var cells = Array.ofDim[CellPanel](controller.gridSize, controller.gridSize)
 
-  override def closeOperation(): Unit = System.exit(0)
+  override def closeOperation(): Unit = controller.finish()
+
+  peer.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE)
 
   def highlightpanel = new FlowPanel {
     contents += new Label("Highlight:")
@@ -82,7 +87,7 @@ class SwingGui(controller: ControllerInterface) extends Frame with Observer {
         controller.load
       })
       contents += new MenuItem(Action("Quit") {
-        System.exit(0)
+        controller.finish()
       })
     }
     contents += new Menu("Edit") {
@@ -133,6 +138,7 @@ class SwingGui(controller: ControllerInterface) extends Frame with Observer {
     case event: GridSizeChanged => resize(event.newSize)
     case event: CellChanged => redraw
     case event: CandidatesChanged => redraw
+    case event: SudokuShutdown => peer.dispatchEvent(new WindowEvent(peer, WindowEvent.WINDOW_CLOSING))
   }
 
   def resize(gridSize: Int) = {

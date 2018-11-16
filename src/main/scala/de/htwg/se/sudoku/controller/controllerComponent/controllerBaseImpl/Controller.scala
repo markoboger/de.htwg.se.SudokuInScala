@@ -170,5 +170,8 @@ class Controller @Inject()(var grid: GridInterface)
     grid = grid.setShowCandidates(row, col)
   }
 
-  override def finish(): Unit = fileIo.unbind()
+  override def finish(): Unit = {
+    publish(new SudokuShutdown)
+    fileIo.unbind()
+  }
 }

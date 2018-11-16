@@ -1,18 +1,28 @@
 package de.htwg.se.sudoku.aview
 
+import java.io.BufferedReader
+
 import com.typesafe.scalalogging.{LazyLogging, Logger}
-import de.htwg.se.sudoku.controller.controllerComponent.ControllerInterface
-import de.htwg.se.sudoku.controller.controllerComponent.GameStatus
-import de.htwg.se.sudoku.controller.controllerComponent.{
-  CandidatesChanged,
-  CellChanged,
-  GridSizeChanged
-}
+import de.htwg.se.sudoku.controller.controllerComponent._
 
 import scala.swing.Reactor
 import scala.swing.event.Event
 
 class Tui(controller: ControllerInterface) extends Reactor with LazyLogging {
+
+  var stopProcessingInput = false
+
+  def processInput(input: BufferedReader) = {
+    while (!stopProcessingInput) {
+      if (input.ready()) {
+        val line = input.readLine()
+        processInputLine(line)
+      } else {
+        Thread.sleep(200) // don't waste cpu cycles if no input is given
+      }
+    }
+  }
+
 
   listenTo(controller)
   def size = controller.gridSize
@@ -20,7 +30,7 @@ class Tui(controller: ControllerInterface) extends Reactor with LazyLogging {
 
   def processInputLine(input: String): Unit = {
     input match {
-      case "q" =>
+      case "q" => controller.finish()
       case "e" => controller.createEmptyGrid
       case "n" => controller.createNewGrid
       case "z" => controller.undo
@@ -46,6 +56,7 @@ class Tui(controller: ControllerInterface) extends Reactor with LazyLogging {
     case event: GridSizeChanged   => printTui
     case event: CellChanged       => printTui
     case event: CandidatesChanged => printCandidates
+    case event: SudokuShutdown => stopProcessingInput = true
   }
 
   def printTui: Unit = {
