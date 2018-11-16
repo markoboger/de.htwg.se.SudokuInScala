@@ -12,6 +12,6 @@ case class UiFactory() extends Actor {
     case CreateTui(controller) =>
       val tui = new Tui(controller)
       sender ! tui
-    case Crash => throw new NullPointerException() // actor gets restarted by default
+    case Crash => throw new NullPointerException("Intentional exception to demonstrate akka actor restart behaviour") // actor gets restarted by default
   }
 }
