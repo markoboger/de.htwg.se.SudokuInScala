@@ -1,22 +1,27 @@
 package de.htwg.se.sudoku.aview.gui
 
-import de.htwg.se.sudoku.controller.controllerComponent.{ CandidatesChanged, CellChanged, ControllerInterface, GridSizeChanged }
+import java.awt.event.WindowEvent
 
-import de.htwg.se.sudoku.controller.controllerComponent.{CandidatesChanged, CellChanged, ControllerInterface, GridSizeChanged}
+import de.htwg.se.sudoku.controller.controllerComponent._
 import de.htwg.se.sudoku.util.Observer
+import javax.swing.WindowConstants
 
-import scala.swing._
 import scala.swing.Swing.LineBorder
+import scala.swing._
 import scala.swing.event._
 
 class CellClicked(val row: Int, val column: Int) extends Event
 
-class SwingGui(controller: ControllerInterface) extends Frame with Observer{
+class SwingGui(controller: ControllerInterface) extends Frame with Observer {
 
   listenTo(controller)
 
   title = "HTWG Sudoku"
   var cells = Array.ofDim[CellPanel](controller.gridSize, controller.gridSize)
+
+  override def closeOperation(): Unit = controller.finish()
+
+  peer.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE)
 
   def highlightpanel = new FlowPanel {
     contents += new Label("Highlight:")
@@ -57,6 +62,7 @@ class SwingGui(controller: ControllerInterface) extends Frame with Observer{
       }
     }
   }
+
   val statusline = new TextField(controller.statusText, 20)
 
   contents = new BorderPanel {
@@ -68,33 +74,59 @@ class SwingGui(controller: ControllerInterface) extends Frame with Observer{
   menuBar = new MenuBar {
     contents += new Menu("File") {
       mnemonic = Key.F
-      contents += new MenuItem(Action("Empty") { controller.createEmptyGrid })
-      contents += new MenuItem(Action("New") { controller.createNewGrid })
-      contents += new MenuItem(Action("Save") {controller.save})
-      contents += new MenuItem(Action("Load") {controller.load})
-      contents += new MenuItem(Action("Quit") { System.exit(0) })
+      contents += new MenuItem(Action("Empty") {
+        controller.createEmptyGrid
+      })
+      contents += new MenuItem(Action("New") {
+        controller.createNewGrid
+      })
+      contents += new MenuItem(Action("Save") {
+        controller.save
+      })
+      contents += new MenuItem(Action("Load") {
+        controller.load
+      })
+      contents += new MenuItem(Action("Quit") {
+        controller.finish()
+      })
     }
     contents += new Menu("Edit") {
       mnemonic = Key.E
-            contents += new MenuItem(Action("Undo") { controller.undo })
-            contents += new MenuItem(Action("Redo") { controller.redo })
+      contents += new MenuItem(Action("Undo") {
+        controller.undo
+      })
+      contents += new MenuItem(Action("Redo") {
+        controller.redo
+      })
     }
     contents += new Menu("Solve") {
       mnemonic = Key.S
-      contents += new MenuItem(Action("Solve") { controller.solve })
+      contents += new MenuItem(Action("Solve") {
+        controller.solve
+      })
     }
     contents += new Menu("Highlight") {
       mnemonic = Key.H
-      for { index <- 0 to controller.gridSize } {
-        contents += new MenuItem(Action(index.toString) { controller.highlight(index) })
+      for {index <- 0 to controller.gridSize} {
+        contents += new MenuItem(Action(index.toString) {
+          controller.highlight(index)
+        })
       }
     }
     contents += new Menu("Options") {
       mnemonic = Key.O
-      contents += new MenuItem(Action("Show all candidates") { controller.toggleShowAllCandidates })
-      contents += new MenuItem(Action("Size 1*1") { controller.resize(1) })
-      contents += new MenuItem(Action("Size 4*4") { controller.resize(4) })
-      contents += new MenuItem(Action("Size 9*9") { controller.resize(9) })
+      contents += new MenuItem(Action("Show all candidates") {
+        controller.toggleShowAllCandidates
+      })
+      contents += new MenuItem(Action("Size 1*1") {
+        controller.resize(1)
+      })
+      contents += new MenuItem(Action("Size 4*4") {
+        controller.resize(4)
+      })
+      contents += new MenuItem(Action("Size 9*9") {
+        controller.resize(9)
+      })
 
     }
   }
@@ -104,8 +136,9 @@ class SwingGui(controller: ControllerInterface) extends Frame with Observer{
 
   reactions += {
     case event: GridSizeChanged => resize(event.newSize)
-    case event: CellChanged     => redraw
+    case event: CellChanged => redraw
     case event: CandidatesChanged => redraw
+    case event: SudokuShutdown => peer.dispatchEvent(new WindowEvent(peer, WindowEvent.WINDOW_CLOSING))
   }
 
   def resize(gridSize: Int) = {
@@ -116,6 +149,7 @@ class SwingGui(controller: ControllerInterface) extends Frame with Observer{
       add(statusline, BorderPanel.Position.South)
     }
   }
+
   def redraw = {
     for {
       row <- 0 until controller.gridSize

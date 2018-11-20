@@ -1,29 +1,35 @@
-package de.htwg.se.sudoku.model.fileIoComponent.fileIoJsonImpl
+package de.htwg.se.sudoku.model.fileIoComponent.fileIoMongoDBImpl
 
-import com.google.inject.Guice
-import com.google.inject.name.Names
-import de.htwg.se.sudoku.SudokuModule
+import com.google.inject.{Guice, Inject}
+import com.google.inject.name.{Named, Names}
+import de.htwg.se.sudoku.MongoDBModule
 import de.htwg.se.sudoku.model.fileIoComponent.FileIOInterface
 import de.htwg.se.sudoku.model.gridComponent.GridInterface
-import net.codingwell.scalaguice.InjectorExtensions._
-import play.api.libs.json._
+import net.codingwell.scalaguice.InjectorExtensions.ScalaInjector
+import org.mongodb.scala.model.Projections
+import org.mongodb.scala.{Document, MongoClient, MongoDatabase}
+import play.api.libs.json.{JsValue, Json}
 
-import scala.io.Source
+import scala.concurrent.Await
+import scala.concurrent.duration.Duration
 import scala.util.Try
 
-class FileIO extends FileIOInterface {
+class FileIO @Inject()(@Named("MongoDBHost") host: String, @Named("MongoDBPort") port: Int) extends FileIOInterface {
 
-  final val FILE_NAME: String = "grid.json"
+  private val mongoClient: MongoClient = MongoClient(s"mongodb://$host:$port")
+  private val db: MongoDatabase = mongoClient.getDatabase("sudoku-in-scala")
+  private val collection = db.getCollection("sudoku-in-scala-col")
 
   override def load: Try[Option[GridInterface]] = {
+    val resultFuture = collection.find().projection(Projections.excludeId()).toFuture()
+    val result = Await.result(resultFuture, Duration.Inf)
+
     var gridOption: Option[GridInterface] = None
 
     Try {
-      val source: String = Source.fromFile(FILE_NAME).getLines.mkString
-
-      val json: JsValue = Json.parse(source)
+      val json: JsValue = Json.parse(result.head.toJson())
       val size = (json \ "grid" \ "size").get.toString.toInt
-      val injector:ScalaInjector = Guice.createInjector(new SudokuModule)
+      val injector = Guice.createInjector(new MongoDBModule)
 
       size match {
         case 1 =>
@@ -60,16 +66,15 @@ class FileIO extends FileIOInterface {
   }
 
   override def save(grid: GridInterface): Try[Unit] = {
-    import java.io._
-
     Try {
-      val pw = new PrintWriter(new File(FILE_NAME))
-      pw.write(Json.prettyPrint(gridToJson(grid)))
-      pw.close
+      Await.result(collection.drop().toFuture(), Duration.Inf)
+      val gameStateDoc = Document.apply(gridToJson(grid).toString())
+      val resultFuture = collection.insertOne(gameStateDoc).toFuture()
+      Await.result(resultFuture, Duration.Inf)
     }
   }
 
-  def gridToJson(grid: GridInterface) = grid.toJson
+  private def gridToJson(grid: GridInterface) = grid.toJson
 
   override def unbind(): Unit = {}
 }
