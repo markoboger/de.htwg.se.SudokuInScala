@@ -8,3 +8,10 @@ case class Cell(value: Int, given: Boolean = false, isHighlighted: Boolean = fal
   override def toString: String = value.toString.replace('0', ' ') + (if (given) "." else if (isHighlighted) "'" else " ")
 }
 
+object Cell {
+  import play.api.libs.json._
+  implicit val cellWrites = Json.writes[Cell]
+  implicit val cellReads = Json.reads[Cell]
+}
+
+

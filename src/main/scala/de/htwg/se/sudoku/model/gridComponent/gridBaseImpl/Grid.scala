@@ -109,3 +109,8 @@ case class Grid(cells: Matrix[Cell]) extends GridInterface {
   override def solve: (Boolean, GridInterface) = new Solver(this).solve
 }
 
+object Grid {
+  import play.api.libs.json._
+  implicit val gridWrites = Json.writes[Grid]
+  implicit val gridReads = Json.reads[Grid]
+}
