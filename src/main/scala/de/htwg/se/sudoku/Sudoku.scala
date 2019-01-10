@@ -11,7 +11,7 @@ object Sudoku {
   val injector = Guice.createInjector(new SudokuModule)
   val controller = injector.getInstance(classOf[ControllerInterface])
   val tui = new Tui(controller)
-  val gui = new SwingGui(controller)
+  //val gui = new SwingGui(controller)
   controller.createNewGrid
 
   def main(args: Array[String]): Unit = {
